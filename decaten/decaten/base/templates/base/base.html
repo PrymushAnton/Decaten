@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1><a href="">Decaten</a></h1>
+        <div class="header_links">
+            <a href="">Авторизація</a>
+            <a href="">Реєстрація</a>
+            <a href="">Кошик</a>
+            <a href="">Замовлення</a>
+        </div>
+    </header>
+    <main>
+        {% block main %}
+
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <h2><a href="">Decaten</a></h2>
+        <div class="phone_and_email">
+            <p>Email: decaten@gmail.com</p>
+            <p>+38xxxxxxxxxx</p>
+        </div>
+        <div class="social_medias">
+            <p>+38xxxxxxxxxx</p>
+            <p>+38xxxxxxxxxx</p>
+            <p>+38xxxxxxxxxx</p>
+        </div>
+    </footer>
+</body>
+</html>
