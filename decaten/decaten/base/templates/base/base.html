@@ -5,16 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+    {% block link %}
+        
+    {% endblock link %}
     <title>Document</title>
 </head>
 <body>
     <header>
-        <h1><a href="">Decaten</a></h1>
+        <h1><a href="{% url 'main' %}">Decaten</a></h1>
         <div class="header_links">
-            <a href="">Авторизація</a>
-            <a href="">Реєстрація</a>
-            <a href="">Кошик</a>
-            <a href="">Замовлення</a>
+            <a href="{% url 'log' %}">Авторизація</a>
+            <a href="{% url 'reg' %}">Реєстрація</a>
+            {% if user.is_authenticated == True %}
+                <a href="">Кошик</a>
+                <a href="">Замовлення</a>
+            {% endif %}
         </div>
     </header>
     <main>
@@ -23,17 +28,19 @@
         {% endblock %}
     </main>
     
-    <footer>
-        <h2><a href="">Decaten</a></h2>
-        <div class="phone_and_email">
-            <p>Email: decaten@gmail.com</p>
-            <p>+38xxxxxxxxxx</p>
-        </div>
-        <div class="social_medias">
-            <p>+38xxxxxxxxxx</p>
-            <p>+38xxxxxxxxxx</p>
-            <p>+38xxxxxxxxxx</p>
-        </div>
-    </footer>
+    {% if not fotti %}
+        <footer>
+            <h2><a href="">Decaten</a></h2>
+            <div class="phone_and_email">
+                <p>Email: decaten@gmail.com</p>
+                <p>+38xxxxxxxxxx</p>
+            </div>
+            <div class="social_medias">
+                <p>+38xxxxxxxxxx</p>
+                <p>+38xxxxxxxxxx</p>
+                <p>+38xxxxxxxxxx</p>
+            </div>
+        </footer>
+    {% endif %}
 </body>
 </html>
