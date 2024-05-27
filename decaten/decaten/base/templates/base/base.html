@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/css/bootstrap.css' %}">
+    <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
+    <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
     {% block link %}
         
     {% endblock link %}
     <title>Document</title>
 </head>
-<body>
+<body class="d-flex flex-column">
     <header>
         <h1><a href="{% url 'main' %}">Decaten</a></h1>
         <div class="header_links">
@@ -22,7 +25,7 @@
             {% endif %}
         </div>
     </header>
-    <main>
+    <main class="w-100">
         {% block main %}
 
         {% endblock %}
