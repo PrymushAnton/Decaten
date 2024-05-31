@@ -20,7 +20,7 @@ from decaten.settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
 from main.views import main
 from base.views import base
-from user.views import log_page, reg_page
+from user.views import log_page, reg_page,logout_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('base/', base, name='base'),
     path('login/', log_page, name='log'),
     path('registration/', reg_page, name='reg'),
+    path('logout', logout_page, name='logout'),
 ]
 
 if DEBUG:

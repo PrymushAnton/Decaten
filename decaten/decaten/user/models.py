@@ -6,4 +6,3 @@ from django.contrib.auth.models import User
 class UserInfo(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     number = models.CharField(max_length=20)
-    
