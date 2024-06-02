@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+body{
+    width: 100%;
+    height: 100%;
+}
+
 html, body{
     height: 100%;
 }
@@ -19,6 +24,12 @@ header {
     gap: 60%;
 }
 
+header p{
+    color: rgb(215, 215, 215);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 header a{
     text-decoration: none;
     color: rgb(215, 215, 215);
@@ -33,12 +44,9 @@ header .header_links{
     gap: 10%;
 }
 
-body{
-    width: 100%;
-    height: 100%;
-}
 
-footer{
+
+/* footer{
     width: 100%;
     position: fixed;
     height: 8em;
@@ -74,4 +82,4 @@ footer .phone_and_email{
 footer .social_medias{
     display: flex;
     flex-direction: column;
-}
+} */
