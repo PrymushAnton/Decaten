@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/css/bootstrap.css' %}">
+    <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
+    <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
+    {% block link %}
+        
+    {% endblock link %}
     <title>Document</title>
 </head>
-<body>
+<body class="d-flex flex-column">
     <header>
-        <h1><a href="">Decaten</a></h1>
+        <h1><a href="{% url 'main' %}">Decaten</a></h1>
         <div class="header_links">
-            <a href="">Авторизація</a>
-            <a href="">Реєстрація</a>
-            <a href="">Кошик</a>
-            <a href="">Замовлення</a>
+            {% if user.is_authenticated == True %}
+                <a href="">Кошик</a>
+                <a href="">Замовлення</a>
+                <a href="{% url 'logout' %}">Вийти з акаунту</a>
+            {% else %}
+                <a href="{% url 'log' %}">Авторизація</a>
+                <a href="{% url 'reg' %}">Реєстрація</a>
+            {% endif %}
         </div>
     </header>
-    <main>
+    <main class="w-100">
         {% block main %}
 
         {% endblock %}
     </main>
     
-    <footer>
-        <h2><a href="">Decaten</a></h2>
-        <div class="phone_and_email">
-            <p>Email: decaten@gmail.com</p>
-            <p>+38xxxxxxxxxx</p>
-        </div>
-        <div class="social_medias">
-            <p>+38xxxxxxxxxx</p>
-            <p>+38xxxxxxxxxx</p>
-            <p>+38xxxxxxxxxx</p>
-        </div>
-    </footer>
+    {% if not fotti %}
+        <footer>
+            <h2><a href="">Decaten</a></h2>
+            <div class="phone_and_email">
+                <p>Email: decaten@gmail.com</p>
+                <p>+38xxxxxxxxxx</p>
+            </div>
+            <div class="social_medias">
+                <p>+38xxxxxxxxxx</p>
+                <p>+38xxxxxxxxxx</p>
+                <p>+38xxxxxxxxxx</p>
+            </div>
+        </footer>
+    {% endif %}
 </body>
 </html>
