@@ -15,7 +15,7 @@
 </head>
 <body class="d-flex flex-column">
     <header>
-        <h1><a href="{% url 'main' %}">Decaten</a></h1>
+        <h1><a href="{% url 'main' %}" id="name-of-site">Decaten</a></h1>
         <div class="header_links">
             {% if user.is_authenticated == True %}
                 <a href="">Кошик</a>

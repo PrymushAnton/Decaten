@@ -17,7 +17,7 @@ header {
     width: 100%;
     position: sticky;
     top: 0;
-    background-color: #2d2d2d;
+    background-color: #FF9B26;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,22 +25,35 @@ header {
 }
 
 header p{
-    color: rgb(215, 215, 215);
     text-decoration: underline;
+    font-weight: bold;
+    margin: 0;
+}
+
+header #name-of-site{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
     font-weight: bold;
 }
 
-header a{
+header #name-of-site:hover{
+    color: rgb(255, 255, 255);
     text-decoration: none;
-    color: rgb(215, 215, 215);
+    font-weight: bold;
 }
-header a:hover{
-    text-decoration: underline;
-    color: rgb(215, 215, 215);
+
+header .header_links a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+}
+header .header_links a:hover{
+    color: rgb(255, 255, 255);
 }
 
 header .header_links{
     display: flex;
+    align-items: center;
     gap: 10%;
 }
 

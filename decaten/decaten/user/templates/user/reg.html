@@ -3,54 +3,58 @@
 
 
 {% block link %}
-    <link rel="stylesheet" href="{% static 'user\user.css' %}">
+    <link rel="stylesheet" href="{% static 'user\css\user.css' %}">
     <script defer src="{% static 'base\js\bootstrap.bundle.min.js' %}"></script>
-    <script defer src="{% static 'user\user.js' %}"></script>
+    <script defer src="{% static 'user\js\user.js' %}"></script>
 {% endblock link %}
 
 
 {% block main %}
-    <form action="" method="post" class="d-flex flex-column">
+    <form action="" method="post" class="d-flex flex-column needs-validation" >
         {% csrf_token %}
 
         <div class="mb-3">
             <label for="exampleInputName" class="form-label">Ім'я користувача</label>
-            <input required name="username" type="text" class="form-control" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+            <input required name="username" type="text" class="form-control username" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+            <div class="invalid-feedback"></div>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
-            <input required name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input required name="email" type="email" class="form-control email" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div class="invalid-feedback"></div>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputNum" class="form-label">Номер телефону</label>
-            <div class="input-group mb-3">
+            <input required name="number" type="number" class="form-control number" maxlength="15" id="exampleInputNum" aria-label="Text input with dropdown button">
+            <div class="invalid-feedback"></div>
+            <!-- <div class="input-group mb-3">
                 <input type="hidden" name="region" value="380">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+380</button>
                 <ul class="dropdown-menu">
                     <li><button type="button" class="dropdown-item" name="ua">+380</button></li>
                     <li><button type="button" class="dropdown-item" name="usa">+415</button></li>
-                    <!-- <li><button type="button" class="dropdown-item" name="*"></button></li> -->
                 </ul>
-                <input required name="number" type="number" class="form-control" maxlength="15" id="exampleInputNum" aria-label="Text input with dropdown button">
-            </div>
-            <div id="emailHelp" class="form-text">Ми нікому не передаємо ваші контактні дані</div>
+            </div> -->
+            <!-- <div id="emailHelp" class="form-text">Ми нікому не передаємо ваші контактні дані</div> -->
         </div>
         
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Пароль</label>
-            <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
+            <input required name="password" type="password" class="form-control password" id="exampleInputPassword1">
+            <div class="invalid-feedback"></div>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Повторіть пароль</label>
-            <input required name="password_confirmation" type="password_" class="form-control" id="exampleInputPassword1">
+            <input required name="password_confirmation" type="password" class="form-control password_confirmation" id="exampleInputPassword1">
+            <div class="invalid-feedback"></div>
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Надіслати</button>
-
+        <button type="submit" id="send" class="btn btn-primary">Надіслати</button>
+        <p id='ajax_text'></p>
     </form>
 {% endblock main %}
     
