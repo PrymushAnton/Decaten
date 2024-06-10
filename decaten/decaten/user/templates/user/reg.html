@@ -25,10 +25,11 @@
             <div class="invalid-feedback"></div>
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="exampleInputNum" class="form-label">Номер телефону</label>
-            <input required name="number" type="number" class="form-control number" maxlength="15" id="exampleInputNum" aria-label="Text input with dropdown button">
-            <div class="invalid-feedback"></div>
+            <span class="input-group-text" id="basic-addon1">+380</span>
+            <input required name="number" type="text" class="form-control number" maxlength="9" id="exampleInputNum" aria-label="Text input with dropdown button" aria-describedby="addon-wrapping">
+            <div class="invalid-feedback"></div> -->
             <!-- <div class="input-group mb-3">
                 <input type="hidden" name="region" value="380">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+380</button>
@@ -38,8 +39,16 @@
                 </ul>
             </div> -->
             <!-- <div id="emailHelp" class="form-text">Ми нікому не передаємо ваші контактні дані</div> -->
+        <!-- </div> -->
+        <div class="mb-3">
+            <label for="exampleInputNum" class="form-label">Номер телефону</label>
+            <div class="input-group">
+                <span class="input-group-text" id="addon-wrapping">+380</span>
+                <input required type="tel" class="form-control number" aria-label="Username" aria-describedby="addon-wrapping" id="exampleInputNum" maxlength="9">
+                <div class="invalid-feedback"></div>
+            </div>
         </div>
-        
+
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Пароль</label>
             <input required name="password" type="password" class="form-control password" id="exampleInputPassword1">

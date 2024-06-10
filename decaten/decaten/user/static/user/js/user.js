@@ -26,6 +26,11 @@ $(document).ready(
                 csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
             },
             success: function (success){
+                if (success == '5'){
+                    console.log(5)
+                    window.location.href = '/'
+                    window.location.reload()
+                }
                 if (success == '1') {
                     var inputs = document.querySelectorAll('input')
                     for (var input of inputs) {
@@ -50,12 +55,21 @@ $(document).ready(
                     $(".invalid-feedback").html('Паролі не співпадають!')
                     $('.password_confirmation').val('')
                     console.log(3)
-                }
-                if (success == '5'){
+                } else if (success == '6') {
+                    console.log(6)
+                    $("input").removeClass('is-invalid')
+                    $(".email").addClass('is-invalid')
+                    $(".invalid-feedback").html('Введіть коректну пошту!')
+                } else if (success == '4') {
                     console.log(4)
-                    window.location.href = '/'                    
-                    window.location.reload()
+                    $('ajax_text').html('Помилка! Спробуйте пізніше!')
+                } else if (success == '7') {
+                    console.log(7)
+                    $("input").removeClass('is-invalid')
+                    $(".number").addClass('is-invalid')
+                    $(".invalid-feedback").html('Введіть правильний номер телефону!')
                 }
+                
             },
         })
     })

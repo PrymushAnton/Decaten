@@ -3,7 +3,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import UserInfo
 from django.http import HttpResponse
+import re
 
+def validate_email(email):
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+    if re.fullmatch(regex, email):
+        return True
+    else:
+        return False
+    
+def validate_number(number):
+    if number.isdigit() and len(number) == 9:
+        return True
+    else:
+        return False
+    
+    
 # Create your views here.
 def reg_page(request):
     if request.user.is_authenticated:
@@ -70,9 +85,11 @@ def log_in_account(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         if email and password:
+            
             try:
                 user = User.objects.get(email = email)
                 if user.check_password(password):
+                    
                     login(request, user)
                     
                     # return redirect('main')
@@ -103,7 +120,7 @@ def validate_account(request):
         password = request.POST.get('password')
         password_confirmation = request.POST.get('password_confirmation')
         # and region 
-        print(username, email, password, password_confirmation)
+        print(username, email, number, password, password_confirmation)
         if username and email and number and password and password_confirmation:
             try:
                 check_email = User.objects.get(email=email)
@@ -111,30 +128,40 @@ def validate_account(request):
                 check_email = None
             finally:
                 if not check_email:
-                    if password == password_confirmation:
-                        
-                        try:
-                            user = User.objects.create_user(username=username, email=email, password=password)
-                            UserInfo.objects.create(user_id=user, number=number)
-                            login(request, user)
-                            print(1235345345345345)
-                            # print(user.is_authenticated())
-                            success = 5
-                            return HttpResponse(success)
-                            # return redirect('main')
-                        except:
-                            error = 'Помилка! Спробуйте пізніше!'
-                            error = 4
+                    if validate_email(email=email):
+                        print('email')
+                        if validate_number(number):
+                            if password == password_confirmation:
+                                print('password')
+                                try:
+                                    user = User.objects.create_user(username=username, email=email, password=password)
+                                    UserInfo.objects.create(user_id=user, number=number)
+                                    login(request, user)
+                                    print('reg')
+                                    # print(user.is_authenticated())
+                                    success = 5
+                                    return HttpResponse(success)
+                                    # return redirect('main')
+                                except:
+                                    error = 'Помилка! Спробуйте пізніше!'
+                                    error = 4
+                                    return HttpResponse(error)
+                                # try:
+                                #     num = int(region + number)
+                                    
+                                # except:
+                                #     pass
+                            else:
+                                error = 'Паролі не співпадають!'
+                                error = 3
+                                return HttpResponse(error)
+                        else:
+                            error = 7
                             return HttpResponse(error)
-                        # try:
-                        #     num = int(region + number)
-                            
-                        # except:
-                        #     pass
                     else:
-                        error = 'Паролі не співпадають!'
-                        error = 3
+                        error = 6
                         return HttpResponse(error)
+                        
                 else:
                     error = 'Дана пошта вже використовується!'
                     error = 2
