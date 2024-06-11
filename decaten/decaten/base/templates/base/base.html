@@ -21,7 +21,7 @@
                 <a href="">Кошик</a>
                 <a href="">Замовлення</a>
                 <a href="{% url 'logout' %}">Вийти</a>
-                <p>{{user.username}}</p>
+                <p>{{user.first_name}}</p>
             {% else %}
                 <a href="{% url 'log' %}">Авторизація</a>
                 <a href="{% url 'reg' %}">Реєстрація</a>
