@@ -4,18 +4,31 @@
 }
 
 body{
+    width: 100vw;
+    height: 100vh;
+    /* padding-top: 80px; */
+}
+
+main{
+    height: 100%;
     width: 100%;
-    height: 100%;
 }
 
-html, body{
+/* html, body{
     height: 100%;
-}
+} */
 
-header {
+header{
+    top: 0;
     height: 80px;
     width: 100%;
-    position: sticky;
+}
+
+.header {
+    z-index: 3;
+    height: 80px;
+    width: 100%;
+    position: fixed;
     top: 0;
     background-color: #FF9B26;
     display: flex;
@@ -24,75 +37,58 @@ header {
     gap: 60%;
 }
 
-header p{
+.header h1{
+    text-shadow: -1px 1px 0 #000,
+    1px 1px 0 #000,
+    1px -1px 0 #000,
+    -1px -1px 0 #000;;
+}
+
+.header p{
     text-decoration: underline;
     font-weight: bold;
     margin: 0;
 }
 
-header #name-of-site{
+.header #name-of-site{
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-weight: bold;
 }
 
-header #name-of-site:hover{
+.header #name-of-site:hover{
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-weight: bold;
 }
 
-header .header_links a{
+.header .header_links a{
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-size: 20px;
 }
-header .header_links a:hover{
+.header .header_links a:hover{
     color: rgb(255, 255, 255);
 }
 
-header .header_links{
+.header .header_links{
     display: flex;
     align-items: center;
     gap: 10%;
 }
 
-
-
-/* footer{
-    width: 100%;
-    position: fixed;
-    height: 8em;
-    bottom: 0;
-    background-color: #2d2d2d;
+.first_header {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 15%;
-}
-footer p {
-    color: rgb(215, 215, 215);
+    gap: 25%;
 }
 
-footer h2{
-    color: rgb(215, 215, 215);
+.header #catalog{
     text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
 }
-footer h2 a{
-    color: rgb(215, 215, 215);
-    text-decoration: none;
-}
-
-footer h2 a:hover{
-    text-decoration: underline;
+.header #catalog:hover{
+    color: rgb(255, 255, 255);
 }
 
-footer .phone_and_email{
-    display: flex;
-    flex-direction: column;
-}
-
-footer .social_medias{
-    display: flex;
-    flex-direction: column;
-} */

@@ -113,6 +113,7 @@ def log_in_account(request):
         if email and password:
             try:
                 user = MyUser.objects.get(email=email)
+                
                 if user.check_password(password):
                     login(request, user)
                     success = 4

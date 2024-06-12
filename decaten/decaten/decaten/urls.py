@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from main.views import main
 from base.views import base
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
+from catalog_product.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +31,9 @@ urlpatterns = [
     path('registration/', reg_page, name='reg'),
     path('logout', logout_page, name='logout'),
     path('validate_account/', validate_account, name='validate_account'),
-    path('log_in_account/', log_in_account, name='log_in_account')
+    path('log_in_account/', log_in_account, name='log_in_account'),
+    path('catalog/', catalog, name='catalog'),
+    path('catalog/filter_products/', filter_products, name='filter_products'),
 ]
 
 if DEBUG:
