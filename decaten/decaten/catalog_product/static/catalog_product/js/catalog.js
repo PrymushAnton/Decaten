@@ -25,12 +25,10 @@ $(document).ready(function(){
                     for (let obj of product){
                         
                         let product_el = `
-                            <a href="">
-                                <div class="product">
-                                    <img src="../media/${obj.image}" alt="">
-                                    <h3>${obj.name}</h3>
-                                    <p>${obj.price} грн.</p>
-                                </div>
+                            <a href="#" class="card d-flex justify-content-around align-items-center" style="width: 18rem; height: 24rem;">
+                                <img class="img-fluid m-2" src="../media/${obj.image}" alt="">
+                                <h3>${obj.name}</h3>
+                                <p>${obj.price} грн.</p>
                             </a>
                         `
                         $(".products").append(product_el)
