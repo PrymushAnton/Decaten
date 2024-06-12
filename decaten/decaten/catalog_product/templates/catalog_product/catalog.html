@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'catalog_product/css/catalog.css' %}">
+    <script defer src="{% static 'catalog_product/js/catalog.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="content">
+        <form class="filters" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary send_filters">Показати</button>
+            
+            {% for name_of_filter in names_of_filters %}
+                <div class="filter_category" method="POST">
+                    <h3>{{name_of_filter.name}}</h1>
+                    {% for filter in list_of_filters %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{filter.id}}" id="flexCheckDefault{{filter.id}}">
+                            <label class="form-check-label" for="flexCheckDefault{{filter.id}}">{{filter.name}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            {% endfor %}
+        </form>
+
+        <div class="products">
+            {% for product in all_products %}
+                <a href="" class="product">
+                    <div class="product">
+                        <img src="{{product.image.url}}" alt="">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.price}} грн.</p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
