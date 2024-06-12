@@ -10,7 +10,7 @@
     <div class="content">
         <form class="filters" method="POST">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary send_filters">Показати</button>
+            
             
             {% for name_of_filter in names_of_filters %}
                 <div class="filter_category" method="POST">
@@ -24,18 +24,27 @@
                 </div>
                 
             {% endfor %}
+            <button type="submit" class="btn btn-primary send_filters" style="margin-top: 15px;">Показати</button>
         </form>
 
         <div class="products">
             {% for product in all_products %}
-                <a href="" class="product">
+                <a href="#" class="card d-flex justify-content-around align-items-center" style="width: 18rem; height: 24rem;">
+                    <img class="img-fluid m-2" src="{{product.image.url}}" alt="">
+                    <h3>{{product.name}}</h3>
+                    <p>{{product.price}} грн.</p>
+                </a>
+            {% endfor %}
+
+
+                <!-- <a href="" class="product">
                     <div class="product">
                         <img src="{{product.image.url}}" alt="">
                         <h3>{{product.name}}</h3>
                         <p>{{product.price}} грн.</p>
                     </div>
                 </a>
-            {% endfor %}
+             -->
         </div>
     </div>
 {% endblock %}
