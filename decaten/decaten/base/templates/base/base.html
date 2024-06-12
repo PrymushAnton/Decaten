@@ -16,29 +16,28 @@
 </head>
 <!-- class="d-flex flex-column" -->
 <body>
-
-
-         
     <header>
-        <div class="first_header">
-            <h1><a href="{% url 'main' %}" id="name-of-site">Decaten</a></h1>
-            <a href="{% url 'catalog' %}" id="catalog">Каталог</a>
-        </div>
-        
-        <div class="header_links">
-            {% if user.is_authenticated == True %}
-                <a href="">Кошик</a>
-                <a href="">Замовлення</a>
-                <a href="{% url 'logout' %}">Вийти</a>
-                {% if not user.is_superuser %}
-                    <p>{{user.first_name}}</p>
+        <div class="header">
+            <div class="first_header">
+                <h1><a href="{% url 'main' %}" id="name-of-site">Decaten</a></h1>
+                <a href="{% url 'catalog' %}" id="catalog">Каталог</a>
+            </div>
+            
+            <div class="header_links">
+                {% if user.is_authenticated == True %}
+                    <a href="">Кошик</a>
+                    <a href="">Замовлення</a>
+                    <a href="{% url 'logout' %}">Вийти</a>
+                    {% if not user.is_superuser %}
+                        <p>{{user.first_name}}</p>
+                    {% else %}
+                        <p>{{user.username}}</p>
+                    {% endif %}
                 {% else %}
-                    <p>{{user.username}}</p>
+                    <a href="{% url 'log' %}">Авторизація</a>
+                    <a href="{% url 'reg' %}">Реєстрація</a>
                 {% endif %}
-            {% else %}
-                <a href="{% url 'log' %}">Авторизація</a>
-                <a href="{% url 'reg' %}">Реєстрація</a>
-            {% endif %}
+            </div>
         </div>
     </header>
     <main>
