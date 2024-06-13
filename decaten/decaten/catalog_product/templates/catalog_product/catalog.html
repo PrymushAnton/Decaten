@@ -4,16 +4,17 @@
 {% block link %}
     <link rel="stylesheet" href="{% static 'catalog_product/css/catalog.css' %}">
     <script defer src="{% static 'catalog_product/js/catalog.js' %}"></script>
+    <script defer src="{% static 'catalog_product/js/flavour.js' %}"></script>
+    <script defer src="{% static 'catalog_product/js/product_image.js' %}"></script>
 {% endblock %}
 
 {% block main %}
-    <div class="content">
-        <form class="filters" method="POST">
+    <div class="content w-100 d-flex justify-content-center align-items-center ps-3">
+        <form class="filters border-end ms-2 w-auto" method="POST">
             {% csrf_token %}
-            
-            
+
             {% for name_of_filter in names_of_filters %}
-                <div class="filter_category" method="POST">
+                <div class="filter_category border-bottom p-3" method="POST">
                     <h3>{{name_of_filter.name}}</h1>
                     {% for filter in list_of_filters %}
                         <div class="form-check">
@@ -27,24 +28,22 @@
             <button type="submit" class="btn btn-primary send_filters" style="margin-top: 15px;">Показати</button>
         </form>
 
-        <div class="products">
+        <div class="products d-flex justify-content-start h-100 w-75 gap-5 ps-5 ms-2">
             {% for product in all_products %}
-                <a href="#" class="card d-flex justify-content-around align-items-center" style="width: 18rem; height: 24rem;">
-                    <img class="img-fluid m-2" src="{{product.image.url}}" alt="">
-                    <h3>{{product.name}}</h3>
+                <a href="#" class="card d-flex justify-content-around align-items-center shadow" style="width: 18rem; height: 24rem;">
+                    <input type="hidden" value="{{product.id}}" class="product_id_image">
+                    <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
+                    <h4>{{product.name}}</h4>
                     <p>{{product.price}} грн.</p>
+                    <select name="{{product.name}}" id="{{product.name}}">
+                        {% for flavour in all_flavours %}
+                            {% if flavour.for_product.name == product.name %}
+                                <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </a>
             {% endfor %}
-
-
-                <!-- <a href="" class="product">
-                    <div class="product">
-                        <img src="{{product.image.url}}" alt="">
-                        <h3>{{product.name}}</h3>
-                        <p>{{product.price}} грн.</p>
-                    </div>
-                </a>
-             -->
         </div>
     </div>
 {% endblock %}

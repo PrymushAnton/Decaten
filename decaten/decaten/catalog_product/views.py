@@ -7,7 +7,6 @@ from django.http import JsonResponse, HttpResponse
 # Create your views here.
 def catalog(request):
     names_of_filters = NameOfFilter.objects.all()
-    print(names_of_filters)
     filter = None
     for name_of_filter in names_of_filters:
         name_of_filter = NameOfFilter.objects.get(name=name_of_filter)
@@ -19,12 +18,15 @@ def catalog(request):
     all_products = Product.objects.all()
     
     amount_of_products = len(Product.objects.all())
+
+    all_flavours = Flavour.objects.all()
     
     context = {
         'names_of_filters': names_of_filters,
         'list_of_filters': filter,
         'all_products': all_products,
         'amount_of_products': amount_of_products,
+        'all_flavours': all_flavours,
     }
     
     return render(request, 'catalog_product/catalog.html', context)
@@ -51,7 +53,23 @@ def filter_products(request):
     else:
         return HttpResponse()
 
-def filter_amount_of_products(request):
-    amount_of_all_products = len(Product.objects.all())
+
+def get_flavour_image(request):
+    value_of_selector = request.POST.get('value_of_selector')
+    value_of_selector = value_of_selector.split(',')
     
-    return JsonResponse()
+    flavour = Flavour.objects.filter(id=value_of_selector[0]).values()
+    flavour = list(flavour)
+
+    print(flavour)
+
+    return JsonResponse({'flavour': flavour})
+
+
+
+def product_image(request):
+    
+    flavours = Flavour.objects.all().values()
+    flavours = list(flavours)
+    
+    return JsonResponse({"flavours":flavours})

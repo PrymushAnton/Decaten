@@ -58,8 +58,8 @@
     <div class="w-100 d-flex justify-content-center align-items-center ">
         <div class="w-75 my-5 d-flex justify-content-around align-items-center ">
             {% for product in all_products %}
-                <a href="#" class="card d-flex justify-content-around align-items-center" style="width: 18rem;">
-                    <img class="img-fluid m-2" src="{{product.image.url}}" alt="">
+                <a href="#" class="card shadow d-flex justify-content-around align-items-center" style="width: 16rem; height: 22rem;">
+                    <img class="w-75 m-2" src="{{product.image.url}}" alt="">
                     <h3>{{product.name}}</h3>
                     <p>{{product.price}} грн.</p>
                 </a>

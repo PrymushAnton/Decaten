@@ -25,9 +25,9 @@ $(document).ready(function(){
                     for (let obj of product){
                         
                         let product_el = `
-                            <a href="#" class="card d-flex justify-content-around align-items-center" style="width: 18rem; height: 24rem;">
+                            <a href="#" class="card d-flex justify-content-around align-items-center shadow" style="width: 18rem; height: 24rem;">
                                 <img class="img-fluid m-2" src="../media/${obj.image}" alt="">
-                                <h3>${obj.name}</h3>
+                                <h4>${obj.name}</h4>
                                 <p>${obj.price} грн.</p>
                             </a>
                         `

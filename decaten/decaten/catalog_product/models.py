@@ -13,17 +13,22 @@ class Filter(models.Model):
     def __str__(self):
         return self.name
     
+
 class Product(models.Model):
     image = models.ImageField()
     name = models.CharField(max_length=255)
     price = models.IntegerField()
-    filters = models.ManyToManyField(Filter, blank=True, null=True)
+    filters = models.ManyToManyField(Filter)
     
     def __str__(self):
         return self.name
     
+
 class Flavour(models.Model):
     name = models.CharField(max_length=255)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    for_product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
     def __str__(self):
         return self.name
+
+    
