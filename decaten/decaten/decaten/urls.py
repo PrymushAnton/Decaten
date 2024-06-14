@@ -36,6 +36,7 @@ urlpatterns = [
     path('catalog/filter_products/', filter_products, name='filter_products'),
     path('catalog/get_flavour_image/', get_flavour_image, name='get_flavour_image'),
     path('catalog/product_image/', product_image, name='product_image'),
+    path('product/<id>', product_page, name='product_page'),
 ]
 
 if DEBUG:

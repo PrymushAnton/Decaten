@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block link %}
+    <!-- <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script> -->
+    <script defer src="{% static '\catalog_product\js\product.js' %}"></script>
+{% endblock link %}
+    
+
+{% block main %}
+    <div class="d-flex justify-content-around align-items-center mx-5 my-2 px-3">
+        <div class="w-50">
+            <img id="1" class="w-100 m-2" src="{{flaur.0.image.url}}" alt="">
+        </div>
+        <div class="w-50 h-100 d-flex flex-column justify-content-around align-items-center">
+            <p class="h1">{{product.name}}</p>
+            <p class="h4 mb-2">ELF BAR</p>
+            
+            <div class="w-75 d-flex flex-wrap flex-row justify-content-around align-items-center">
+                {% for f in flaur %}
+                    <button id="{{f.id}}" class="btn btn-primary border border-black m-2" onclick="clickBtn('{{f.id}}'  , '{{f.image.url}}')">{{f.name}}</button>
+                {% endfor %}
+            </div>
+            <p class="mt-2" >{{product.price}} грн.</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id_product" value="{{product.id}}">
+                <input type="hidden" name="id_flaur" value="1">
+                <button class="btn btn-success">Замовити</button>
+            </form>
+        </div>
+    </div>
+{% endblock main %}
