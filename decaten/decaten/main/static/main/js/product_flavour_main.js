@@ -2,10 +2,10 @@
 $(document).ready(function() {
     $('select').on('input', function() {
         $.ajax({
-            url: 'get_flavour_image/',
-            type: 'POST',
+            url: 'product_flavour_main/',
+            type: 'GET',
             data: {
-                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                // csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
                 value_of_selector: $(this).val(),
             },
             success: function(data) {
@@ -14,8 +14,8 @@ $(document).ready(function() {
                     $(class_image).attr('src', '')
                     $(class_image).attr('src', '../media/' + obj.image)
                 }
+
             }
         })
     })
 })
-

@@ -16,7 +16,7 @@
 </head>
 <!-- class="d-flex flex-column" -->
 <body class="bg-light">
-    <header>
+    <!-- <header>
         <div class="header">
             <div class="first_header">
                 <h1><a href="{% url 'main' %}" id="name-of-site">Decaten</a></h1>
@@ -38,6 +38,29 @@
                     <a href="{% url 'reg' %}">Реєстрація</a>
                 {% endif %}
             </div>
+        </div>
+    </header> -->
+
+    <header class="d-flex justify-content-around w-100 border-bottom shadow-sm bg-secondary bg-gradient gap-5">
+        <div class="first_header d-flex align-items-center">
+            <h1><a href="{% url 'main' %}" id="name-of-site">Decaten</a></h1>
+        </div>
+
+        <div class="header_links d-flex align-items-center me-5 pe-5">
+            {% if user.is_authenticated == True %}
+                <a href="{% url 'catalog' %}" id="catalog">Каталог</a>
+                <a href="">Кошик</a>
+                <a href="">Замовлення</a>
+                <a href="{% url 'logout' %}">Вийти</a>
+                {% if not user.is_superuser %}
+                    <p>{{user.first_name}}</p>
+                {% else %}
+                    <p>{{user.username}}</p>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'log' %}">Авторизація</a>
+                <a href="{% url 'reg' %}">Реєстрація</a>
+            {% endif %}
         </div>
     </header>
     <main>

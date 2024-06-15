@@ -33,25 +33,31 @@ def catalog(request):
 
 
 def filter_products(request):
-    if request.method == 'POST':
-        filters_true = request.POST.get('filters_true')
-        filters_true = filters_true.split(',')
-        
-        products = []
-        
-        for filter_id in filters_true:
-            product = Product.objects.filter(filters__id=filter_id).values()
-            product = list(product)
-            # print(product)
-            products.append(product)
-            # print(products)
-        
-        # products = list(products)
-        # print(products)
-        # ({'products':product})
-        return JsonResponse({'products':products})
-    else:
-        return HttpResponse()
+    filters_true = request.POST.get('filters_true')
+    filters_true = filters_true.split(',')
+    
+    products = []
+    
+    # all_products = Product.objects.all()
+    # flavours = []
+    
+    for filter_id in filters_true:
+        product = Product.objects.filter(filters__id=filter_id).values()
+        product = list(product)
+        # print(product)
+        products.append(product)
+    #     for obj in product_obj:
+            
+    #         flavour = Flavour.objects.filter(for_product=obj).values()
+    #         flavour = list(flavour)
+    #         flavours.append(flavour)
+
+    print(products)
+
+    return JsonResponse({'products':products})
+
+
+
 
 
 def get_flavour_image(request):
