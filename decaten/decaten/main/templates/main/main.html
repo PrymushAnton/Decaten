@@ -69,6 +69,7 @@
                     <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
                     <h4>{{product.name}}</h4>
                     <p>{{product.price}} грн.</p>
+                    <a href="/product/{{product.id}}">Переглянути</a>
                     <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
                         {% for flavour in all_flavours %}
                             {% if flavour.for_product.name == product.name %}

@@ -79,3 +79,8 @@ def product_image(request):
     flavours = list(flavours)
     
     return JsonResponse({"flavours":flavours})
+
+def product_page(request, id):
+    context = {'product': Product.objects.get(id=id)}
+    context['flaur'] = Flavour.objects.filter(for_product = id)
+    return render(request, 'catalog_product/product.html', context)
