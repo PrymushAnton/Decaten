@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from decaten.settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
-from main.views import main
+from main.views import *
 from base.views import base
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
@@ -37,6 +37,8 @@ urlpatterns = [
     path('catalog/get_flavour_image/', get_flavour_image, name='get_flavour_image'),
     path('catalog/product_image/', product_image, name='product_image'),
     path('product/<id>', product_page, name='product_page'),
+    path('product_flavour_main/', product_flavour_main, name='product_flavour_main'),
+    path('product_image_main/', product_image_main, name='product_image_main'),
 ]
 
 if DEBUG:

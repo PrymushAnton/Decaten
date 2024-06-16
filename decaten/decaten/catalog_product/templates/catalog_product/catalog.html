@@ -30,14 +30,12 @@
 
         <div class="products d-flex justify-content-start h-100 w-75 gap-5 ps-5 ms-2">
             {% for product in all_products %}
-                <div class="card d-flex justify-content-around align-items-center shadow" style="width: 18rem; height: 24rem;">
-                    <a href="/product/{{product.id}}" class="d-flex flex-column justify-content-around align-items-center shadow" style="height: auto;">
-                        <input type="hidden" value="{{product.id}}" class="product_id_image">
-                        <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
-                        <h4>{{product.name}}</h4>
-                        <p>{{product.price}} грн.</p>
-                    </a>
-                    <select name="{{product.name}}" id="{{product.name}}">
+                <div class="card d-flex justify-content-around align-items-center shadow product_{{product.id}}">
+                    <input type="hidden" value="{{product.id}}" class="product_id_image">
+                    <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
+                    <h4>{{product.name}}</h4>
+                    <p>{{product.price}} грн.</p>
+                    <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
                         {% for flavour in all_flavours %}
                             {% if flavour.for_product.name == product.name %}
                                 <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
