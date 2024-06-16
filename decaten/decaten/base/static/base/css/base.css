@@ -19,7 +19,7 @@ body{
 
 main{
     height: max-content;
-    width: 98%;
+    width: 100%;
 }
 
 main a{
@@ -36,7 +36,7 @@ header{
     /* background-color: #FF9B26; */
 }
 
-.header {
+/* .header {
     z-index: 3;
     height: 80px;
     width: 100%;
@@ -47,7 +47,7 @@ header{
     justify-content: center;
     align-items: center;
     gap: 60%;
-}
+} */
 
 header h1{
     text-shadow: -1px 1px 0 #000,
@@ -84,11 +84,11 @@ header .header_links a:hover{
     color: rgb(255, 255, 255);
 }
 
-header .header_links{
+/* header .header_links{
     display: flex;
     align-items: center;
     gap: 10%;
-}
+} */
 /* 
 .first_header {
     display: flex;

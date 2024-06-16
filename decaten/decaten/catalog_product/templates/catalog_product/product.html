@@ -5,29 +5,30 @@
 {% block link %}
     <!-- <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script> -->
     <script defer src="{% static '\catalog_product\js\product.js' %}"></script>
+    <script defer src="{% static 'catalog_product\js\flavour.js' %}"></script>
 {% endblock link %}
     
 
 {% block main %}
-    <div class="d-flex justify-content-around align-items-center mx-5 my-2 px-3">
-        <div class="w-50">
-            <img id="1" class="w-100 m-2" src="{{flaur.0.image.url}}" alt="">
+    <div class="d-flex justify-content-center align-items-center mx-5 my-5 px-3 gap-5">
+        <div class="w-50 d-flex justify-content-end mx-5">
+            <img id="1" class="w-50 m-2 image_flavour{{product.id}}" src="{{flaur.0.image.url}}" alt="">
         </div>
-        <div class="w-50 h-100 d-flex flex-column justify-content-around align-items-center">
-            <p class="h1">{{product.name}}</p>
-            <p class="h4 mb-2">ELF BAR</p>
-            
-            <div class="w-75 d-flex flex-wrap flex-row justify-content-around align-items-center">
-                {% for f in flaur %}
-                    <button id="{{f.id}}" class="btn btn-primary border border-black m-2" onclick="clickBtn('{{f.id}}'  , '{{f.image.url}}')">{{f.name}}</button>
-                {% endfor %}
-            </div>
-            <p class="mt-2" >{{product.price}} грн.</p>
+        <div class="w-50 h-100 d-flex flex-column justify-content-around align-items-start mx-5">
+            <p class="h1">{{product.name}}</p> 
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="id_product" value="{{product.id}}">
                 <input type="hidden" name="id_flaur" value="1">
-                <button class="btn btn-success">Замовити</button>
+                <select name="selector" id="{{product.name}}" class="form-select w-100 mb-3">
+                    {% for flavour in flaur %}
+                        {% if flavour.for_product.name == product.name %}
+                            <option value="{{flavour.id}},{{flavour.for_product.id}}" {% if forloop.first %}selected{% endif %}>{{flavour.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <p class="mt-2" >{{product.price}} грн.</p>
+                <button class="btn btn-success">Додати в кошик</button>
             </form>
         </div>
     </div>

@@ -10,9 +10,16 @@ $(document).ready(function() {
             },
             success: function(data) {
                 for (let obj of data.flavour){
-                    class_image = '.image_flavour' + obj.for_product_id
-                    $(class_image).attr('src', '')
-                    $(class_image).attr('src', '../media/' + obj.image)
+                    try{
+                        class_image = '.image_flavour' + obj.for_product_id
+                        $(class_image).attr('src', '')
+                        $(class_image).attr('src', '../media/' + obj.image)
+                    } catch {
+                        class_image = '.image_flavour' + obj.for_product_id
+                        $(class_image).attr('src', '')
+                        $(class_image).attr('src', '../../media/' + obj.image)
+                    }
+                    
                 }
             }
         })

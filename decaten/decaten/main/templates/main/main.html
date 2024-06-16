@@ -64,19 +64,20 @@
     <div class="w-100 d-flex justify-content-center align-items-center ">
         <div class="w-75 h-25 my-5 d-flex justify-content-around align-items-center gap-5">
             {% for product in all_products %}
-                <div class="card d-flex justify-content-around align-items-center shadow product_{{product.id}}">
+                <div class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}">
                     <input type="hidden" value="{{product.id}}" class="product_id_image">
                     <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
                     <h4>{{product.name}}</h4>
                     <p>{{product.price}} грн.</p>
-                    <a href="/product/{{product.id}}">Переглянути</a>
+                    
                     <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
                         {% for flavour in all_flavours %}
                             {% if flavour.for_product.name == product.name %}
-                                <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
+                                <option value="{{flavour.id}},{{flavour.for_product}}" {% if forloop.first %}selected{% endif %}>{{flavour.name}}</option>
                             {% endif %}
                         {% endfor %}
                     </select>
+                    <a href="/product/{{product.id}}" class="text-success">Переглянути</a>
                 </div>
             {% endfor %}
         </div>

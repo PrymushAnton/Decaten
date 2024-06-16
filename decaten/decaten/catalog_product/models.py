@@ -30,5 +30,14 @@ class Flavour(models.Model):
     image = models.ImageField(blank=True, null=True)
     def __str__(self):
         return self.name
-
     
+
+class Cart(models.Model):
+    sessionkey = models.CharField(max_length =255)
+    
+class ProductInCart(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
+    count=models.IntegerField()
+    flavour = models.ForeignKey(Flavour, on_delete=models.CASCADE, blank=True, null=True)
+
