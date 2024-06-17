@@ -6,6 +6,7 @@
     <!-- <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script> -->
     <script defer src="{% static '\catalog_product\js\product.js' %}"></script>
     <script defer src="{% static 'catalog_product\js\flavour.js' %}"></script>
+    <script defer src="{% static 'catalog_product\js\add_to_cart.js' %}"></script>
 {% endblock link %}
     
 
@@ -28,7 +29,7 @@
                     {% endfor %}
                 </select>
                 <p class="mt-2" >{{product.price}} грн.</p>
-                <button class="btn btn-success">Додати в кошик</button>
+                <button class="btn btn-success add_to_cart">Додати в кошик</button>
             </form>
         </div>
     </div>

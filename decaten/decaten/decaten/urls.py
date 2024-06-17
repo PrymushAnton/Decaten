@@ -30,7 +30,7 @@ urlpatterns = [
     path('base/', base, name='base'),
     path('login/', log_page, name='log'),
     path('registration/', reg_page, name='reg'),
-    path('logout', logout_page, name='logout'),
+    path('logout/', logout_page, name='logout'),
     path('validate_account/', validate_account, name='validate_account'),
     path('log_in_account/', log_in_account, name='log_in_account'),
     path('catalog/', catalog, name='catalog'),
@@ -42,7 +42,10 @@ urlpatterns = [
     path('product_image_main/', product_image_main, name='product_image_main'),
     path('product/get_flavour_image/', get_flavour_image, name='product_page'),
     path('cart/', cart, name='cart'),
-    # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),
+    path('cart/plus_count/', plus_count, name='plus_count'),
+    path('cart/minus_count/', minus_count, name='minus_count'),
+    path('cart/delete_product/', delete_product, name='delete_product'),
+    path('product/add_to_cart/', add_to_cart, name='product_page'),
 ]
 
 if DEBUG:
