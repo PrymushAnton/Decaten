@@ -48,20 +48,18 @@
 
         {% endblock %}
     </main>
-    
-    <!-- {% if not fotti %}
-        <footer>
-            <h2><a href="">Decaten</a></h2>
-            <div class="phone_and_email">
-                <p>Email: decaten@gmail.com</p>
-                <p>+38xxxxxxxxxx</p>
-            </div>
-            <div class="social_medias">
-                <p>+38xxxxxxxxxx</p>
-                <p>+38xxxxxxxxxx</p>
-                <p>+38xxxxxxxxxx</p>
-            </div>
-        </footer>
-    {% endif %} -->
+    <footer>
+        <h2><a href="">Decaten</a></h2>
+        <div class="phone_and_email">
+            <p>Email: decaten@gmail.com</p>
+            <p>+38xxxxxxxxxx</p>
+        </div>
+        <div class="hrefs">
+            <a href="{% url 'main' %}">Головна</a>
+            <a href="{% url 'cart' %}">Кошик</a>
+            <a href="{% url 'log' %}">Авторізація</a>
+            <a href="{% url 'reg' %}">Реєстрація</a>
+        </div>
+    </footer>
 </body>
 </html>
