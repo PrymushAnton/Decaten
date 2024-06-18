@@ -11,6 +11,7 @@ body, html{
     align-items: center;
     text-align: center;
     /* padding-top: 80px; */
+    overflow-x: hidden;
 }
 
 /* body{
@@ -33,6 +34,8 @@ main a{
 header{
     top: 0;
     height: 80px;
+    margin: 0 !important;
+    /* width: 100%; */
     /* background-color: #FF9B26; */
 }
 

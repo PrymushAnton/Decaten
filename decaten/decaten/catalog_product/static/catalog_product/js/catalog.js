@@ -4,12 +4,12 @@ $(document).ready(function(){
         var filters = document.querySelectorAll('.form-check-input')
         var filters_true = []
         for (let filter of filters){
+            console.log(filter.checked)
             if (filter.checked) {
                 filters_true.push(filter.value)
-
             }
         }
-
+        // console.log(filters_true)
         var all_inputs = document.querySelectorAll('.product_id_image')
 
 
@@ -23,9 +23,8 @@ $(document).ready(function(){
             success: function(data){
                 for (let el of $('.card')){
                     $('.card').removeClass('filtered')
-                    $('.card').removeClass('w-25')
                     $('.card').addClass('d-flex')
-                    $('.card').removeAttr('style')
+                    $('.card').removeClass('d-none')
                 }
 
                 for (let product of data.products){
@@ -34,8 +33,6 @@ $(document).ready(function(){
                             if (input.value == obj.id){
                                 if (!($(".product_"+input.value).hasClass('filtered'))) {
                                     $(".product_"+input.value).addClass('filtered')
-                                    $(".product_"+input.value).addClass('w-25')
-
                                 }
                                 
                             }
@@ -48,7 +45,7 @@ $(document).ready(function(){
                             if (input.value != obj.id) {
                                 if (!($(".product_"+input.value).hasClass('filtered'))){
                                     $(".product_"+input.value).removeClass('d-flex')
-                                    $(".product_"+input.value).css('display', 'none')
+                                    $(".product_"+input.value).addClass('d-none')
                                     
                                 }
 

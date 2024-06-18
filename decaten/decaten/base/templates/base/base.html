@@ -17,16 +17,16 @@
 <!-- class="d-flex flex-column" -->
 <body class="bg-light">
 
-    <header class="row container-fluid align-items-center border-bottom shadow-sm bg-secondary bg-gradient" style="width: 100%;">
+    <header class="row align-items-center border-bottom shadow-sm bg-secondary bg-gradient" style="width: 100%;">
 
-        <div class="col-1" style='border: 1px solid red;'></div>
-        <div class="first_header col-4 d-flex align-items-center gap-4" style='border: 1px solid red;'>
+        <div class="col-1"></div>
+        <div class="first_header col-4 d-flex align-items-center gap-4">
             <h1>Decaten</h1>
             <a href="{% url 'main' %}" id="name-of-site">Головна</a>
             <a href="{% url 'catalog' %}" id="catalog">Каталог</a>
         </div>
-        <div class="col-2" style='border: 1px solid red;'></div>
-        <div class="header_links col-4 d-flex align-items-center justify-content-end gap-4" style='border: 1px solid red;'>
+        <div class="col-2"></div>
+        <div class="header_links col-4 d-flex align-items-center justify-content-end gap-4">
             {% if user.is_authenticated == True %}
                 <a href="{% url 'cart' %}">Кошик</a>
                 <a href="">Замовлення</a>
@@ -42,7 +42,7 @@
                 <a href="{% url 'reg' %}">Реєстрація</a>
             {% endif %}
         </div>
-        <div class="col-1" style='border: 1px solid red;'></div>
+        <div class="col-1"></div>
     </header>
     <main >
         {% block main %}

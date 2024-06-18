@@ -10,51 +10,57 @@
 
 
 {% block main %}
-    <form action="" method="post" class="d-flex flex-column needs-validation" >
-        {% csrf_token %}
+    <div class="container row">
+        <div class="col-4"></div>
+        <div class="col-4 border rounded p-3 px-4 bg-white">
+            <form action="" method="post" class="d-flex flex-column needs-validation" >
+                {% csrf_token %}
 
-        <div class="mb-3">
-            <label for="exampleInputName" class="form-label">Ім'я користувача</label>
-            <input required name="first_name" type="text" class="form-control first_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
-            <div class="invalid-feedback"></div>
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Ім'я користувача</label>
+                    <input required name="first_name" type="text" class="form-control first_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Прізвище користувача</label>
+                    <input required name="last_name" type="text" class="form-control last_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
+                    <input required name="email" type="email" class="form-control email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputNum" class="form-label">Номер телефону</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="addon-wrapping">+380</span>
+                        <input required type="tel" class="form-control number" aria-label="Username" aria-describedby="addon-wrapping" id="exampleInputNum" maxlength="9">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                    <input required name="password" type="password" class="form-control password" id="exampleInputPassword1">
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Повторіть пароль</label>
+                    <input required name="password_confirmation" type="password" class="form-control password_confirmation" id="exampleInputPassword1">
+                    <div class="invalid-feedback"></div>
+                </div>
+
+
+                <button type="submit" id="send" class="btn btn-primary">Надіслати</button>
+                <p id='ajax_text'></p>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label for="exampleInputName" class="form-label">Прізвище користувача</label>
-            <input required name="last_name" type="text" class="form-control last_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
-            <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
-            <input required name="email" type="email" class="form-control email" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputNum" class="form-label">Номер телефону</label>
-            <div class="input-group">
-                <span class="input-group-text" id="addon-wrapping">+380</span>
-                <input required type="tel" class="form-control number" aria-label="Username" aria-describedby="addon-wrapping" id="exampleInputNum" maxlength="9">
-                <div class="invalid-feedback"></div>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Пароль</label>
-            <input required name="password" type="password" class="form-control password" id="exampleInputPassword1">
-            <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Повторіть пароль</label>
-            <input required name="password_confirmation" type="password" class="form-control password_confirmation" id="exampleInputPassword1">
-            <div class="invalid-feedback"></div>
-        </div>
-
-
-        <button type="submit" id="send" class="btn btn-primary">Надіслати</button>
-        <p id='ajax_text'></p>
-    </form>
+        <div class="col-4"></div>
+    </div>
 {% endblock main %}
     

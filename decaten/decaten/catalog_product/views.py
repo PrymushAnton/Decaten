@@ -51,10 +51,13 @@ def filter_products(request):
     # flavours = []
     
     for filter_id in filters_true:
-        product = Product.objects.filter(filters__id=filter_id).values()
-        product = list(product)
-        # print(product)
-        products.append(product)
+        try:
+            product = Product.objects.filter(filters__id=filter_id).values()
+            product = list(product)
+            # print(product)
+            products.append(product)
+        except:
+            pass
     #     for obj in product_obj:
             
     #         flavour = Flavour.objects.filter(for_product=obj).values()
