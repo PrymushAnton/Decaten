@@ -9,42 +9,56 @@
 {% endblock %}
 
 {% block main %}
-    <div class="content w-100 d-flex justify-content-center align-items-center ps-3">
-        <form class="filters border-end ms-2 w-auto" method="POST">
-            {% csrf_token %}
+<!-- d-flex justify-content-center align-items-center -->
+    <div class="content container-fluid row">
+        <div class="col-1" style='border: 1px solid red;'></div>
 
-            {% for name_of_filter in names_of_filters %}
-                <div class="filter_category border-bottom p-3" method="POST">
-                    <h3>{{name_of_filter.name}}</h1>
-                    {% for filter in list_of_filters %}
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="{{filter.id}}" id="flexCheckDefault{{filter.id}}">
-                            <label class="form-check-label" for="flexCheckDefault{{filter.id}}">{{filter.name}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-                
-            {% endfor %}
-            <button type="submit" class="btn btn-primary send_filters" style="margin-top: 15px;">Показати</button>
-        </form>
 
-        <div class="products d-flex justify-content-start h-100 w-75 gap-5 ps-5 ms-2">
-            {% for product in all_products %}
-                <div class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}">
-                    <input type="hidden" value="{{product.id}}" class="product_id_image">
-                    <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
-                    <h4>{{product.name}}</h4>
-                    <p>{{product.price}} грн.</p>
-                    <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
-                        {% for flavour in all_flavours %}
-                            {% if flavour.for_product.name == product.name %}
-                                <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
-                            {% endif %}
+        <div class="col-2 border-end" style='border: 1px solid red;'>
+            <form class="filters" method="POST" >
+                {% csrf_token %}
+                {% for name_of_filter in names_of_filters %}
+                    <div class="d-flex flex-column filter_category border-bottom p-2 w-100 align-items-start" method="POST">
+                        <h4>{{name_of_filter.name}}</h1>
+                        {% for name_of_semi_filter in list_of_filters %}
+                            {% for name_of_filter_semi in name_of_semi_filter %}
+                                {% if name_of_filter == name_of_filter_semi.name_of_filter %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{filter.id}}" id="flexCheckDefault{{name_of_filter_semi.id}}">
+                                        <label class="form-check-label" for="flexCheckDefault{{name_of_filter_semi.id}}">{{name_of_filter_semi.name}}</label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
-                    </select>
-                    <a href="../product/{{product.id}}" class="text-success">Переглянути</a>
-                </div>
-            {% endfor %}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn btn-primary send_filters" style="margin-top: 15px;">Показати</button>
+            </form>
         </div>
+        
+
+        <div class="products col-8 py-2" style='border: 1px solid red;'>
+            <div class="container row justify-content-between">
+                {% for product in all_products %}
+                    <div class="col-3 card d-flex justify-content-around align-items-center py-3 mb-3 shadow product_{{product.id}}" style='border: 1px solid green; width: 24% !important;'>
+                        <input type="hidden" value="{{product.id}}" class="product_id_image">
+                        <img class="w-75 m-1 image_flavour{{product.id}}" src="" alt="">
+                        <h5>{{product.name}}</h4>
+                        <p>{{product.price}} грн.</p>
+                        <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
+                            {% for flavour in all_flavours %}
+                                {% if flavour.for_product.name == product.name %}
+                                    <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <a href="../product/{{product.id}}" class="text-success">Переглянути</a>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+        <div class="col-1" style='border: 1px solid red;'></div>
     </div>
 {% endblock %}

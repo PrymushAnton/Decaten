@@ -7,13 +7,22 @@ from django.http import JsonResponse, HttpResponse
 # Create your views here.
 def catalog(request):
     names_of_filters = NameOfFilter.objects.all()
-    filter = None
+    
+    filters = []
     for name_of_filter in names_of_filters:
+        print(name_of_filter)
         name_of_filter = NameOfFilter.objects.get(name=name_of_filter)
         try:
-            filter = Filter.objects.filter(name_of_filter = name_of_filter)
+            semi_filter = Filter.objects.filter(name_of_filter = name_of_filter)
+            filters.append(semi_filter)
+            
         except:
             continue
+        
+    
+    # for name_of_semifilter in filters:
+    #     for name_of_filtersemi in name_of_semifilter:
+    #         print(name_of_filtersemi.name_of_filter)
     
     all_products = Product.objects.all()
     
@@ -23,7 +32,7 @@ def catalog(request):
     
     context = {
         'names_of_filters': names_of_filters,
-        'list_of_filters': filter,
+        'list_of_filters': filters,
         'all_products': all_products,
         'amount_of_products': amount_of_products,
         'all_flavours': all_flavours,

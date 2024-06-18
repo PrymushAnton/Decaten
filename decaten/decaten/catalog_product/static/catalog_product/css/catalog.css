@@ -10,31 +10,27 @@
     /* gap: 0; */
 }
 
-.filters{
+/* .filters{
     width: 22%;
     height: 100%;
-    /* border-right: 2px solid black; */
     padding: 1%;
     display: flex;
     flex-direction: column;
-}
+} */
 
-.filter_category{
+/* .filter_category{
     display: flex;
     flex-direction: column;
     align-items: start;
-    /* border-bottom: 1px solid black; */
     padding-bottom: 15px;
-}
+} */
 
 .form-check input[type="checkbox"]{
     accent-color: #FF9B26;
 }
-.products{
-    /* display: flex; */
+/* .products{
     padding-top: 20px;
-    gap: 20px;
-}
+} */
 .products a{
     text-decoration: none;
     color: black;

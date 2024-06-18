@@ -8,8 +8,17 @@ def main(request):
     context = {}
     images_for_carusel = Carusel.objects.all()
     all_products = Product.objects.all()
+    print(all_products)
+    products = []
+    count = 0
+    for product in all_products:
+        count += 1
+        if count <= 4:
+            products.append(product)
+    print(products)
+    
     context['images_for_carusel'] = images_for_carusel
-    context['all_products'] = all_products
+    context['products'] = products
     context['all_flavours'] = Flavour.objects.all()
     return render(request, 'main/main.html', context)
 
