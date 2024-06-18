@@ -1,20 +1,20 @@
 # Decaten
 
-## [Team Info]
+## Team Info
 - Team Member 1 Anton Prymush: [GitHub Profile](https://github.com/luny-06)
 - Team Member 2 Andrii Druzhha: [GitHub Profile](https://github.com/GKAndrey)
 - Team Member 3 Mykhailo Fatuyev: [GitHub Profile](https://github.com/mishafat)
 - Team Member 4 Yaroslav Samchuk: [GitHub Profile](https://github.com/YaroslavSamchuk)
 
-## [Links]
+## Links
 - Figma(https://www.figma.com/design/He9uAMtimSi7BggXDkfste/Decaten?node-id=0-1&t=j5Bxubp8ji2jO3ty-0)
 - FigJam(https://www.figma.com/board/FJDA9tQkrUKBHibZFNrBFG/Untitled?node-id=1-14&t=DluDv1APBdXD8PLG-0)
 
-## [Description]
+## Description
 
 Decaten is a site where you can buy disposable e-cigarettes.
 
-## [Libraries and Technologies]
+## Libraries and Technologies
 
 List the libraries and technologies used in the project.
 
@@ -28,7 +28,7 @@ List the libraries and technologies used in the project.
 - Bootstrap
 - SQLite3
 
-## [Models]
+## Models
 
 ### NameOfFilter
 This model responsible for name of category of filters.
