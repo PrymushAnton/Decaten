@@ -106,11 +106,12 @@ header #catalog:hover{
 }
 
 footer {
-    background-color: black;
+    background-color: rgb(39, 39, 39);
     display: flex;
     color: white;
     padding-left: 10%;
     padding-right: 10%;
+    justify-content: space-between;
     
 }
 
@@ -139,4 +140,24 @@ footer h2 a {
 footer h2 a:hover, :focus {
     text-shadow: 0px 2px 10px yellow;
     font-size: larger;
+}
+
+.socialmedias {
+    display: flex;
+    flex-direction: column;
+}
+
+.socialmedias div a img {
+    width: 100%;
+}
+.socialmedias div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.socialmedias div a {
+    display: inline-block;
+    width: 7%;
+    margin: 1%;
 }
