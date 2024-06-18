@@ -7,13 +7,22 @@ from django.http import JsonResponse, HttpResponse
 # Create your views here.
 def catalog(request):
     names_of_filters = NameOfFilter.objects.all()
-    filter = None
+    
+    filters = []
     for name_of_filter in names_of_filters:
+        print(name_of_filter)
         name_of_filter = NameOfFilter.objects.get(name=name_of_filter)
         try:
-            filter = Filter.objects.filter(name_of_filter = name_of_filter)
+            semi_filter = Filter.objects.filter(name_of_filter = name_of_filter)
+            filters.append(semi_filter)
+            
         except:
             continue
+        
+    
+    # for name_of_semifilter in filters:
+    #     for name_of_filtersemi in name_of_semifilter:
+    #         print(name_of_filtersemi.name_of_filter)
     
     all_products = Product.objects.all()
     
@@ -23,7 +32,7 @@ def catalog(request):
     
     context = {
         'names_of_filters': names_of_filters,
-        'list_of_filters': filter,
+        'list_of_filters': filters,
         'all_products': all_products,
         'amount_of_products': amount_of_products,
         'all_flavours': all_flavours,
@@ -42,10 +51,13 @@ def filter_products(request):
     # flavours = []
     
     for filter_id in filters_true:
-        product = Product.objects.filter(filters__id=filter_id).values()
-        product = list(product)
-        # print(product)
-        products.append(product)
+        try:
+            product = Product.objects.filter(filters__id=filter_id).values()
+            product = list(product)
+            # print(product)
+            products.append(product)
+        except:
+            pass
     #     for obj in product_obj:
             
     #         flavour = Flavour.objects.filter(for_product=obj).values()
@@ -84,29 +96,56 @@ def product_page(request, id):
     context['flaur'] = Flavour.objects.filter(for_product = id)
 
     
-    if request.method == 'POST':
-        select = request.POST.get('selector')
-        select = select.split(',')
-        print(select)
+    # if request.method == 'POST':
+    #     select = request.POST.get('selector')
+    #     select = select.split(',')
+    #     print(select)
         
-        session_key = request.session.session_key
-        if not session_key:
-            request.session.cycle_key()
-            session_key = request.session.session_key
+    #     session_key = request.session.session_key
+    #     if not session_key:
+    #         request.session.cycle_key()
+    #         session_key = request.session.session_key
     
-        # product_id = request.POST.get('id_product')
+    #     # product_id = request.POST.get('id_product')
         
-        try:
-            cart = Cart.objects.get(sessionkey=session_key)
-        except:
-            cart = Cart.objects.create(sessionkey=session_key)        
+    #     try:
+    #         cart = Cart.objects.get(sessionkey=session_key)
+    #     except:
+    #         cart = Cart.objects.create(sessionkey=session_key)        
         
-        try:
-            product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
-            product.count += 1
-            product.save()
-        except:
-            product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+    #     try:
+    #         product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
+    #         product.count += 1
+    #         product.save()
+    #     except:
+    #         product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
 
     
     return render(request, 'catalog_product/product.html', context)
+
+
+def add_to_cart(request):
+    
+    select = request.POST.get('selector')
+    select = select.split(',')
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+
+    # product_id = request.POST.get('id_product')
+    
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)        
+    
+    try:
+        product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
+        product.count += 1
+        product.save()
+    except:
+        product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+    
+    return HttpResponse(1)

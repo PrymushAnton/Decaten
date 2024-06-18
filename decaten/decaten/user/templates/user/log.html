@@ -9,24 +9,32 @@
 
 
 {% block main %}
-    <form action="" method="post" class="d-flex flex-column">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
-            <input name="email" type="email" class="form-control email" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div class="invalid-feedback"></div>
-          </div>
+  <div class="container row">
+    <div class="col-4"></div>
+    <div class="col-4 border rounded p-3 px-4 bg-white">
+      <form action="" method="post" class="d-flex flex-column">
+          {% csrf_token %}
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Пароль</label>
-            <input name="password" type="password" class="form-control password" id="exampleInputPassword1">
-            <div class="invalid-feedback"></div>
-          </div>
-          <!-- <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
-          </div> -->
-          <button type="submit" class="btn btn-primary send">Надіслати</button>
-          <p class="ajax_text"></p>
-    </form>
+              <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
+              <input name="email" type="email" class="form-control email" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Пароль</label>
+              <input name="password" type="password" class="form-control password" id="exampleInputPassword1">
+              <div class="invalid-feedback"></div>
+            </div>
+            <!-- <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
+            </div> -->
+            <button type="submit" class="btn btn-primary send">Надіслати</button>
+            <p class="ajax_text"></p>
+      </form>
+    </div>
+    <div class="col-4"></div>
+  </div>
+  </div>
+   
 {% endblock main %}
     

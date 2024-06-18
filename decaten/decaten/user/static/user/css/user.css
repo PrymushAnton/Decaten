@@ -4,9 +4,9 @@ main{
     align-items: center;
     justify-content: center;
 }
-form{
+/* form{
     width: 30%;
-}
+} */
 .btn-primary{
     background-color: orange;
     border: black;

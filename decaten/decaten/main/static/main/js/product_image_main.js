@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    
     $.ajax({
         url: 'product_image_main/',
         type: 'GET',
