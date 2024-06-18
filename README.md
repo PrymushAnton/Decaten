@@ -7,8 +7,8 @@
 - Team Member 4 Yaroslav Samchuk: [GitHub Profile](https://github.com/YaroslavSamchuk)
 
 ## Links
-- Figma(https://www.figma.com/design/He9uAMtimSi7BggXDkfste/Decaten?node-id=0-1&t=j5Bxubp8ji2jO3ty-0)
-- FigJam(https://www.figma.com/board/FJDA9tQkrUKBHibZFNrBFG/Untitled?node-id=1-14&t=DluDv1APBdXD8PLG-0)
+- [Figma](https://www.figma.com/design/He9uAMtimSi7BggXDkfste/Decaten?node-id=0-1&t=j5Bxubp8ji2jO3ty-0)
+- [FigJam](https://www.figma.com/board/FJDA9tQkrUKBHibZFNrBFG/Untitled?node-id=1-14&t=DluDv1APBdXD8PLG-0)
 
 ## Description
 
