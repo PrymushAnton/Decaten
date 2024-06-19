@@ -64,7 +64,7 @@
     <div class="w-100 d-flex justify-content-center align-items-center ">
         <div class="w-75 h-25 my-5 d-flex justify-content-around align-items-center gap-5">
             {% for product in all_products %}
-                <div class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}">
+                <div id="card" class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}">
                     <input type="hidden" value="{{product.id}}" class="product_id_image">
                     <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
                     <h4>{{product.name}}</h4>

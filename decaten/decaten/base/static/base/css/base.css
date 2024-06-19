@@ -158,6 +158,24 @@ footer h2 a:hover, :focus {
 
 .socialmedias div a {
     display: inline-block;
-    width: 7%;
+    width: 5%;
     margin: 1%;
+}
+
+header a {
+    transition: all 0.5s;
+}
+header a:hover {
+    color: white;
+    font-weight: bold;
+    text-shadow: -4px 5px 3px black;
+}
+
+.first_header h1 a {
+    transition: all 1s;
+}
+
+.first_header h1 a:hover {
+    text-shadow: 0px 2px 10px;
+    border: 0px solid black;
 }
