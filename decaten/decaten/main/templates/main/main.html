@@ -8,12 +8,12 @@
 {% endblock %}
 
 {% block main %}
-    <div class="content">
+    <div class="content d-flex flex-column align-items-center">
 
         
-        <div class="my-3 row d-flex justify-content-center align-items-center">
-            <div class="col-1"></div>
-            <div class="col-10 align-items-center justify-content-center d-flex">
+        <div class="my-3 row d-flex justify-content-center align-items-center" style="width: 80%;">
+            <!-- <div class="col-1"></div> -->
+            <div class="align-items-center justify-content-center d-flex">
                 <div id="carouselExample" class="w-100 my-4 carousel slide border rounded">
                     <div class="carousel-inner">
                         {% for caruselImg in images_for_carusel %}
@@ -40,7 +40,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-1"></div>
+            <!-- <div class="col-1"></div> -->
         </div>
         
 
@@ -77,10 +77,10 @@
         <div class="w-100 d-flex justify-content-center align-items-center ">
             <div class="w-75 h-25 my-5 d-flex justify-content-around align-items-center gap-5">
                 {% for product in products %}
-                    <div class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}">
+                    <div class="card d-flex justify-content-around align-items-center p-3 shadow product_{{product.id}}" style='width: 23% !important;'>
                         <input type="hidden" value="{{product.id}}" class="product_id_image">
                         <img class="w-75 m-2 image_flavour{{product.id}}" src="" alt="">
-                        <h4>{{product.name}}</h4>
+                        <h5>{{product.name}}</h5>
                         <p>{{product.price}} грн.</p>
                         
                         <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">

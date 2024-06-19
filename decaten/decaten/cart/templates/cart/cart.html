@@ -11,7 +11,8 @@
 
 
 {% block main %}
-    <div class="w-100 h-100 d-flex gap-4 justify-content-center align-items-center content">
+    
+    <div class="row justify-content-center align-items-center content mt-4">
         {% if not products %}
             <div class="d-flex flex-column align-items-center">
                 <h2>Кошик порожній!</h2>
@@ -19,43 +20,47 @@
             </div>
             
         {% endif %}
-        {% for product_in_cart in products %}
-            <div style="border: 1px solid red; padding: 10px; border-radius: 15px; margin-bottom: 10px;" class="card_{{product_in_cart.product_id}}">
+        <div class="col-1"></div>
+        <div class="col-10 d-flex justify-content-start gap-3 flex-wrap ps-3">
+            {% for product_in_cart in products %}
+            <div class="card_{{product_in_cart.product_id}} card d-flex align-items-center py-3 mb-3 shadow product_{{product.id}}" style="width: 19%;">
                 {% for flavour in flavours %}
                     {% if flavour.id == product_in_cart.flavour_id %}
-                        <img src="{{flavour.image.url}}" alt="" width="200px" class="image_flavour{{product_in_cart.product_id}}">
+                        <img src="{{flavour.image.url}}" alt="" width="200px" class="image_flavour{{product_in_cart.product_id}} w-75 m-1 ">
                     {% endif %}
                 {% endfor %}
                 
-                <h1>{{product_in_cart.product.name}}</h1>
+                <h5>{{product_in_cart.product.name}}</h5>
                 <p>{{product_in_cart.product.price}} грн</p>
-                <h4 class="product_count_{{product_in_cart.product_id}}">{{product_in_cart.count}}</h4>
+                
                 {% for flavour in flavours %}
                     {% if flavour.id == product_in_cart.flavour_id %}
-                        <h4>{{flavour.name}}</h4>
+                        <p>{{flavour.name}}</p>
                     {% endif %}
                 {% endfor %}
-                
-                <form method="POST">
-                    {% csrf_token %}
-                    {% for flavour in flavours %}
-                        {% if flavour.id == product_in_cart.flavour_id %}
-                            <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="minus" class="minus_input_hidden_{{flavour.for_product.id}}">
-                        {% endif %}
-                    {% endfor %}
-                    <button class="minus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">-</button>
-                </form>
-
-                <form method="POST">
-                    {% csrf_token %}
-                    {% for flavour in flavours %}
-                        {% if flavour.id == product_in_cart.flavour_id %}
-                            <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="plus" class="plus_input_hidden_{{flavour.for_product.id}}">
-                        {% endif %}
-                    {% endfor %}
-                    <button class="plus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">+</button>
-                </form>
-
+                <div class="d-flex gap-1 mb-2">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for flavour in flavours %}
+                            {% if flavour.id == product_in_cart.flavour_id %}
+                                <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="minus" class="minus_input_hidden_{{flavour.for_product.id}}">
+                            {% endif %}
+                        {% endfor %}
+                        <button class="btn btn-outline-secondary minus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">-</button>
+                    </form>
+                    <div style="border: 1px solid gray;" class="p-2 d-flex align-items-center rounded product_count_{{product_in_cart.product_id}}">Кількість: {{product_in_cart.count}}</div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for flavour in flavours %}
+                            {% if flavour.id == product_in_cart.flavour_id %}
+                                <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="plus" class="plus_input_hidden_{{flavour.for_product.id}}">
+                            {% endif %}
+                        {% endfor %}
+                        <button class="btn btn-outline-secondary plus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">+</button>
+                    </form>
+    
+                    
+                </div>
                 <form method="POST">
                     {% csrf_token %}
                     {% for flavour in flavours %}
@@ -63,10 +68,15 @@
                             <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="delete" class="delete_input_hidden_{{flavour.for_product.id}}">
                         {% endif %}
                     {% endfor %}
-                    <button class="delete" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">delete</button>
+                    <button class="btn btn-secondary delete" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">delete</button>
                 </form>
 
             </div>
         {% endfor %}
+        </div>
+        
+        <div class="col-1"></div>
+        
+        
     </div>
 {% endblock main %}

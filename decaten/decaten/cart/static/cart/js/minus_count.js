@@ -12,7 +12,7 @@ $(document).ready(function() {
             success: function(data){
                 console.log(data)
                 if (data.count > 0) {
-                    $('.product_count_'+`${data.product_id}`).html(data.count)
+                    $('.product_count_'+`${data.product_id}`).html('Кількість: '+data.count)
                 } 
                 if (data.count < 1) {
                     $(".card_"+`${data.product_id}`).remove()

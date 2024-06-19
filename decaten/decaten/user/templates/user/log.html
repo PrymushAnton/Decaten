@@ -9,9 +9,9 @@
 
 
 {% block main %}
-  <div class="container row">
-    <div class="col-4"></div>
-    <div class="col-4 border rounded p-3 px-4 bg-white">
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <!-- <div class="col-4"></div> -->
+    <div class="w-25 border rounded py-4 px-5 bg-white">
       <form action="" method="post" class="d-flex flex-column">
           {% csrf_token %}
           <div class="mb-3">
@@ -32,7 +32,7 @@
             <p class="ajax_text"></p>
       </form>
     </div>
-    <div class="col-4"></div>
+    <!-- <div class="col-4"></div> -->
   </div>
   </div>
    

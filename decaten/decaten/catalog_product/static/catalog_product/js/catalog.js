@@ -4,7 +4,6 @@ $(document).ready(function(){
         var filters = document.querySelectorAll('.form-check-input')
         var filters_true = []
         for (let filter of filters){
-            console.log(filter.checked)
             if (filter.checked) {
                 filters_true.push(filter.value)
             }
@@ -26,23 +25,22 @@ $(document).ready(function(){
                     $('.card').addClass('d-flex')
                     $('.card').removeClass('d-none')
                 }
-
                 for (let product of data.products){
                     for (let input of all_inputs) { 
-                        for (let obj of product) {
-                            if (input.value == obj.id){
-                                if (!($(".product_"+input.value).hasClass('filtered'))) {
-                                    $(".product_"+input.value).addClass('filtered')
-                                }
-                                
+   
+                        if (input.value == product.id){
+                            if (!($(".product_"+input.value).hasClass('filtered'))) {
+                                $(".product_"+input.value).addClass('filtered')
                             }
+                            
                         }
+
                     }
                 }
                 for (let product of data.products){
                     for (let input of all_inputs) { 
-                        for (let obj of product) {
-                            if (input.value != obj.id) {
+
+                            if (input.value != product.id) {
                                 if (!($(".product_"+input.value).hasClass('filtered'))){
                                     $(".product_"+input.value).removeClass('d-flex')
                                     $(".product_"+input.value).addClass('d-none')
@@ -50,7 +48,6 @@ $(document).ready(function(){
                                 }
 
                             }
-                        }
                     }
                 }
 
