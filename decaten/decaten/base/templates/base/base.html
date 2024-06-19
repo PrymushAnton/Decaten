@@ -17,7 +17,7 @@
 <!-- class="d-flex flex-column" -->
 <body class="bg-light">
 
-    <header class="w-100 d-flex align-items-center border-bottom shadow-sm bg-secondary bg-gradient" style="width: 100%;">
+    <header class="w-100 d-flex align-items-center border-bottom shadow-sm bg-secondary bg-gradient">
 
         <div class="col-2"></div>
         <div class="first_header d-flex align-items-center col-2 gap-4">
@@ -28,7 +28,7 @@
         <div class="header_links col-2 d-flex align-items-center gap-4">
             {% if user.is_authenticated == True %}
                 <a href="{% url 'cart' %}">Кошик</a>
-                <a href="">Замовлення</a>
+                <a href="{% url 'order' %}">Замовлення</a>
                 <a href="{% url 'logout' %}">Вийти</a>
                 {% if not user.is_superuser %}
                     <p>{{user.first_name}}</p>
@@ -43,7 +43,7 @@
         </div>
         <div class="col-2"></div>
     </header>
-    <main >
+    <main>
         {% block main %}
 
         {% endblock %}
