@@ -3,7 +3,7 @@
 ## Team Info
 - Team Member 1 Anton Prymush: [GitHub Profile](https://github.com/PrymushAnton)
 - Team Member 2 Andrii Druzhha: [GitHub Profile](https://github.com/GKAndrey)
-- Team Member 3 Mykhailo Fatuyev: [GitHub Profile](https://github.com/mishafat)
+- Team Member 3 Mykhailo Fatuiev: [GitHub Profile](https://github.com/mishafat)
 - Team Member 4 Yaroslav Samchuk: [GitHub Profile](https://github.com/YaroslavSamchuk)
 
 ## Links
