@@ -221,9 +221,9 @@ const baseRequest = {
             }
                 ], */
         countryCode: 'US',
-        currencyCode: "USD",
+        currencyCode: "UAH",
         totalPriceStatus: "FINAL",
-        totalPrice: "12.00",
+        totalPrice: "2",
         totalPriceLabel: "Total"
       };
     }
