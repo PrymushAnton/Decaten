@@ -6,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'base/css/css/bootstrap.css' %}">
+    <link rel="shortcut icon" href="{% static 'base/vape.svg' %}" type="image/x-icon">
     <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
     <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
     <script defer src="{% static 'base/js/burger.js' %}"></script>
     {% block link %}
         
     {% endblock link %}
-    <title>Document</title>
+    <title>Decaten</title>
     
 </head>
 <!-- class="d-flex flex-column" -->
 <body class="bg-light">
 
     <header>
-
         <!-- <div class="col-1"></div> -->
         <div class="first_headerd d-flex align-items-center gap-4">
             <h1>Decaten</h1>
@@ -32,6 +32,7 @@
                 <a href="{% url 'cart' %}" class="cart">Кошик</a>
                 <a href="" class="orders">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
+
                 {% if not user.is_superuser %}
                     <p class="name_of_user">{{user.first_name}}</p>
                 {% else %}
@@ -64,7 +65,7 @@
         </div>
         <!-- <div class="col-1"></div> -->
     </header>
-    <main >
+    <main>
         {% block main %}
 
         {% endblock %}

@@ -23,6 +23,7 @@ from base.views import base
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
 from cart.views import *
+from order.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,10 +43,15 @@ urlpatterns = [
     path('product_image_main/', product_image_main, name='product_image_main'),
     path('product/get_flavour_image/', get_flavour_image, name='product_page'),
     path('cart/', cart, name='cart'),
+
     path('cart/plus_count/', plus_count, name='plus_count'),
     path('cart/minus_count/', minus_count, name='minus_count'),
     path('cart/delete_product/', delete_product, name='delete_product'),
     path('product/add_to_cart/', add_to_cart, name='product_page'),
+
+    path('order', order_page,name='order')
+    # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),
+
 ]
 
 if DEBUG:
