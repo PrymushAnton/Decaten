@@ -44,7 +44,7 @@
         <div class="products d-flex justify-content-start gap-3 flex-wrap py-2 ms-4" style="width: 65% !important;">
             <!-- <div class="container d-flex row justify-content-around"> -->
                 {% for product in all_products %}
-                    <div class="container-md flex-column d-flex align-items-center py-3 mb-3 border rounded shadow product_{{product.id}}" style="width: 24%;">
+                    <div class="container-md card_of_product flex-column d-flex align-items-center py-3 mb-3 border rounded shadow product_{{product.id}}" style="width: 24%;">
                         <input type="hidden" value="{{product.id}}" class="product_id_image">
                         <img class="w-75 m-1 image_flavour{{product.id}}" src="" alt="">
                         <h5>{{product.name}}</h5>

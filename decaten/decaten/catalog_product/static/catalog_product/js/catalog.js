@@ -20,10 +20,10 @@ $(document).ready(function(){
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(data){
-                for (let el of $('.card')){
-                    $('.card').removeClass('filtered')
-                    $('.card').addClass('d-flex')
-                    $('.card').removeClass('d-none')
+                for (let el of $('.card_of_product')){
+                    $('.card_of_product').removeClass('filtered')
+                    $('.card_of_product').addClass('d-flex')
+                    $('.card_of_product').removeClass('d-none')
                 }
                 for (let product of data.products){
                     for (let input of all_inputs) { 

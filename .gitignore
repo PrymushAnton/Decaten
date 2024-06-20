@@ -163,3 +163,14 @@ cython_debug/
 #.idea/
 decaten/decaten/base/migrations/__pycache__/__init__.cpython-311.pyc
 *.sqlite3
+decaten/decaten/base/migrations/__pycache__/__init__.cpython-311.pyc
+decaten/decaten/catalog_product/migrations/__pycache__/0001_initial.cpython-311.pyc
+decaten/decaten/catalog_product/migrations/__pycache__/0002_filter_products.cpython-311.pyc
+decaten/decaten/catalog_product/migrations/__pycache__/0003_remove_filter_products_product_filters.cpython-311.pyc
+decaten/decaten/catalog_product/migrations/__pycache__/__init__.cpython-311.pyc
+decaten/decaten/db.sqlite3
+decaten/decaten/main/migrations/__pycache__/__init__.cpython-311.pyc
+decaten/decaten/user/migrations/__pycache__/0001_initial.cpython-311.pyc
+decaten/decaten/user/migrations/__pycache__/0002_myuser.cpython-311.pyc
+decaten/decaten/user/migrations/__pycache__/0003_alter_myuser_number.cpython-311.pyc
+decaten/decaten/user/migrations/__pycache__/__init__.cpython-311.pyc
