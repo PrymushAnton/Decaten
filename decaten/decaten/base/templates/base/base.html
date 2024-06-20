@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'base/css/css/bootstrap.css' %}">
     <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
     <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
+    <script defer src="{% static 'base/js/burger.js' %}"></script>
     {% block link %}
         
     {% endblock link %}
@@ -17,29 +18,48 @@
 <!-- class="d-flex flex-column" -->
 <body class="bg-light">
 
-    <header class="d-flex justify-content-center align-items-center border-bottom shadow-sm bg-secondary bg-gradient" style="width: 100%; gap: 13%;">
+    <header>
 
         <!-- <div class="col-1"></div> -->
         <div class="first_headerd d-flex align-items-center gap-4">
             <h1>Decaten</h1>
-            <a href="{% url 'main' %}" id="name-of-site">Головна</a>
-            <a href="{% url 'catalog' %}" id="catalog">Каталог</a>
+            <a href="{% url 'main' %}" class="main">Головна</a>
+            <a href="{% url 'catalog' %}" class="catalog">Каталог</a>
         </div>
-        <div class="col-2"></div>
+        <!-- <div class="col-2"></div> -->
         <div class="header_links d-flex align-items-center justify-content-end gap-4">
             {% if user.is_authenticated == True %}
-                <a href="{% url 'cart' %}">Кошик</a>
-                <a href="">Замовлення</a>
-                <a href="{% url 'logout' %}">Вийти</a>
+                <a href="{% url 'cart' %}" class="cart">Кошик</a>
+                <a href="" class="orders">Замовлення</a>
+                <a href="{% url 'logout' %}" class="logout">Вийти</a>
                 {% if not user.is_superuser %}
-                    <p>{{user.first_name}}</p>
+                    <p class="name_of_user">{{user.first_name}}</p>
                 {% else %}
-                    <p>{{user.username}}</p>
+                    <p class="name_of_user">{{user.username}}</p>
                 {% endif %}
+                <svg class="burger_icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             {% else %}
-                <a href="{% url 'cart' %}">Кошик</a>
-                <a href="{% url 'log' %}">Авторизація</a>
-                <a href="{% url 'reg' %}">Реєстрація</a>
+                <a href="{% url 'cart' %}" class="cart">Кошик</a>
+                <a href="{% url 'log' %}" class="auth">Авторизація</a>
+                <a href="{% url 'reg' %}" class="reg">Реєстрація</a>
+                <svg class="burger_icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            {% endif %}
+
+        </div>
+
+        <div class="header_list" id="">
+            <li><a href="{% url 'main' %}">Головна</a></li>
+            <li><a href="{% url 'catalog' %}">Каталог</a></li>
+            {% if user.is_authenticated == True %}
+                <li><a href="{% url 'cart' %}">Кошик</a></li>
+                <li><a href="#">Замовлення</a></li>
+                <li><a href="{% url 'logout' %}">Вийти</a></li>
+            {% else %}
+                <li><a href="{% url 'cart' %}">Кошик</a></li>
+                <li><a href="{% url 'log' %}">Авторизація</a></li>
+                <li><a href="{% url 'reg' %}">Реєстрація</a></li>
             {% endif %}
         </div>
         <!-- <div class="col-1"></div> -->
