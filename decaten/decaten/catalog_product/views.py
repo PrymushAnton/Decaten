@@ -10,7 +10,7 @@ def catalog(request):
     
     filters = []
     for name_of_filter in names_of_filters:
-        print(name_of_filter)
+        # print(name_of_filter)
         name_of_filter = NameOfFilter.objects.get(name=name_of_filter)
         try:
             semi_filter = Filter.objects.filter(name_of_filter = name_of_filter)
@@ -26,6 +26,18 @@ def catalog(request):
     
     all_products = Product.objects.all()
     
+    products_values = Product.objects.all().values()
+    products_values = list(products_values)
+    prices = []
+    
+    for value in products_values:
+        prices.append(int(value['price']))
+        
+    
+    max_price = max(prices)
+    min_price = min(prices)
+    # print(min_price, max_price)
+    
     amount_of_products = len(Product.objects.all())
 
     all_flavours = Flavour.objects.all()
@@ -36,6 +48,8 @@ def catalog(request):
         'all_products': all_products,
         'amount_of_products': amount_of_products,
         'all_flavours': all_flavours,
+        'min_price': min_price,
+        'max_price': max_price,
     }
     
     return render(request, 'catalog_product/catalog.html', context)
@@ -239,3 +253,4 @@ def add_to_cart(request):
         product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
     
     return HttpResponse(1)
+

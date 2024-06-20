@@ -6,20 +6,22 @@
     <script defer src="{% static 'catalog_product/js/catalog.js' %}"></script>
     <script defer src="{% static 'catalog_product/js/flavour.js' %}"></script>
     <script defer src="{% static 'catalog_product/js/product_image.js' %}"></script>
+    <script defer src="{% static 'catalog_product/js/price.js' %}"></script>
+
 {% endblock %}
 
 {% block main %}
 <!-- d-flex justify-content-center align-items-center -->
-<div class="column">
-
-
-    <div class="content d-flex flex-row justify-content-center">
+    <div class="content">
         <!-- <div class="col-1"></div> -->
 
 
         <div class="filter_section">
             <form class="filters" method="POST" >
                 {% csrf_token %}
+
+                
+
                 {% for name_of_filter in names_of_filters %}
                     <div class="filter_category" method="POST">
                         <h4>{{name_of_filter.name}}</h4>
@@ -41,27 +43,67 @@
         </div>
         
 
-        <div class="products d-flex justify-content-start gap-3 flex-wrap py-2 ms-4" style="width: 65% !important;">
-            <!-- <div class="container d-flex row justify-content-around"> -->
-                {% for product in all_products %}
-                    <div class="container-md card_of_product flex-column d-flex align-items-center py-3 mb-3 border rounded shadow product_{{product.id}}" style="width: 24%;">
-                        <input type="hidden" value="{{product.id}}" class="product_id_image">
-                        <img class="w-75 m-1 image_flavour{{product.id}}" src="" alt="">
-                        <h5>{{product.name}}</h5>
-                        <p>{{product.price}} грн.</p>
-                        <select name="{{product.name}}" id="{{product.name}}" class="form-select w-75 mb-3">
-                            {% for flavour in all_flavours %}
-                                {% if flavour.for_product.name == product.name %}
-                                    <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <a href="../product/{{product.id}}" class="text-success">Переглянути</a>
-                    </div>
-                {% endfor %}
+        <div class="offcanvas_div">
+            <div class="filter_button_div">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Фільтри</button>
             </div>
             
+              
+            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                <div class="offcanvas-header">
+                    <h3 class="offcanvas-title" id="staticBackdropLabel">Фільтри</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div>
+                        <form class="filters_offcanvas" method="POST" >
+                            {% csrf_token %}
+            
+                            
+            
+                            {% for name_of_filter in names_of_filters %}
+                                <div class="filter_category" method="POST">
+                                    <h4>{{name_of_filter.name}}</h4>
+                                    {% for name_of_semi_filter in list_of_filters %}
+                                        {% for name_of_filter_semi in name_of_semi_filter %}
+                                            {% if name_of_filter == name_of_filter_semi.name_of_filter %}
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="{{name_of_filter_semi.id}}" id="flexCheckDefault_offcanvas_{{name_of_filter_semi.id}}">
+                                                    <label class="form-check-label" for="flexCheckDefault_offcanvas_{{name_of_filter_semi.id}}">{{name_of_filter_semi.name}}</label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            
+                            <button type="submit" data-bs-dismiss="offcanvas" class="btn btn-primary send_filters" style="margin-top: 15px;">Показати</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        <div class="products">
+            {% for product in all_products %}
+                <div class="card_of_product product_{{product.id}}">
+                    <input type="hidden" value="{{product.id}}" class="product_id_image">
+                    <img class="image_flavour{{product.id}}" src="" alt="">
+                    <h5>{{product.name}}</h5>
+                    <p>{{product.price}} грн.</p>
+                    <select name="{{product.name}}" id="{{product.name}}" class="form-select">
+                        {% for flavour in all_flavours %}
+                            {% if flavour.for_product.name == product.name %}
+                                <option value="{{flavour.id}},{{flavour.for_product}}">{{flavour.name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <a href="../product/{{product.id}}" class="text-success">Переглянути</a>
+                </div>
+            {% endfor %}
+        </div>
+            
     </div>
-</div>
-        <!-- <div class="col-1"></div> -->
 {% endblock %}

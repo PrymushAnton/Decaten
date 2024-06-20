@@ -38,7 +38,7 @@ $(document).ready(function() {
                     console.log(3)
                 } else if (data == '4') {
                     console.log(5)
-                    $('.ajax_text').html('Ви зареєстровані!')
+                    // $('.ajax_text').html('Ви зареєстровані!')
                     window.location.href = '/'                    
                     window.location.reload()
                 }

@@ -49,9 +49,8 @@ urlpatterns = [
     path('cart/delete_product/', delete_product, name='delete_product'),
     path('product/add_to_cart/', add_to_cart, name='product_page'),
 
-    path('order', order_page,name='order')
+    path('order', order_page,name='order'),
     # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),
-
 ]
 
 if DEBUG:

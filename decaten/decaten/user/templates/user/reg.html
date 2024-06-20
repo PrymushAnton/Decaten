@@ -10,9 +10,9 @@
 
 
 {% block main %}
-    <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="content">
         <!-- <div class="col-4"></div> -->
-        <div class="border rounded py-4  px-5 bg-white w-25" >
+        <div class="form_div">
             <form action="" method="post" class="d-flex flex-column needs-validation">
                 {% csrf_token %}
 
@@ -55,8 +55,10 @@
                     <div class="invalid-feedback"></div>
                 </div>
 
-
-                <button type="submit" id="send" class="btn btn-primary">Надіслати</button>
+                <div class="button_div">
+                    <button type="submit" id="send" class="btn btn-primary" style="margin-top: 15px;">Надіслати</button>
+                </div>
+                
                 <p id='ajax_text'></p>
             </form>
         </div>
