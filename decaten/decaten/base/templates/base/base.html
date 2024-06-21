@@ -22,7 +22,8 @@
     <header>
         <!-- <div class="col-1"></div> -->
         <div class="first_headerd d-flex align-items-center gap-4">
-            <h1>Decaten</h1>
+            <h1><a href="{% url 'main' %}">Decaten</a></h1>
+             <!-- <h1>Decaten</h1> -->
             <a href="{% url 'main' %}" class="main">Головна</a>
             <a href="{% url 'catalog' %}" class="catalog">Каталог</a>
         </div>
@@ -71,19 +72,35 @@
         {% endblock %}
     </main>
     
-    <!-- {% if not fotti %}
-        <footer>
-            <h2><a href="">Decaten</a></h2>
+    <footer>
+        <h3><a href="{% url 'main' %}">Decaten</a></h3>
+        
+        <div class="footer_info">
+            <div class="our_pages">
+                <h5>Наші сторінки</h5>
+                <a href="{% url 'main' %}">Головна</a>
+                <a href="{% url 'catalog' %}">Каталог</a>
+            </div>
+    
             <div class="phone_and_email">
-                <p>Email: decaten@gmail.com</p>
+                <h5>Контакти</h5>
+                <p>decaten@gmail.com</p>
                 <p>+38xxxxxxxxxx</p>
             </div>
-            <div class="social_medias">
-                <p>+38xxxxxxxxxx</p>
-                <p>+38xxxxxxxxxx</p>
-                <p>+38xxxxxxxxxx</p>
-            </div>
-        </footer>
-    {% endif %} -->
+        
+        </div>
+
+        <div class="our_pages" id="default">
+            <h5>Наші сторінки</h5>
+            <a href="{% url 'main' %}">Головна</a>
+            <a href="{% url 'catalog' %}">Каталог</a>
+        </div>
+
+        <div class="phone_and_email" id="default">
+            <h5>Контакти</h5>
+            <p>decaten@gmail.com</p>
+            <p>+38xxxxxxxxxx</p>
+        </div>
+    </footer>
 </body>
 </html>

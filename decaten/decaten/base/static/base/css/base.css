@@ -35,6 +35,10 @@ header h1{
     color: rgb(255, 255, 255);
     font-weight: bold;  
 }
+header h1 a{
+    color: white;
+    font-size:40px;
+}
 
 header p{
     padding: 0;
@@ -92,6 +96,75 @@ header {
     display: none;
 }
 
+
+
+footer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 15%;
+    /* height: 80px; */
+    background-color: #b35c57;
+    padding: 1%;
+    /* position: absolute; */
+    /* bottom: 0; */
+}
+
+footer h3 a{
+    text-decoration: none;
+    text-shadow: -1px 1px 0 #000,
+    1px 1px 0 #000,
+    1px -1px 0 #000,
+    -1px -1px 0 #000;;
+    color: rgb(255, 255, 255);
+    font-weight: bold;  
+}
+
+footer .our_pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* gap: 5%; */
+}
+footer .phone_and_email{
+    display: flex;
+    /* gap: 5%; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.our_pages a{
+    /* text-decoration: none; */
+    /* color: rgb(0, 0, 0); */
+    color: var(--bs-body-color);
+    /* font-size: 20px; */
+}
+
+.our_pages a:hover{
+    color: rgb(255, 255, 255);
+}
+
+footer p{
+    margin-bottom: 0 !important;
+}
+footer h5{
+    margin-bottom: 1%;
+    color: black;
+}
+
+.footer_info{
+    display: none;
+    /* justify-content: space-between;
+    align-items: center; */
+    /* width: 31%; */
+    /* flex-direction: row; */
+}
+
+
+
 /* @media (max-width: ) */
 
 
@@ -108,6 +181,10 @@ header {
         padding: 0 5%;
         z-index:100;
     }
+    header h1 a{
+        color: white;
+        font-size:34px;
+    }
     
     .header_list{
         display: block;
@@ -121,7 +198,15 @@ header {
         left: 100vw;
         transition: all 0.5s;
     }
-    
+    footer h5{
+        font-size: 16px;
+    }
+    footer p{
+        font-size: 14px;
+    }
+    footer{
+        gap: 10%;
+    }
     
     #open{
         
@@ -156,8 +241,42 @@ header {
     }
 }
 
+@media (max-width: 425px){
+    header h1 a{
+        color: white;
+        font-size:30px;
+    }
+}
+
 @media (max-width: 1000px){
     header a{
         font-size: 18px;
     }
+}
+
+@media (max-width: 500px){
+    footer{
+        flex-direction: column;
+        /* align-items: start; */
+        /* padding-left: 7%; */
+    }
+    footer h3 {
+        margin-bottom: 15px;
+    }
+    footer .our_pages{
+        margin-bottom: 15px;
+    }
+    footer .phone_and_email{
+        margin-bottom: 15px;
+    }
+    #default{
+        display: none;
+    }
+    .footer_info{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+    }
+
 }

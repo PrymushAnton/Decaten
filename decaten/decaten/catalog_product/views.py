@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import *
 from django.http import JsonResponse, HttpResponse
-
+import json
+import ast
 
 
 # Create your views here.
@@ -19,11 +20,6 @@ def catalog(request):
         except:
             continue
         
-    
-    # for name_of_semifilter in filters:
-    #     for name_of_filtersemi in name_of_semifilter:
-    #         print(name_of_filtersemi.name_of_filter)
-    
     all_products = Product.objects.all()
     
     products_values = Product.objects.all().values()
@@ -36,7 +32,6 @@ def catalog(request):
     
     max_price = max(prices)
     min_price = min(prices)
-    # print(min_price, max_price)
     
     amount_of_products = len(Product.objects.all())
 
@@ -57,61 +52,147 @@ def catalog(request):
 
 def filter_products(request):
     filters_true = request.POST.get('filters_true')
-    filters_true = filters_true.split(',')
-    # filters_true = [ int(filter_true) for filter_true in filters_true ]
+    
+    
+    filters_true = ast.literal_eval(filters_true)
+    # print(filters_true)
+    
+    products_true = request.POST.get('filters_true')
+    products_true = ast.literal_eval(products_true)
+    for product_list in products_true:
+        product_list.clear()
+
+    # print('products_true: ',products_true)
+    # print(products_true)
+    # print(filters_true)
     
     filtered_products = []
     filters = []
 
-    try:
-        
-        filter = Filter.objects.filter(id__in=filters_true).values()
-        for obj in filter:
-            filters.append(obj['id'])
-        filtered_products = Product.objects.filter(filters__id__in=filters).distinct().values()
-        filtered_products = list(filtered_products)
-        
-    except:
-        pass
-    print(filters)
-    print(filtered_products)
+    error = None
 
-    # filtered_products = Product.objects.all()
-    # for filter_id in filters:
-    #     filtered_products = filtered_products.filter(filters__id=filter_id).values()
-    
-    
-    
 
+    max_price = request.POST.get('max_price')
+    min_price = request.POST.get('min_price')
+    all_products = Product.objects.all().values()
+    filtered_products_by_price_ids = []
+    for product in all_products:
+        if int(product['price']) >= int(min_price) and int(product['price']) <= int(max_price):
+            filtered_products_by_price_ids.append(int(product['id']))
     
-    # try:
-    # for filter in filters:
+    count = 0
+    for filter_list in filters_true:
+        product = Product.objects.filter(filters__in=filter_list)
+        # print(product)
+        # print(count)
+        products_true[count].append(product)
+        count += 1
+    # print(products_true)
+    
+    
+    def get_products(queryset):
+        return list(queryset)
+    
+    # Перетворимо list_of_lists з QuerySet до списків з продуктами
+    list_of_product_lists = [get_products(qs[0]) for qs in products_true if qs]
+
+    # Фільтруємо порожні списки
+    filtered_lists = [lst for lst in list_of_product_lists if lst]
+
+    # Якщо є хоча б один непорожній список, знаходимо спільні елементи
+    if filtered_lists:
+        common_items = set(filtered_lists[0])
+        for lst in filtered_lists[1:]:
+            
+            common_items.intersection_update(lst)
+        # Перетворимо набір назад у список (якщо потрібно)
+        common_items = list(common_items)
+        print(common_items)
+        if len(common_items) == 0:
+            error = 1
+    else:
+        common_items = []
+
+    # Перевірка результату
+    # print(common_items)
     # count = 0
-    # products = [count += 1, Product.objects.filter(filters__id=filters[filter_obj['id']]) for filter_obj in filter]   
-    # for filter_obj in filter:
+    # for item in common_items:
+    #     print(type(item))
+    #     common_items[count] = item
     #     count += 1
-    #     print(count)
-    #     product = Product.objects.filter(filters__id=filters[count])
-    #     print(product)
-        # products.append(product)
-    # product = Product.objects.filter(filters__in=filters)
-    # product = Product.objects.all()
-    # product = list(product)
+    values_list = [product.__dict__['id'] for product in common_items]
+    # print(values_list)
+    
+    products = Product.objects.filter(id__in=values_list).values()
+    products = list(products)
     # print(products)
-    # for prod in product:
-    #     print(prod.name)
-        # products.append(product)
+    
+    # products_true = [lst for lst in products_true if lst]
+    
+    
+    # if products_true:
+    #     common_items = set(products_true[0])
+    #     for lst in products_true[1:]:
+    #         common_items.intersection_update(lst)
+
+    #     # Перетворимо набір назад у список (якщо потрібно)
+    #     common_items = list(common_items)
+    # else:
+    #     common_items = []
+    # print('common_items',common_items)
+    
+    
+    
+    
+    
+    
+    
+    # for product_list in products_true:
+    #     if product_list:
+    #         for product in product_list
+    
+    
+
+    # filters_list = []
+    # for filter in filters_true:
+        # names_of_filters = Filter.objects.filter(id=filter)
+    # products = Product.objects.filter(filters__id__in=filters_true)
+        # filters_list.append(names_of_filters)
+    # print(names_of_filters)
+        
+        
+    # print(filters_list)
+    # names_of_filters_list = []
+    # for el in name_of_filters:
+    #     print(el)
+    #     name = NameOfFilter.objects.filter(id=el)
+    #     print(name)
+    #     names_of_filters_list.append(name)
+        
+    # print(names_of_filters_list)
+        
+
+    # name_of_filters = NameOfFilter.objects.all().values()
+    # for filter in filters_true:
+    #     # name_of_filters_ids.append(int(name['id']))
+    #     print(filter)
+
+
+    # try:
+    #     filter = Filter.objects.filter(id__in=filters_true).values()
+    #     for obj in filter:
+    #         filters.append(obj['id'])
+    #     filtered_products = Product.objects.filter(filters__id__in=filters).distinct().values()
+    #     filtered_products = list(filtered_products)
+        
     # except:
     #     pass
-    # print(product)
-    # for obj in product_obj:
-        
-    #     flavour = Flavour.objects.filter(for_product=obj).values()
-    #     flavour = list(flavour)
-    #     flavours.append(flavour)
-
-    # 'products':products
-    return JsonResponse({'products': filtered_products})
+    # print(filters)
+    # print(filtered_products)
+    
+    
+    # 'products': products_true
+    return JsonResponse({'products': products, 'error': error})
 
 
 
@@ -180,51 +261,7 @@ def product_page(request, id):
     context['list_of_filters'] = list_of_filters
     
     
-    # context['filters'] = product_filters
-    
-    # for product in product_filters:
-    #     for obj in product:
-    #         id_of_filters.append(int(obj['name_of_filter']))
-    
-    # for id in id_of_filters:
-    #     name_of_filters.append(list(NameOfFilter.objects.filter(id=id).values('name')))
-
-    # context['name_of_filters'] = name_of_filters
-    
-    # print(name_of_filters)
-    # print(product_filters)
-    
-    # for list_of_names_obj in name_of_filters:
-    #     list_of_names.append(list_of_names_obj)
-    #     breakpoint
-        
-    # for list_of_filters_obj in product_filters:
-    #     list_of_filters.append(list_of_filters_obj)
-    #     break
-        
-    # print(list_of_names)
-    # print(list_of_filters)
-    # for product in product_filters:
-    #     for obj in product:
-    #         print(obj)
-    # print(product_filters)
-    # for product in product_filters:
-    #     count = 0
-    #     for filter in name_of_filters:
-    #         count_new = 0
-    #         for obj in product:
-    #             if count_new == 1:
-    #                 break
-    #             else:
-    #                 for obj_filter in filter:
-    #                     if count == 1:
-    #                         break
-    #                     else:
-    #                         list_of_filters.append([obj_filter['name'], obj['name']])
-    #                         count += 1
-    #                         count_new += 1
-    
-    # print(list_of_filters)
+   
     return render(request, 'catalog_product/product.html', context)
 
 

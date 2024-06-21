@@ -19,17 +19,39 @@
         <div class="filter_section">
             <form class="filters" method="POST" >
                 {% csrf_token %}
-
-                
-
+                <div class="price-filter">
+                    <div class="price-name">
+                        <h4>Ціна</h4>
+                    </div>
+                    <div class="price-input">
+                        <div class="field">
+                            <input type="number" class="input-min" value="{{min_price}}">
+                        </div>
+                        <div class="separator">-</div>
+                        <div class="field">
+                            <input type="number" class="input-max" value="{{max_price}}">
+                        </div>
+                    </div>
+                    
+                    <div class="slider">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="range-input">
+                        <input type="range" id="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="1"
+                            value="{{min_price}}">
+                        <input type="range" id="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="1"
+                            value="{{max_price}}">
+                    </div>
+                </div>
                 {% for name_of_filter in names_of_filters %}
-                    <div class="filter_category" method="POST">
+                    <div class="filter_category filter_category_pc" id="filter_category_phone" method="POST">
                         <h4>{{name_of_filter.name}}</h4>
                         {% for name_of_semi_filter in list_of_filters %}
                             {% for name_of_filter_semi in name_of_semi_filter %}
                                 {% if name_of_filter == name_of_filter_semi.name_of_filter %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{name_of_filter_semi.id}}" id="flexCheckDefault{{name_of_filter_semi.id}}">
+                                    <div class="form-check check_pc">
+                                        <input class="form-check-input" type="checkbox" data-names="{{name_of_filter_semi.name_of_filter.id}}" value="{{name_of_filter_semi.id}}" id="flexCheckDefault{{name_of_filter_semi.id}}">
+                                        <!-- <input type="hidden" class="name_of_filters_value" value="{{name_of_filter_semi.name_of_filter.id}}"> -->
                                         <label class="form-check-label" for="flexCheckDefault{{name_of_filter_semi.id}}">{{name_of_filter_semi.name}}</label>
                                     </div>
                                 {% endif %}
@@ -58,7 +80,30 @@
                     <div>
                         <form class="filters_offcanvas" method="POST" >
                             {% csrf_token %}
-            
+                            <div class="price-filter-phone">
+                                <div class="price-name-phone">
+                                    <h4>Ціна</h4>
+                                </div>
+                                
+                                <div class="price-input-phone">
+                                    <div class="field-phone">
+                                        <input type="number" class="input-min-phone" value="{{min_price}}">
+                                    </div>
+                                    <div class="separator-phone">-</div>
+                                    <div class="field-phone">
+                                        <input type="number" class="input-max-phone" value="{{max_price}}">
+                                    </div>
+                                </div>
+                                <div class="slider-phone">
+                                    <div class="progress-phone"></div>
+                                </div>
+                                <div class="range-input-phone">
+                                    <input type="range" id="min-price-slider-phone" min="{{min_price}}" max="{{max_price}}" step="1"
+                                        value="{{min_price}}">
+                                    <input type="range" id="max-price-slider-phone" min="{{min_price}}" max="{{max_price}}" step="1"
+                                        value="{{max_price}}">
+                                </div>
+                            </div>
                             
             
                             {% for name_of_filter in names_of_filters %}

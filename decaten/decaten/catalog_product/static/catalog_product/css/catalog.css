@@ -202,3 +202,203 @@
         font-size: 15px;
     }
 }
+
+
+
+
+.price-filter{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    /* gap: 10px; */
+}
+
+.price-name{
+    width: 100%;
+    display: flex;
+    align-items: start;
+}
+
+.price-name h4{
+    margin-bottom: 0;
+}
+
+.price-input {
+    /* margin: 30px 0 35px; */
+    margin: 10px 0 20px;
+    display: flex;
+    width: 100%;
+}
+
+.price-input .field {
+    height: 30px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.field input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #999;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    -moz-appearance: none;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.slider {
+    height: 5px;
+    background: #ddd;
+    border-radius: 5px;
+    position: relative;
+}
+
+.slider .progress {
+    height: 5px;
+    border-radius: 5px;
+    left: 25%;
+    right: 25%;
+    position: absolute;
+    background: #FF847C;
+}
+
+.price-input .separator {
+    width: 100px;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.range-input {
+    position: relative;
+    margin-bottom: 3%;
+}
+
+.range-input input {
+    position: absolute;
+    top: -5px;
+    height: 5px;
+    left: 0;
+    width: 100%;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    background: #f5968f;
+    cursor: pointer;
+}
+
+
+
+
+
+.price-filter-phone{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    /* gap: 10px; */
+}
+
+.price-name-phone{
+    width: 100%;
+    display: flex;
+    align-items: start;
+}
+
+.price-name-phone h4{
+    margin-bottom: 0;
+}
+
+.price-input-phone {
+    /* margin: 30px 0 35px; */
+    margin: 10px 0 20px;
+    display: flex;
+    width: 100%;
+}
+
+.price-input-phone .field-phone {
+    height: 30px;
+    width: auto;
+    align-items: center;
+    display: flex;
+}
+
+.field-phone input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #999;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    -moz-appearance: none;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.slider-phone {
+    height: 5px;
+    background: #ddd;
+    border-radius: 5px;
+    position: relative;
+}
+
+.slider-phone .progress-phone {
+    height: 5px;
+    border-radius: 5px;
+    left: 25%;
+    right: 25%;
+    position: absolute;
+    background: #FF847C;
+}
+
+.price-input-phone .separator-phone {
+    width: 100px;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.range-input-phone {
+    position: relative;
+    margin-bottom: 3%;
+}
+
+.range-input-phone input {
+    position: absolute;
+    top: -5px;
+    height: 5px;
+    left: 0;
+    width: 100%;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    background: #f5968f;
+}
