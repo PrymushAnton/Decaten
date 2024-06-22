@@ -3,7 +3,20 @@
     padding: 0;
 }
 
-footer{
-    position: absolute;
-    bottom: 0;
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* margin-top: 8%;   */
+    min-height: calc(100vh - 80px);
+    /* height: 100vh; */
+}
+
+.products{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 3%;
 }

@@ -6,23 +6,25 @@
     <script defer src="{% static 'cart/js/plus_count.js' %}"></script>
     <script defer src="{% static 'cart/js/minus_count.js' %}"></script>
     <script defer src="{% static 'cart/js/delete_product.js' %}"></script>
-
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
 {% endblock %}
 
 
 {% block main %}
-    
-    <div class="row justify-content-center align-items-center content mt-4 h-100">
-        {% if not products %}
-            <div class="d-flex flex-column align-items-center">
-                <h2>Кошик порожній!</h2>
-                <img src="{% static 'cart/icons/cart.svg' %}" alt="" style="width: 200px;">
-            </div>
-            
-        {% endif %}
-        <div class="col-1"></div>
-        <div class="col-10 d-flex justify-content-start gap-3 flex-wrap ps-3">
-            {% for product_in_cart in products %}
+<!-- row justify-content-center align-items-center content mt-4 h-100 -->
+    <div class="content">
+
+        <!-- <div class="col-1"></div> -->
+        <!-- col-10 d-flex justify-content-start gap-3 flex-wrap ps-3  -->
+        <div class="products">
+            {% if not products %}
+                <div class="d-flex flex-column align-items-center">
+                    <h2>Кошик порожній!</h2>
+                    <img src="{% static 'cart/icons/cart.svg' %}" alt="" style="width: 200px;">
+                </div>
+                
+            {% endif %}
+        {% for product_in_cart in products %}
             <div class="card_{{product_in_cart.product_id}} card d-flex align-items-center py-3 mb-3 shadow product_{{product.id}}" style="width: 19%;">
                 {% for flavour in flavours %}
                     {% if flavour.id == product_in_cart.flavour_id %}
@@ -75,7 +77,7 @@
         {% endfor %}
         </div>
         
-        <div class="col-1"></div>
+        <!-- <div class="col-1"></div> -->
         
         
     </div>

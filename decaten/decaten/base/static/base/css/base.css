@@ -107,8 +107,10 @@ footer{
     /* height: 80px; */
     background-color: #b35c57;
     padding: 1%;
-    /* position: absolute; */
-    /* bottom: 0; */
+    /* position: absolute;
+    bottom: 0;
+    z-index: -1; */
+    /* margin-top: auto; */
 }
 
 footer h3 a{
