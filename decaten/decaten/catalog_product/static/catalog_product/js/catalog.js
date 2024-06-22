@@ -93,16 +93,20 @@ $(document).ready(function(){
                 console.log(data.error)
                 if (data.products.length != 0){
                     console.log(data.products.length)
+                    $('#error').css('display', 'none')
                     $('.card_of_product').css('display', 'none')
                     for (let product of data.products){
                         console.log(product)
                         
                         $('.product_'+product.id).css('display', 'flex')
                     }
+
                 } else if (data.error != 1){
                     $('.card_of_product').css('display', 'flex')
+                    $('#error').css('display', 'none')
                 } else if (data.error == 1){
                     $('.card_of_product').css('display', 'none')
+                    $('#error').css('display', 'block')
                 }
                 
 

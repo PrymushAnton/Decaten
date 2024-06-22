@@ -79,7 +79,11 @@ def filter_products(request):
     for product in all_products:
         if int(product['price']) >= int(min_price) and int(product['price']) <= int(max_price):
             filtered_products_by_price_ids.append(int(product['id']))
-    
+        
+
+    products_price = Product.objects.filter(id__in=filtered_products_by_price_ids)
+
+    # print(products_price)
     count = 0
     for filter_list in filters_true:
         product = Product.objects.filter(filters__in=filter_list)
@@ -89,7 +93,7 @@ def filter_products(request):
         count += 1
     # print(products_true)
     
-    
+    products_true
     def get_products(queryset):
         return list(queryset)
     
@@ -107,24 +111,58 @@ def filter_products(request):
             common_items.intersection_update(lst)
         # Перетворимо набір назад у список (якщо потрібно)
         common_items = list(common_items)
-        print(common_items)
         if len(common_items) == 0:
             error = 1
     else:
         common_items = []
-
-    # Перевірка результату
-    # print(common_items)
-    # count = 0
-    # for item in common_items:
-    #     print(type(item))
-    #     common_items[count] = item
-    #     count += 1
-    values_list = [product.__dict__['id'] for product in common_items]
-    # print(values_list)
     
-    products = Product.objects.filter(id__in=values_list).values()
-    products = list(products)
+    values_list = [product.__dict__['id'] for product in common_items]
+    products = Product.objects.filter(id__in=values_list)
+
+    print(len(list(products.values())))
+    print(len(list(products_price.values())))
+    
+    if len(list(products.values())) != 0 and len(list(products_price.values())) != 0:
+        common_products_price = products.intersection(products_price)
+        # print(common_products_price)
+        # common_products_price = list(common_products_price)
+        print(common_products_price)
+        if len(list(common_products_price)) == 0:
+            error = 1
+        products = list(common_products_price.values())
+        print('products true',products)
+        print('error', error)
+    elif len(list(products_price.values())) == 0 and len(list(products.values())) == 0:
+        error = 1
+        products = list(products_price.values())
+        print('products false',products)
+        print('error', error)
+    elif len(list(products.values())) == 0:
+        if len(list(products_price.values())) != 0:
+            products = list(products_price.values())
+            print('products none 1',products)
+            print('error', error)
+        else:
+            products = list(products.values())
+            print('products none 2',products)
+            print('error', error)
+    else:
+        error = 1
+    # elif len(list(products.values())) == 0:
+    #     error = 1
+    #     products = list(products.values())
+    #     print('products none',products)
+
+
+    # common_products = products.intersection(products_price)
+    # print(common_products)
+    
+    
+    
+    
+    # print(products)
+    # if len(products) == 0:
+    #     error = 1
     # print(products)
     
     # products_true = [lst for lst in products_true if lst]
@@ -191,7 +229,7 @@ def filter_products(request):
     # print(filtered_products)
     
     
-    # 'products': products_true
+    # 'products': products, 'error': error
     return JsonResponse({'products': products, 'error': error})
 
 
