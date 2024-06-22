@@ -126,7 +126,7 @@ def filter_products(request):
         common_products_price = products.intersection(products_price)
         # print(common_products_price)
         # common_products_price = list(common_products_price)
-        print(common_products_price)
+        # print(common_products_price)
         if len(list(common_products_price)) == 0:
             error = 1
         products = list(common_products_price.values())

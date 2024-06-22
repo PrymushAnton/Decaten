@@ -66,12 +66,18 @@
 
 .filter_section{
     border-right: 1px solid rgba(0, 0, 0, 0.103);
+    width: 20%;
+}
+
+.filter_category h5{
+    width: 100%;
+    text-align: start;
 }
 
 .content{
     display: flex;
     justify-content: center;
-    padding: 0 10% 0 9%;
+    padding: 0 8%;
     /* height: 100%; */
 }
 
@@ -123,6 +129,9 @@
 .card_of_product p{
     margin-bottom: 1%;
 }
+.card_of_product h5{
+    font-size: 18px;
+}
 
 .card_of_product a{
     margin: 2% 0;
@@ -156,7 +165,7 @@
 .filter_button_div{
     display: flex;
     width: 100vw;
-    margin-left: 10%;
+    margin-left: 8%;
 }
 
 
@@ -168,7 +177,9 @@
     .content{
         flex-direction: column;
         align-items: center;
+        padding: 0 !important;
     }
+
     .filters {
         display: none;
     }
@@ -177,16 +188,17 @@
         height: 0;
     }
     .products{
-        width: 85%;
+        height: max-content;
+        width: 90%;
         justify-content: center;
-        align-items: center;
+        align-items: start;
         margin-left: 0;
         margin-top: 1%;
         gap: 4%;
         margin-bottom: 2%;
     }
     .card_of_product{
-        width: 45%;
+        width: 45% !important;
         margin-top: 2%;
     }
 }
@@ -209,7 +221,39 @@
     }
 }
 
+@media (max-width: 1440px){
+    .card_of_product {
+        width: 31%;
+    }
+}
 
+@media (max-width:1250px){
+    .card_of_product {
+        width: 31%;
+    }
+    .filter_category h5{
+        font-size: 17px;
+    }
+    .filter_category label{
+        font-size: 15px;
+    }
+    .content{
+        padding: 0 5%;
+    }
+}
+
+@media (max-width:1024px){
+    .filter_section{
+        width: 25%;
+    }
+    .content{
+        padding: 0 2%;
+        /* justify-content: space-between; */
+    }
+    .card_of_product {
+        width: 32%;
+    }
+}
 
 
 .price-filter{
@@ -225,7 +269,7 @@
     align-items: start;
 }
 
-.price-name h4{
+.price-name h5{
     margin-bottom: 0;
 }
 
@@ -285,7 +329,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 .range-input {
     position: relative;
-    margin-bottom: 3%;
+    margin-bottom: 10%;
 }
 
 .range-input input {
@@ -326,7 +370,7 @@ input[type='range']::-webkit-slider-thumb {
     align-items: start;
 }
 
-.price-name-phone h4{
+.price-name-phone h5{
     margin-bottom: 0;
 }
 
@@ -386,7 +430,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 .range-input-phone {
     position: relative;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 
 .range-input-phone input {

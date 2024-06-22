@@ -21,7 +21,7 @@
                 {% csrf_token %}
                 <div class="price-filter">
                     <div class="price-name">
-                        <h4>Ціна</h4>
+                        <h5>Ціна</h5>
                     </div>
                     <div class="price-input">
                         <div class="field">
@@ -45,7 +45,7 @@
                 </div>
                 {% for name_of_filter in names_of_filters %}
                     <div class="filter_category filter_category_pc" id="filter_category_phone" method="POST">
-                        <h4>{{name_of_filter.name}}</h4>
+                        <h5>{{name_of_filter.name}}</h5>
                         {% for name_of_semi_filter in list_of_filters %}
                             {% for name_of_filter_semi in name_of_semi_filter %}
                                 {% if name_of_filter == name_of_filter_semi.name_of_filter %}
@@ -82,7 +82,7 @@
                             {% csrf_token %}
                             <div class="price-filter-phone">
                                 <div class="price-name-phone">
-                                    <h4>Ціна</h4>
+                                    <h5>Ціна</h5>
                                 </div>
                                 
                                 <div class="price-input-phone">
@@ -107,12 +107,12 @@
                             
             
                             {% for name_of_filter in names_of_filters %}
-                                <div class="filter_category" method="POST">
-                                    <h4>{{name_of_filter.name}}</h4>
+                                <div class="filter_category filter_category_phone" method="POST">
+                                    <h5>{{name_of_filter.name}}</h5>
                                     {% for name_of_semi_filter in list_of_filters %}
                                         {% for name_of_filter_semi in name_of_semi_filter %}
                                             {% if name_of_filter == name_of_filter_semi.name_of_filter %}
-                                                <div class="form-check">
+                                                <div class="form-check check_phone">
                                                     <input class="form-check-input" type="checkbox" value="{{name_of_filter_semi.id}}" id="flexCheckDefault_offcanvas_{{name_of_filter_semi.id}}">
                                                     <label class="form-check-label" for="flexCheckDefault_offcanvas_{{name_of_filter_semi.id}}">{{name_of_filter_semi.name}}</label>
                                                 </div>

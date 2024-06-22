@@ -4,6 +4,7 @@ $(document).ready(function(){
         var filters = document.querySelectorAll('.form-check-input')
         var filter_categories = document.querySelectorAll('#filter_category_phone')
         var filters_true = []
+        var filter_true_phone = []
         // for (let filter_category of filter_categories){
         //     console.log(123)
         //     var temp_list = []
@@ -41,7 +42,20 @@ $(document).ready(function(){
         }
         // console.log(filters_true)
         // console.log(JSON.stringify(filters_true))
-
+        var divs_phone = document.querySelectorAll('.filter_category_phone')
+        
+        for (let div_phone of divs_phone){
+            var temp_list = []
+            var div_check = div_phone.querySelectorAll('.check_phone')
+            for (let div_obj of div_check){
+                var input = div_obj.querySelector('input')
+                if (input.checked){
+                    temp_list.push(parseInt(input.value))
+                }
+                
+            }
+            filter_true_phone.push(temp_list)
+        }
 
         var all_inputs = document.querySelectorAll('.product_id_image')
 
@@ -55,15 +69,28 @@ $(document).ready(function(){
         // console.log(ids_of_name_of_filters)
         // console.log(filters_true)
 
+        var max_price = null
+        var min_price = null
+        var filters = null
+
+        if ($('.filters').css('display') == 'none'){
+            max_price = $('.input-max-phone').val()
+            min_price = $('.input-min-phone').val()
+            filters = filter_true_phone
+        } else {
+            max_price: $('.input-max').val()
+            min_price: $('.input-min').val()
+            filters = filters_true
+        }
 
         $.ajax({
             url: 'filter_products/',
             type: "POST",
             data: {
-                filters_true: JSON.stringify(filters_true),
+                filters_true: JSON.stringify(filters),
                 // name_of_filters: ids_of_name_of_filters.toString(),
-                max_price: $('.input-max').val(),
-                min_price: $('.input-min').val(),
+                max_price: max_price,
+                min_price: min_price,
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(data){
@@ -89,15 +116,16 @@ $(document).ready(function(){
                 //     }
                     
                 // }
-                console.log(data.products)
-                console.log(data.error)
+                // console.log(data.products)
+                // console.log(data.error)
+                // console.log(123)
                 if (data.products.length != 0){
-                    console.log(data.products.length)
+                    // console.log(data.products.length)
                     $('#error').css('display', 'none')
                     $('.card_of_product').css('display', 'none')
                     for (let product of data.products){
-                        console.log(product)
-                        
+                        // console.log(product)
+                        // console.log(product)
                         $('.product_'+product.id).css('display', 'flex')
                     }
 
