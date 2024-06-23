@@ -18,9 +18,9 @@
                 <h2>Кошик порожній!</h2>
                 <img src="{% static 'cart/icons/cart.svg' %}" alt="" style="width: 200px;">
             </div>
-            
+        {% else %}
+        
         {% endif %}
-        <div class="col-1"></div>
         <div class="col-10 d-flex justify-content-start gap-3 flex-wrap ps-3">
             {% for product_in_cart in products %}
             <div class="card_{{product_in_cart.product_id}} card d-flex align-items-center py-3 mb-3 shadow product_{{product.id}}" style="width: 19%;">
@@ -74,9 +74,8 @@
             </div>
         {% endfor %}
         </div>
-        
-        <div class="col-1"></div>
-        
-        
+    </div>
+    <div class="row justify-content-center align-items-center content my-4">
+        <a href="{% url 'order' %}" class="btn btn-success col-1 fs-5">Замовити</a>
     </div>
 {% endblock main %}

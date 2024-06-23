@@ -2,10 +2,6 @@
 {% load static %}
 
 
-{% block link %}
-    <script src="{% static 'order/order.js' %}" defer></script>
-    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()" defer></script>
-{% endblock link %}
     
 <!-- disabled  -->
 {% block main %}
@@ -38,31 +34,31 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <label for="address" class="form-label">Адреса проживання</label>
+                <label for="address" class="form-label">Адреса проживання (обов'язково вкажіть область та місто)</label>
                 <input type="text" class="form-control" id="address" name="address" required>
                 <div class="invalid-feedback">
                     Будьласка, введіть адресу проживання.
                 </div>
             </div>
             <div class="col-md-4">
-                <label for="post_index" class="form-label">Індекс нової пошти</label>
+                <label for="post_index" class="form-label">Індекс пошти</label>
                 <input type="text" class="form-control" id="post_index" name="post_index" required>
                 <div class="invalid-feedback">
                     Будьласка, введітьб індекс нової пошти
                 </div>
             </div>
-            <div class="col-md-3 " id="btn_pay">
-                <!-- <label for="post_select" class="form-label">Оберіть варіант оплати</label>
-                <select class="form-select" id="post_select" required>
-                    <option selected value="NP">Google Pay</option>
-                    <option value="UP">Оплата картой Visa/MasterCard</option>
+            <div class="col-md-3 ">
+                <label for="card_select" class="form-label">Оберіть варіант оплати</label>
+                <select class="form-select" id="card_select" required>
+                    <option class="card_select_element" selected value="VM">Оплата картой Visa/MasterCard</option>
+                    <option class="card_select_element" value="GP">Google Pay</option>
                 </select>
                 <div class="invalid-feedback">
                     Будьласка оберіть один з наданих варіантів.
                 </div>
                 <div class="valid-feedback">
                     Підтверджено.
-                </div> -->
+                </div>
             </div>
             <div class="col-md-4">
                 <label for="validationCustom02" class="form-label">Номер карти</label>
@@ -98,6 +94,7 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6" id="btn_pay" hidden></div>
             <div class="col-12 d-flex flex-row justify-content-center align-items-center">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
@@ -130,5 +127,21 @@
             })
         })()
     </script>
+    <script defer>
+        const allSel = $('#card_select')[0];
+            console.log(allSel);
+            allSel.on('blur', function() {
+                let selNum = allSel.val();
+                if(selNum == 'GP'){
+                    console.log(1);
+                    // $('#btn_pay').prop('hidden', true);
+                } else {
+                    console.log(1)
+                    // $(sel).addClass('valid');
+            }
+        });
+    </script>
+    <script src="{% static 'order/order.js' %}"></script>
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 {% endblock main %}
     

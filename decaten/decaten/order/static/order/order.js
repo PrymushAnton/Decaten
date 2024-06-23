@@ -1,3 +1,4 @@
+
 /**
  * Define the version of the Google Pay API referenced when creating your
  * configuration
@@ -254,9 +255,9 @@ const baseRequest = {
           paymentToken = paymentData.paymentMethodData.tokenizationData.token;
     
                 if (attempts++ % 2 == 0) {
-              reject(new Error('Every other attempt fails, next one should succeed'));      
+              reject(new Error('Every other attempt fails, next one should succeed'));
           } else {
-              resolve({});      
+              resolve({});
           }
         }, 500);
       });
