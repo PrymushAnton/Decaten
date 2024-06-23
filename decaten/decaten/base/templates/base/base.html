@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'base/css/css/bootstrap.css' %}">
     <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
     <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
+    <script defer src="{% static 'base\js\js.js' %}"></script>
     {% block link %}
         
     {% endblock link %}
@@ -15,7 +16,7 @@
     
 </head>
 <!-- class="d-flex flex-column" -->
-<body class="bg-light">
+<body class="bg-light" id="body">
 
     <header class="w-100 d-flex align-items-center border-bottom shadow-sm bg-secondary bg-gradient" style="width: 100%;">
 
@@ -47,8 +48,33 @@
         {% block main %}
 
         {% endblock %}
+        <button type="button" class="mybtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div id="button_support">
+                <img src="https://www.svgrepo.com/show/448396/discussion-circle.svg" alt="">
+            </div>
+            
+        </button>
+          
+          <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Підтвердження дії</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Після того як ви натиснете на кнопку перейти до чату ви перейдете на сторінку чату з підтримкою. ВОна може відповісти вам напротязі найближчих 5 хвилин. Підтримка відповідае тільки на прості питання!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <a href="{% url 'support' %}"><button type="button" class="btn btn-primary">Перейти до чату</button></a>
+                </div>
+                </div>
+            </div>
+        </div>
     </main>
-    <footer>
+    <footer id="footer">
         <h2><a href="">Decaten</a></h2>
         <div class="phone_and_email">
             <p>Email: decaten@gmail.com</p>

@@ -179,3 +179,58 @@ header a:hover {
     text-shadow: 0px 2px 10px;
     border: 0px solid black;
 }
+
+#button_support {
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+    height: 8%;
+    border-radius: 50%;
+    border: 1px solid black;
+    transition: all 0.7s;
+}
+
+#button_support img {
+    margin: 10%;
+    width: 90%;
+    height: 90%;
+    position: relative;
+}
+
+.mybtn {
+    width: 0px;
+    height: 0px;
+    border: 0px solid black;
+}
+
+#button_support:hover {
+    background-color: rgb(167, 167, 167);
+    border: 1px solid rgb(167, 167, 167);
+    box-shadow: 0px 0px 10px 2px rgb(167, 167, 167);
+}
+
+#inputs {
+    display: flex;
+    flex-direction: row;
+    width: 92%;
+    bottom: 0px;
+    left: 0px;
+    position: fixed;
+    
+}
+
+#inputs button {
+    height: 50px;
+    width: 10%;
+    border-radius: 10px;
+}
+
+#inputs button img {
+    height: 100%;
+}
+
+
+#inputs textarea{
+    resize: none;
+    width: 95%;
+}

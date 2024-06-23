@@ -19,7 +19,7 @@ from django.urls import path
 from decaten.settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
 from main.views import *
-from base.views import base
+from base.views import base, support_chat
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
 from cart.views import *
@@ -42,6 +42,7 @@ urlpatterns = [
     path('product_image_main/', product_image_main, name='product_image_main'),
     path('product/get_flavour_image/', get_flavour_image, name='product_page'),
     path('cart/', cart, name='cart'),
+    path('support/', support_chat, name='support'),
     # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),
 ]
 

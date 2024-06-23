@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}
+<script defer src="{% static 'base\js\support.js' %}"></script>
+{% endblock link %}
+{% block main %}
+<div id="chat">
+
+</div>
+<div id="inputs">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <button><img src="https://www.svgrepo.com/show/533314/send-alt-2.svg" alt=""></button>
+</div>
+{% endblock main %}
