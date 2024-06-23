@@ -20,10 +20,21 @@
 
 import requests
 
-url = 'https://automatic-funicular-gjrvpqqjp7xfwjxp-8000.app.github.dev/post/'  # Replace with your actual URL
-data = {'key': 'value'}  # Your POST data
+def code_data(data):
+    new_data = {}
+    for message in data:
+        index_of_message = data.index(message)
+        for i in message:
+            new_data[f"{i}{index_of_message}"] = [message[i]]
+    return new_data
 
-response = requests.post(url)
+url = 'https://yaroslavsamchukapi.onrender.com/post/'
+data = [{"role" : "user", "content": "Hi! Who are you? And what you are doing here?"}] 
+data = code_data(data)
+print(data)
+
+
+response = requests.post(url, data=data)
 
 print(response.status_code)
 print(response.json())
