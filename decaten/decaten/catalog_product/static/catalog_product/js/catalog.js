@@ -78,8 +78,8 @@ $(document).ready(function(){
             min_price = $('.input-min-phone').val()
             filters = filter_true_phone
         } else {
-            max_price: $('.input-max').val()
-            min_price: $('.input-min').val()
+            max_price = $('.input-max').val()
+            min_price = $('.input-min').val()
             filters = filters_true
         }
 

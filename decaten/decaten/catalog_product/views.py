@@ -75,6 +75,7 @@ def filter_products(request):
     max_price = request.POST.get('max_price')
     min_price = request.POST.get('min_price')
     all_products = Product.objects.all().values()
+    # print('prices',max_price, min_price)
     filtered_products_by_price_ids = []
     for product in all_products:
         if int(product['price']) >= int(min_price) and int(product['price']) <= int(max_price):
@@ -119,8 +120,8 @@ def filter_products(request):
     values_list = [product.__dict__['id'] for product in common_items]
     products = Product.objects.filter(id__in=values_list)
 
-    print(len(list(products.values())))
-    print(len(list(products_price.values())))
+    # print(len(list(products.values())))
+    # print(len(list(products_price.values())))
     
     if len(list(products.values())) != 0 and len(list(products_price.values())) != 0:
         common_products_price = products.intersection(products_price)

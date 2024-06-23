@@ -13,7 +13,9 @@ $(document).ready(function(){
     })
 
     $('.burger_close').click(function(){
-        $('.carousel_container').css('height', 'none')
+        // $('.carousel_container').css('height', 'none')
+
+        $('.carousel_container').removeAttr('style')
         $('.header_list').removeAttr('id')
         $(".burger_close").attr('id', 'burger_close_icon')
         $('.burger_icon').attr('id', 'burger_open_icon')

@@ -25,6 +25,8 @@
 .filter_section{
     border-right: 1px solid rgba(0, 0, 0, 0.103);
     width: 20%;
+    padding: 1%;
+    /* height: 91.5vh; */
 }
 
 .filter_category h5{
@@ -35,8 +37,8 @@
 .content{
     display: flex;
     justify-content: start;
-    padding: 0 8%;
-    min-height: 100vh;
+    padding: 0 10%;
+    min-height: calc(100vh - 80px);
 }
 
 .products{
@@ -95,10 +97,7 @@ h5{
     margin: 2% 0;
 }
 
-.filter_section{
-    padding: 1%;
-    height: 91.5vh;
-}
+
 
 .filter_category{
     padding-bottom: 3%;

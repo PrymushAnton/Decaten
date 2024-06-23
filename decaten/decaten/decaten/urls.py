@@ -48,6 +48,7 @@ urlpatterns = [
     path('cart/minus_count/', minus_count, name='minus_count'),
     path('cart/delete_product/', delete_product, name='delete_product'),
     path('product/add_to_cart/', add_to_cart, name='product_page'),
+    path('cart/error_empty/', error_empty, name='error_empty'),
 
     path('order', order_page,name='order'),
     # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),

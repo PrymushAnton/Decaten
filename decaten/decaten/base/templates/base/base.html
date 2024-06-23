@@ -71,36 +71,37 @@
 
         {% endblock %}
     </main>
-    
-    <footer>
-        <h3><a href="{% url 'main' %}">Decaten</a></h3>
+    {% block footer %}
+        <footer>
+            <h3><a href="{% url 'main' %}">Decaten</a></h3>
+            
+            <div class="footer_info">
+                <div class="our_pages">
+                    <h5>Наші сторінки</h5>
+                    <a href="{% url 'main' %}">Головна</a>
+                    <a href="{% url 'catalog' %}">Каталог</a>
+                </div>
         
-        <div class="footer_info">
-            <div class="our_pages">
+                <div class="phone_and_email">
+                    <h5>Контакти</h5>
+                    <p>decaten@gmail.com</p>
+                    <p>+38xxxxxxxxxx</p>
+                </div>
+            
+            </div>
+
+            <div class="our_pages" id="default">
                 <h5>Наші сторінки</h5>
                 <a href="{% url 'main' %}">Головна</a>
                 <a href="{% url 'catalog' %}">Каталог</a>
             </div>
-    
-            <div class="phone_and_email">
+
+            <div class="phone_and_email" id="default">
                 <h5>Контакти</h5>
                 <p>decaten@gmail.com</p>
                 <p>+38xxxxxxxxxx</p>
             </div>
-        
-        </div>
-
-        <div class="our_pages" id="default">
-            <h5>Наші сторінки</h5>
-            <a href="{% url 'main' %}">Головна</a>
-            <a href="{% url 'catalog' %}">Каталог</a>
-        </div>
-
-        <div class="phone_and_email" id="default">
-            <h5>Контакти</h5>
-            <p>decaten@gmail.com</p>
-            <p>+38xxxxxxxxxx</p>
-        </div>
-    </footer>
+        </footer>
+    {% endblock %}
 </body>
 </html>
