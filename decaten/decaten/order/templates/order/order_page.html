@@ -2,11 +2,66 @@
 {% load static %}
 
 
+{% block link %}
+    <style>
+        form.bottomForm{
+            border-bottom-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+    </style>
+{% endblock link %}
+    
     
 <!-- disabled  -->
 {% block main %}
-    <div class="container-md h-75 d-flex justify-content-center align-items-center mt-5 pt-5">
-        <form class="row g-3 needs-validation mt-5 p-5 justify-content-center align-items-end border border-2" novalidate>
+    <div class="container-md h-75 d-flex flex-column justify-content-center align-items-center mt-3 ">
+        <form method="post" id="userInfo" class="bottomForm row g-3 needs-validation mt-2 p-5 pt-1 justify-content-center align-items-end border border-2" novalidate>
+            {% csrf_token %}
+            <div class="col-md-12 text-center">
+                <p class="h2">Надайте особисту інформацію інформацію</p>
+            </div>
+            <div class="col-md-4">
+                <label for="name" class="form-label">Ім'я</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                <div class="invalid-feedback">
+                    Заповныть поле.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="surename" class="form-label">Фамілія</label>
+                <input type="text" class="form-control" id="surename" name="surename" required>
+                <div class="invalid-feedback">
+                    Заповныть поле.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="number" class="form-label">Номер телефону</label>
+                <input type="number" maxlength="10" mштlength="8" class="form-control" id="number" name="number" required>
+                <div class="invalid-feedback">
+                    Введіть справжный номер.
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-row justify-content-center align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="terms_conditions" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        "Згоджуюсь та надаю особисту інформацію."
+                    </label>
+                    <div class="invalid-feedback">
+                        Ви повинні підтвердити згоду на надання особистої інформації.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <input hidden type="text" name="user_info" value="true">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+        <form hidden id="postInfo" method="post" class="row g-3 needs-validation mt-4 p-5 pt-1 justify-content-center align-items-end border border-2" novalidate>
+            {% csrf_token %}
+            <div class="col-md-12 text-center">
+                <p class="h2">Надайте інформацію про відправку</p>
+            </div>
             <div class="col-md-6">
                 <label for="post_select" class="form-label" >Оберіть пошту для відпрвки</label>
                 <select class="form-select " id="post_select" name="post" required>
@@ -47,6 +102,27 @@
                     Будьласка, введітьб індекс нової пошти
                 </div>
             </div>
+            <div class="col-12 d-flex flex-row justify-content-center align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" name="terms_conditions" id="postCheck" required>
+                    <label class="form-check-label" for="postCheck">
+                        "Я згоджуюсь з умовамі відправки."
+                    </label>
+                    <div class="invalid-feedback">
+                        Ви повинні підтвердити умови відправки.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <input hidden type="text" name="post_info" value="true">
+                <button class="btn btn-primary" type="submit" value="post_info">Submit form</button>
+            </div>
+        </form>
+        <form hidden id="payInfo" method="post" class="row g-3 needs-validation mt-4 p-5 pt-1 justify-content-center align-items-end border border-2" novalidate>
+            {% csrf_token %}
+            <div class="col-md-12 text-center">
+                <p class="h3">Інформація що до оплати:</p>
+            </div>
             <div class="col-md-3 ">
                 <label for="card_select" class="form-label">Оберіть варіант оплати</label>
                 <select class="form-select" id="card_select" required>
@@ -60,7 +136,7 @@
                     Підтверджено.
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 not_GP">
                 <label for="validationCustom02" class="form-label">Номер карти</label>
                 <input type="text" class="form-control" id="validationCustom02" required>
                 <div class="valid-feedback">
@@ -70,7 +146,7 @@
                     Будьласка, введіть номер карти.
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 not_GP">
                 <label for="number_post" class="form-label">Термін придатності карти</label>
                 <div class="input-group">
                     <input type="text" maxlength="2" class="form-control" id="number_post" name="number_post" required>
@@ -85,7 +161,7 @@
                 </div>
                 
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 not_GP">
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">СVV</span>
                     <input type="text" maxlength="3" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
@@ -97,17 +173,17 @@
             <div class="col-md-6" id="btn_pay" hidden></div>
             <div class="col-12 d-flex flex-row justify-content-center align-items-center">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                    <label class="form-check-label" for="invalidCheck">
-                        "Я згоджуюсь з умовамі відправки."
+                    <input class="form-check-input" type="checkbox" value="" id="payCheck" required>
+                    <label class="form-check-label" for="payCheck">
+                        "Я згоджуюсь з умовамі оплати."
                     </label>
                     <div class="invalid-feedback">
-                        Ви повинні підтвердити умови відправки.
+                        Ви повинні підтвердити умови оплати.
                     </div>
                 </div>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Submit form</button>
+                <button class="btn btn-primary" type="submit" value="pay_info">Submit form</button>
             </div>
         </form>
     </div>
@@ -128,20 +204,34 @@
         })()
     </script>
     <script defer>
-        const allSel = $('#card_select')[0];
-            console.log(allSel);
-            allSel.on('blur', function() {
-                let selNum = allSel.val();
-                if(selNum == 'GP'){
-                    console.log(1);
-                    // $('#btn_pay').prop('hidden', true);
+        $(document).ready(function() {
+            
+            $('#card_select').on('change', function() {
+                if ($('#card_select').val() == 'GP'){
+                    $("#btn_pay").prop('hidden', false)
+                    $(".not_GP").each((index, elem) => {
+                        console.log(elem)
+                        $(elem).prop('hidden', true)
+                    })
+                    $(".not_GP input").each((index, elem) => {
+                        $(elem).prop('required', false)
+                    })
+                    
                 } else {
-                    console.log(1)
-                    // $(sel).addClass('valid');
-            }
+                    $("#btn_pay").prop('hidden', true)
+                    $(".not_GP").each((index, elem) => {
+                        console.log(elem)
+                        $(elem).prop('hidden', false)
+                    })
+                    $(".not_GP input").each((index, elem) => {
+                        $(elem).prop('required', true)
+                    })
+                }
+            });
         });
     </script>
     <script src="{% static 'order/order.js' %}"></script>
+    <script src="{% static 'order/post_order.js' %}"></script>
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 {% endblock main %}
     

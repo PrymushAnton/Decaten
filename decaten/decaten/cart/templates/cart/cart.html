@@ -75,7 +75,9 @@
         {% endfor %}
         </div>
     </div>
-    <div class="row justify-content-center align-items-center content my-4">
-        <a href="{% url 'order' %}" class="btn btn-success col-1 fs-5">Замовити</a>
-    </div>
+    {% if products %}
+        <div class="row justify-content-center align-items-center content my-4">
+            <a href="{% url 'order' %}" class="btn btn-success col-1 fs-5">Замовити</a>
+        </div>
+    {% endif %}
 {% endblock main %}
