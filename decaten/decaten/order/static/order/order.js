@@ -153,15 +153,20 @@ const baseRequest = {
         // handle the response
         processPayment(paymentData)
           .then(function() {
+            $("#payResponse").prop('value', '1')
+            $("#payInfo").submit()
             resolve({transactionState: 'SUCCESS'});
           })
           .catch(function() {
+            $("#payResponse").prop('value', '0')
+            $("#payInfo").submit()
             resolve({
               transactionState: 'ERROR',
               error: {
                 intent: 'PAYMENT_AUTHORIZATION',
                 message: 'Insufficient funds, try again. Next attempt should work.',
                 reason: 'PAYMENT_DATA_INVALID'
+                
               }
             });
             });

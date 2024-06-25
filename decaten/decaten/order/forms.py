@@ -99,11 +99,89 @@ class PostInfoForm(forms.Form):
         })
     )
 
-    terms_conditions = forms.BooleanField(
+    check_post = forms.BooleanField(
         label='"Я згоджуюсь з умовамі відправки."',
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input',
             'id': 'postCheck',
             'required': 'required'
+        })
+    )
+    
+    
+class PaymentForm(forms.Form):
+    CARD_CHOICES = [
+        ('VM', 'Оплата картой Visa/MasterCard'),
+        ('GP', 'Google Pay'),
+    ]
+
+    card_select = forms.ChoiceField(
+        choices=CARD_CHOICES,
+        required=True,
+        label='Оберіть варіант оплати',
+        widget=forms.Select(attrs={
+            'class': 'form-select',
+            'id': 'card_select',
+            'required': True
+        })
+    )
+    
+    card_number = forms.CharField(
+        required=False,
+        label='Номер карти',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'id': 'validationCustom02'
+        })
+    )
+
+    expiry_month = forms.CharField(
+        required=False,
+        max_length=2,
+        label='Термін придатності карти (місяць)',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'maxlength': '2',
+            'name': 'number_post'
+        })
+    )
+
+    expiry_year = forms.CharField(
+        required=False,
+        max_length=2,
+        label='Термін придатності карти (рік)',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'maxlength': '2',
+            'name': 'number_post'
+        })
+    )
+
+    cvv = forms.CharField(
+        required=False,
+        max_length=3,
+        label='СVV',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'maxlength': '3',
+            'id': 'validationCustomUsername',
+            'aria-describedby': 'inputGroupPrepend'
+        })
+    )
+
+    pay_response = forms.CharField(
+        required=True,
+        widget=forms.HiddenInput(attrs={
+            'id': 'payResponse',
+            'value': '0'
+        })
+    )
+
+    pay_check = forms.BooleanField(
+        required=True,
+        label='Я згоджуюсь з умовамі оплати.',
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input',
+            'id': 'payCheck'
         })
     )

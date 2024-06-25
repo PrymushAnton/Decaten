@@ -104,7 +104,7 @@
             </div>
             <div class="col-12 d-flex flex-row justify-content-center align-items-center">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="terms_conditions" id="postCheck" required>
+                    <input class="form-check-input" type="checkbox" value="1" name="check_post" id="postCheck" required>
                     <label class="form-check-label" for="postCheck">
                         "Я згоджуюсь з умовамі відправки."
                     </label>
@@ -125,9 +125,9 @@
             </div>
             <div class="col-md-3 ">
                 <label for="card_select" class="form-label">Оберіть варіант оплати</label>
-                <select class="form-select" id="card_select" required>
-                    <option class="card_select_element" selected value="VM">Оплата картой Visa/MasterCard</option>
-                    <option class="card_select_element" value="GP">Google Pay</option>
+                <select class="form-select" id="card_select" name="card_select" required>
+                    <option class="card_select_element" value="VM">Оплата картой Visa/MasterCard</option>
+                    <option class="card_select_element" selected value="GP">Google Pay</option>
                 </select>
                 <div class="invalid-feedback">
                     Будьласка оберіть один з наданих варіантів.
@@ -136,9 +136,9 @@
                     Підтверджено.
                 </div>
             </div>
-            <div class="col-md-4 not_GP">
+            <div class="col-md-4 not_GP" hidden>
                 <label for="validationCustom02" class="form-label">Номер карти</label>
-                <input type="text" class="form-control" id="validationCustom02" required>
+                <input type="text" class="form-control" id="validationCustom02" name="card_number">
                 <div class="valid-feedback">
                     Підтверджено.
                 </div>
@@ -146,12 +146,12 @@
                     Будьласка, введіть номер карти.
                 </div>
             </div>
-            <div class="col-md-3 not_GP">
+            <div class="col-md-3 not_GP" hidden>
                 <label for="number_post" class="form-label">Термін придатності карти</label>
                 <div class="input-group">
-                    <input type="text" maxlength="2" class="form-control" id="number_post" name="number_post" required>
+                    <input type="text" maxlength="2" class="form-control" id="number_post" name="number_post" >
                     <span class="input-group-text">/</span>
-                    <input type="text" maxlength="2" class="form-control" id="number_post" name="number_post" required>
+                    <input type="text" maxlength="2" class="form-control" id="number_post" name="number_post" >
                     <div class="valid-feedback">
                         Підтверджено.
                     </div>
@@ -161,19 +161,21 @@
                 </div>
                 
             </div>
-            <div class="col-md-2 not_GP">
+            <div class="col-md-2 not_GP" hidden>
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">СVV</span>
-                    <input type="text" maxlength="3" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <input type="text" name="cvv" maxlength="3" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" >
                     <div class="invalid-feedback">
                         Заповніть це поле.
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" id="btn_pay" hidden></div>
+            <div class="col-md-6" id="btn_pay"  >
+                <input hidden type="hidden" id="payResponse" name="payResponse" value="0">
+            </div>
             <div class="col-12 d-flex flex-row justify-content-center align-items-center">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="payCheck" required>
+                    <input class="form-check-input" type="checkbox" name="pay_check" id="payCheck" required>
                     <label class="form-check-label" for="payCheck">
                         "Я згоджуюсь з умовамі оплати."
                     </label>
@@ -182,8 +184,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit" value="pay_info">Submit form</button>
+            <div class="col-12 " id="subPayBtn" hidden>
+                <button class="btn btn-primary" type="submit">Submit form</button>
             </div>
         </form>
     </div>
@@ -203,35 +205,9 @@
             })
         })()
     </script>
-    <script defer>
-        $(document).ready(function() {
-            
-            $('#card_select').on('change', function() {
-                if ($('#card_select').val() == 'GP'){
-                    $("#btn_pay").prop('hidden', false)
-                    $(".not_GP").each((index, elem) => {
-                        console.log(elem)
-                        $(elem).prop('hidden', true)
-                    })
-                    $(".not_GP input").each((index, elem) => {
-                        $(elem).prop('required', false)
-                    })
-                    
-                } else {
-                    $("#btn_pay").prop('hidden', true)
-                    $(".not_GP").each((index, elem) => {
-                        console.log(elem)
-                        $(elem).prop('hidden', false)
-                    })
-                    $(".not_GP input").each((index, elem) => {
-                        $(elem).prop('required', true)
-                    })
-                }
-            });
-        });
-    </script>
     <script src="{% static 'order/order.js' %}"></script>
-    <script src="{% static 'order/post_order.js' %}"></script>
+    
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    <script src="{% static 'order/post_order.js' %}"></script>
 {% endblock main %}
     
