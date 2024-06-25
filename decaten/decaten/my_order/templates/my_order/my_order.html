@@ -1,0 +1,154 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'my_order/css/my_order.css' %}">
+    <script defer src="{% static 'my_order/js/my_order.js' %}"></script>
+{% endblock %}
+
+
+
+{% block main %}
+    <!-- <div class="content">
+        <div class="form_div">
+            <form class="order_form" action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Ім'я користувача</label>
+                    <input required name="first_name" type="text" class="form-control first_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Прізвище користувача</label>
+                    <input required name="last_name" type="text" class="form-control last_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <button>Відправити</button>
+            </form>
+        </div>
+        
+    </div> -->
+
+    <select id="area-select">
+        <option value="">Select Area</option>
+      </select>
+      
+      <select id="city-select">
+        <option value="">Select City</option>
+      </select>
+      
+      <div id="radio-buttons">
+        <input type="radio" id="warehouses-radio" name="location_type" value="warehouses" disabled>
+        <label for="warehouses-radio">Warehouses</label>
+        <input type="radio" id="postmachines-radio" name="location_type" value="postmachines" disabled>
+        <label for="postmachines-radio">Postmachines</label>
+      </div>
+      
+      <select id="location-select">
+        <option value="">Select Location</option>
+      </select>
+      
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        // Завантаження списку областей при завантаженні сторінки
+        $(document).ready(function() {
+          $.ajax({
+            url: '/areas/',
+            success: function(data) {
+              var $areaSelect = $('#area-select');
+              $areaSelect.empty();
+              $areaSelect.append('<option value="">Select Area</option>');
+              data.forEach(function(area) {
+                $areaSelect.append(
+                  $('<option>', {
+                    value: area.Ref,
+                    text: area.Description
+                  })
+                );
+              });
+            }
+          });
+        });
+      
+        // Завантаження списку міст при виборі області
+        $('#area-select').on('change', function() {
+          var areaRef = $(this).val();
+          $.ajax({
+            url: '/cities/',
+            data: { 'area_ref': areaRef },
+            success: function(data) {
+              var $citySelect = $('#city-select');
+              $citySelect.empty();
+              $citySelect.append('<option value="">Select City</option>');
+              data.forEach(function(city) {
+                $citySelect.append(
+                  $('<option>', {
+                    value: city.Ref,
+                    text: city.Description
+                  })
+                );
+              });
+            }
+          });
+        });
+      
+        // Перевірка наявності відділень та поштоматів при виборі міста
+        $('#city-select').on('change', function() {
+          var cityRef = $(this).val();
+          console.log(cityRef)
+          $.ajax({
+            url: '/warehouses/',
+            data: { 'city_ref': cityRef },
+            success: function(data) {
+              var hasWarehouses = data.some(item => item.TypeOfWarehouse === '9');
+              var hasPostmachines = data.some(item => item.TypeOfWarehouse === '10');
+      
+              $('#warehouses-radio').prop('disabled', !hasWarehouses);
+              $('#postmachines-radio').prop('disabled', !hasPostmachines);
+      
+              $('#warehouses-radio').prop('checked', hasWarehouses);
+              $('#postmachines-radio').prop('checked', hasPostmachines && !hasWarehouses);
+      
+              if (hasWarehouses || hasPostmachines) {
+                fillLocationSelect(data);
+              } else {
+                $('#location-select').empty().append('<option value="">No Locations Available</option>');
+              }
+            }
+          });
+        });
+      
+        // Заповнення селекту локацій залежно від вибору радіо кнопки
+        $('input[name="location_type"]').on('change', function() {
+          var cityRef = $('#city-select').val();
+          if (!cityRef) return;
+          $.ajax({
+            url: '/warehouses/',
+            data: { 'city_ref': cityRef },
+            success: function(data) {
+              fillLocationSelect(data);
+            }
+          });
+        });
+      
+        function fillLocationSelect(data) {
+          var $locationSelect = $('#location-select');
+          $locationSelect.empty();
+          $locationSelect.append('<option value="">Select Location</option>');
+          var selectedType = $('input[name="location_type"]:checked').val();
+          data.forEach(function(location) {
+            if ((selectedType === 'warehouses' && location.TypeOfWarehouse === '9') ||
+                (selectedType === 'postmachines' && location.TypeOfWarehouse === '10')) {
+              $locationSelect.append(
+                $('<option>', {
+                  value: location.Ref,
+                  text: location.Description
+                })
+              );
+            }
+          });
+        }
+      </script>
+{% endblock %}
