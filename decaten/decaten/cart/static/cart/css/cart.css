@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* margin-top: 8%;   */
+    min-height: calc(100vh - 80px);
+    /* height: 100vh; */
+}
+
+.products{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin-top: 1%;
+    width: 100%;
+}
+
+.error_empty{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+}
+.error_empty img{
+    width: 30%;
+}
+.product_card{
+    display: flex;
+    align-items: center;
+    padding-bottom: 1%;
+    margin-bottom: 2%;
+    width: 20%;
+    flex-direction: column;
+
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+}
+.product_card img{
+    width: 75%;
+    margin: 2%;
+}
+.product_card p{
+    margin-bottom: 2%;
+}
+
+.count{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 1.5%;
+    background-color: white;
+    /* width: 100%; */
+
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.plus, .minus{
+    width: 33px;
+    height: 33px;
+    /* padding: 15%; */
+    background-color: white;
+    transition: background-color 0.3s ease;
+
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+}
+
+.plus:hover, .minus:hover{
+    background-color: gray;
+}
+
+.count_div{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5%;
+    margin-bottom: 4%;
+}
+
+.delete_div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.delete {
+    /* width: 50%;
+    height: 20%; */
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+
+    background-color: white;
+
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+
+    transition: background-color 0.3s ease;
+}
+
+.delete_div form{
+    width: 100%;
+    
+}
+
+.delete:hover{
+    background-color: gray;
+}

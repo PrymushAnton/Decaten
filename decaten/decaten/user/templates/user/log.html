@@ -9,10 +9,9 @@
 
 
 {% block main %}
-  <div class="d-flex align-items-center justify-content-center w-100">
-    <!-- <div class="col-4"></div> -->
-    <div class="w-25 border rounded py-4 px-5 bg-white">
-      <form action="" method="post" class="d-flex flex-column">
+  <div class="content">
+    <div class="form_div">
+      <form action="" method="post">
           {% csrf_token %}
           <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Адреса електронної пошти</label>
@@ -24,17 +23,17 @@
               <input name="password" type="password" class="form-control password" id="exampleInputPassword1">
               <div class="invalid-feedback"></div>
             </div>
-            <!-- <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
-            </div> -->
-            <button type="submit" class="btn btn-primary send">Надіслати</button>
-            <p class="ajax_text"></p>
+            <div class="button_div">
+              <button type="submit" class="btn btn-primary send" style="margin-top: 15px;">Надіслати</button>
+            </div>
+              <!-- <p class="ajax_text"></p> -->
       </form>
     </div>
-    <!-- <div class="col-4"></div> -->
   </div>
   </div>
    
 {% endblock main %}
-    
+  
+{% block footer %}
+
+{% endblock %}

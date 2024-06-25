@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+.content{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    min-height: calc(100vh - 180px);
+}
+
+.image_div{
+    display: flex;
+    justify-content: start;
+    width: 25%;
+}
+
+.image_div img{
+    width: 75%;
+    margin: 2%;
+}

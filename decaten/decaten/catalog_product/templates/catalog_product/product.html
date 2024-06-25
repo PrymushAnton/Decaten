@@ -7,14 +7,17 @@
     <script defer src="{% static '\catalog_product\js\product.js' %}"></script>
     <script defer src="{% static 'catalog_product\js\flavour.js' %}"></script>
     <script defer src="{% static 'catalog_product\js\add_to_cart.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'catalog_product/css/product.css' %}">
 {% endblock link %}
     
 
 {% block main %}
-    <div class="d-flex justify-content-center align-items-center mx-5 my-5 ">
-
-        <div class="w-auto d-flex justify-content-start">
-            <img id="1" class="w-75 m-2 image_flavour{{product.id}}" src="{{flaur.0.image.url}}" alt="">
+<!-- d-flex justify-content-center align-items-center mx-5 my-5  -->
+    <div class="content">
+        <!-- w-auto d-flex justify-content-start  -->
+        <div class="image_div">
+            <!-- w-75 m-2  -->
+            <img id="1" class="image_flavour{{product.id}}" src="{{flaur.0.image.url}}" alt="">
         </div>
 
         <div class="d-flex flex-column justify-content-start align-items-center pe-5">

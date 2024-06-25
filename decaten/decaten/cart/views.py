@@ -15,6 +15,8 @@ def cart(request):
         cart = Cart.objects.get(sessionkey=session_key)
     except:
         cart = Cart.objects.create(sessionkey=session_key)
+        
+    # print(cart.productincart_set.)
               
     context = {
         "products": cart.productincart_set.all(),
@@ -78,7 +80,7 @@ def plus_count(request):
         count = product.count
         product.save()
         
-        return JsonResponse({"count": count, 'product_id': hidden_input[1]})
+        return JsonResponse({"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0]})
     except:
         return HttpResponse()
     
@@ -107,7 +109,7 @@ def minus_count(request):
             product.delete()
 
         count = product.count
-        return JsonResponse({"count": count, 'product_id': hidden_input[1]})
+        return JsonResponse({"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0]})
     except:
         return HttpResponse()
     
@@ -130,6 +132,29 @@ def delete_product(request):
         hidden_input = hidden_input.split(',')
         product = cart.productincart_set.get(product_id=hidden_input[1], flavour_id=hidden_input[0])
         product.delete()
-        return JsonResponse({'product_id': hidden_input[1]})
+        products = list(cart.productincart_set.all().values())
+        print(products)
+        return JsonResponse({'product_id': hidden_input[1], 'flavour_id': hidden_input[0]})
     except:
         return HttpResponse()
+
+def error_empty(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    # flavours = Flavour.objects.all()
+
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+        
+    # print(cart.productincart_set.)
+    
+    cart = list(cart.productincart_set.all().values())
+    
+
+    
+    return JsonResponse({"products": cart})
