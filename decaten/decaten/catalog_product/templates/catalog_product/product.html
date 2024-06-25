@@ -19,9 +19,11 @@
             <!-- w-75 m-2  -->
             <img id="1" class="image_flavour{{product.id}}" src="{{flaur.0.image.url}}" alt="">
         </div>
-
-        <div class="d-flex flex-column justify-content-start align-items-center pe-5">
-            <p class="h1">{{product.name}}</p> 
+        <!-- d-flex flex-column justify-content-start align-items-center pe-5 -->
+        <div class="product_info ">
+            <!-- <p class="h1">{{product.name}}</p>  -->
+             
+            <h1>{{product.name}}</h1>
  
             {% for filter in list_of_filters %}
                 <div class="d-flex">

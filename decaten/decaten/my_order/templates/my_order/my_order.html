@@ -11,7 +11,7 @@
 
 
 {% block main %}
-    <!-- <div class="content">
+    <!-- 
         <div class="form_div">
             <form class="order_form" action="" method="POST">
                 {% csrf_token %}
@@ -29,27 +29,26 @@
             </form>
         </div>
         
-    </div> -->
-
-    <select id="area-select">
-        <option value="">Select Area</option>
-      </select>
-      
-      <select id="city-select">
-        <option value="">Select City</option>
-      </select>
-      
-      <div id="radio-buttons">
-        <input type="radio" id="warehouses-radio" name="location_type" value="warehouses" disabled>
-        <label for="warehouses-radio">Warehouses</label>
-        <input type="radio" id="postmachines-radio" name="location_type" value="postmachines" disabled>
-        <label for="postmachines-radio">Postmachines</label>
-      </div>
-      
-      <select id="location-select">
-        <option value="">Select Location</option>
-      </select>
-      
+    -->
+    <div class="content">
+        <form action="" method="POST">
+          <div class="form_div">
+            <select id="area-select">
+              <option value="">Оберіть Область</option>
+            </select>
+              
+            <select id="city-select">
+                <option value="">Оберіть Місто</option>
+            </select>
+              
+            <select id="location-select">
+                <option value="">Оберіть Відділення</option>
+            </select>
+          </div>
+            
+        </form>
+        
+    </div>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script>
         // Завантаження списку областей при завантаженні сторінки
@@ -59,7 +58,7 @@
             success: function(data) {
               var $areaSelect = $('#area-select');
               $areaSelect.empty();
-              $areaSelect.append('<option value="">Select Area</option>');
+              $areaSelect.append('<option value="">Оберіть Область</option>');
               data.forEach(function(area) {
                 $areaSelect.append(
                   $('<option>', {
@@ -81,7 +80,9 @@
             success: function(data) {
               var $citySelect = $('#city-select');
               $citySelect.empty();
-              $citySelect.append('<option value="">Select City</option>');
+              $('#location-select').empty()
+              $citySelect.append('<option value="">Оберіть Місто</option>');
+              $('#location-select').append('<option value="">Оберіть відділення</option>')
               data.forEach(function(city) {
                 $citySelect.append(
                   $('<option>', {
@@ -97,25 +98,35 @@
         // Перевірка наявності відділень та поштоматів при виборі міста
         $('#city-select').on('change', function() {
           var cityRef = $(this).val();
-          console.log(cityRef)
           $.ajax({
             url: '/warehouses/',
             data: { 'city_ref': cityRef },
             success: function(data) {
-              var hasWarehouses = data.some(item => item.TypeOfWarehouse === '9');
-              var hasPostmachines = data.some(item => item.TypeOfWarehouse === '10');
+              var $locationSelect = $('#location-select');
+              $locationSelect.empty();
+              $locationSelect.append('<option value="">Оберіть відділення</option>');
+              data.forEach(function(location) {
+                $locationSelect.append(
+                  $('<option>', {
+                    value: location.Ref,
+                    text: location.Description
+                  })
+                );
+              });
+              // var hasWarehouses = data.some(item => item.TypeOfWarehouse === '9');
+              // var hasPostmachines = data.some(item => item.TypeOfWarehouse === '10');
       
-              $('#warehouses-radio').prop('disabled', !hasWarehouses);
-              $('#postmachines-radio').prop('disabled', !hasPostmachines);
+              // $('#warehouses-radio').prop('disabled', !hasWarehouses);
+              // $('#postmachines-radio').prop('disabled', !hasPostmachines);
       
-              $('#warehouses-radio').prop('checked', hasWarehouses);
-              $('#postmachines-radio').prop('checked', hasPostmachines && !hasWarehouses);
+              // $('#warehouses-radio').prop('checked', hasWarehouses);
+              // $('#postmachines-radio').prop('checked', hasPostmachines && !hasWarehouses);
       
-              if (hasWarehouses || hasPostmachines) {
-                fillLocationSelect(data);
-              } else {
-                $('#location-select').empty().append('<option value="">No Locations Available</option>');
-              }
+              // if (hasWarehouses || hasPostmachines) {
+              //   fillLocationSelect(data);
+              // } else {
+              //   $('#location-select').empty().append('<option value="">No Locations Available</option>');
+              // }
             }
           });
         });

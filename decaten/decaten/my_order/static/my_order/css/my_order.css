@@ -12,8 +12,9 @@
 }
 
 .form_div {
-    width: 30%;
-    height: 50%;
+    /* width: max-content;
+    height: 50%; */
+    padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -33,3 +34,8 @@
     justify-content: center;
     align-items: center;
 } */
+
+select{
+    width: 200px;
+    margin-bottom: 10px;
+}
