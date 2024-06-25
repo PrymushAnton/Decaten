@@ -50,6 +50,10 @@
     width: 75%;
     margin: 2%;
 }
+.product_card p{
+    margin-bottom: 2%;
+}
+
 .count{
     display: flex;
     align-items: center;
