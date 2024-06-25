@@ -18,15 +18,13 @@ Decaten is a site where you can buy disposable e-cigarettes.
 
 List the libraries and technologies used in the project.
 
-- HTML
-- CSS
-- Java Script
-- Django
-- JavaScript
-- Jquery
-- Ajax
-- Bootstrap
-- SQLite3
+- HTML - creating body for pages
+- CSS - creating styles for pages
+- JavaScript/Jquery - for front-end development
+- Python/Django - for back-end development
+- Ajax - used for preventing page from reloading
+- Bootstrap - used to create useful elements
+- SQLite3 - used for saving data
 
 ## Models
 
