@@ -30,8 +30,15 @@ def order_page(request):
                 context = "dict_items([('sPost', ['']))])"
             else:
                 context = form.errors.items()
-        elif request.POST.get('pay_info'):
+        elif request.POST.get('payResponse'):
             form = PaymentForm(request.POST)
+            if form.is_valid():
+                print(form.changed_data, request.POST.get('payResponse'))
+                for i in form.changed_data:
+                    # form[i].key() == form.cleaned_data[i]
+                    print(form.cleaned_data[i])
+            else:
+                print(form.errors)
         # post = request.POST.get("post")
         # sending_option = request.POST.get("sending_option")
         # address = request.POST.get("address")

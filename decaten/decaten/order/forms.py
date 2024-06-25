@@ -169,11 +169,10 @@ class PaymentForm(forms.Form):
         })
     )
 
-    pay_response = forms.CharField(
-        required=True,
+    payResponse = forms.CharField(
+        required=False,
         widget=forms.HiddenInput(attrs={
             'id': 'payResponse',
-            'value': '0'
         })
     )
 
