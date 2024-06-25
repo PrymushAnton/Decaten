@@ -36,7 +36,7 @@
     display: flex;
     align-items: center;
     padding-bottom: 1%;
-    margin-bottom: 2%;
+    margin-bottom: 3%;
     width: 20%;
     flex-direction: column;
 
@@ -68,8 +68,8 @@
 }
 
 .plus, .minus{
-    width: 33px;
-    height: 33px;
+    width: 25px;
+    height: 25px;
     /* padding: 15%; */
     background-color: white;
     transition: background-color 0.3s ease;
@@ -127,4 +127,116 @@
 
 .delete:hover{
     background-color: gray;
+}
+
+.make_order{
+    position: fixed;
+    right: 3%;
+    bottom: 5%;
+    background-color: rgb(30, 211, 30);
+    color: black;
+    font-size: 22px;
+    text-decoration: none;
+    padding: 5px 20px;
+
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+
+    transition: all 0.3s ease;
+}
+
+.make_order:hover{
+    background-color: rgb(22, 155, 22);
+    color: white
+}
+@media (max-width: 1024px){
+    .product_card {
+        width: 29%;
+    }
+}
+
+@media (max-width: 768px){
+    /* .products{
+        gap: 3%;
+    } */
+
+    .product_card p{
+        margin-bottom: 2%;
+        font-size: 15px;
+    }
+    .product_card h5{
+        font-size: 18px;
+    }
+    button{
+        font-size: 15px;
+        margin-bottom: 2%;
+    }
+    .count{
+        font-size: 15px;
+    }
+
+    .make_order{
+        right: 5%;
+        bottom: 10%;
+        background-color: rgb(30, 211, 30);
+        color: black;
+        font-size: 18px;
+        text-decoration: none;
+        padding: 3px 10px;
+    
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+        box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    
+        transition: all 0.3s ease;
+    }
+
+
+    /* .plus, .minus{
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    } */
+}
+
+@media (max-width: 650px){
+    .product_card {
+        width: 40%;
+        margin-bottom: 5%;
+    }
+    .products{
+        gap: 5%;
+    }
+}
+
+@media (max-width:450px){
+    .product_card{
+        width: 45%;
+        margin-bottom: 3%;
+    }
+    .products{
+        gap: 3%;
+    }
+    .product_card p{
+        margin-bottom: 2%;
+        font-size: 14px;
+    }
+    .product_card h5{
+        font-size: 16px;
+    }
+    button{
+        font-size: 14px;
+        margin-bottom: 2%;
+    }
+    .count{
+        font-size: 14px;
+    }
+    #flavour_name{
+        font-size: 12px;
+    }
 }

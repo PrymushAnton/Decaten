@@ -38,7 +38,7 @@
                     
                     {% for flavour in flavours %}
                         {% if flavour.id == product_in_cart.flavour_id %}
-                            <p>{{flavour.name}}</p>
+                            <p id="flavour_name">{{flavour.name}}</p>
                         {% endif %}
                     {% endfor %}
                     <!-- d-flex gap-1 mb-2 -->
@@ -88,9 +88,10 @@
 
     </div>
     {% if products %}
-        <div class="row justify-content-center align-items-center content my-4">
-            <a href="{% url 'order' %}" class="btn btn-success col-1 fs-5">Замовити</a>
-        </div>
+    <!-- row justify-content-center align-items-center content my-4 -->
+        <!-- <div class="make_order"> -->
+            <a href="{% url 'order' %}" class="make_order">Замовити</a>
+        <!-- </div> -->
     {% endif %}
     </div>
 {% endblock main %}
