@@ -1,3 +1,4 @@
+
 /**
  * Define the version of the Google Pay API referenced when creating your
  * configuration
@@ -152,15 +153,20 @@ const baseRequest = {
         // handle the response
         processPayment(paymentData)
           .then(function() {
+            $("#payResponse").prop('value', '1')
+            $("#payInfo").submit()
             resolve({transactionState: 'SUCCESS'});
           })
           .catch(function() {
+            $("#payResponse").prop('value', '0')
+            $("#payInfo").submit()
             resolve({
               transactionState: 'ERROR',
               error: {
                 intent: 'PAYMENT_AUTHORIZATION',
                 message: 'Insufficient funds, try again. Next attempt should work.',
                 reason: 'PAYMENT_DATA_INVALID'
+                
               }
             });
             });
@@ -254,9 +260,9 @@ const baseRequest = {
           paymentToken = paymentData.paymentMethodData.tokenizationData.token;
     
                 if (attempts++ % 2 == 0) {
-              reject(new Error('Every other attempt fails, next one should succeed'));      
+              reject(new Error('Every other attempt fails, next one should succeed'));
           } else {
-              resolve({});      
+              resolve({});
           }
         }, 500);
       });

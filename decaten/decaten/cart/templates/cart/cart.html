@@ -23,8 +23,6 @@
                 <h2>Кошик порожній!</h2>
                 <img src="{% static 'cart/icons/cart.svg' %}" alt="">
             </div>
-                
-            <!-- {% endif %} -->
             {% for product_in_cart in products %}
             <!-- d-flex align-items-center py-3 mb-3 shadow  -->
                 <div class="card_{{product_in_cart.product_id}}_{{product_in_cart.flavour_id}} product_card product_{{product.id}}_{{product_in_cart.flavour_id}}">
@@ -87,9 +85,12 @@
                 </div>
             {% endfor %}
         </div>
-        
-        <!-- <div class="col-1"></div> -->
-        
-        
+
+    </div>
+    {% if products %}
+        <div class="row justify-content-center align-items-center content my-4">
+            <a href="{% url 'order' %}" class="btn btn-success col-1 fs-5">Замовити</a>
+        </div>
+    {% endif %}
     </div>
 {% endblock main %}
