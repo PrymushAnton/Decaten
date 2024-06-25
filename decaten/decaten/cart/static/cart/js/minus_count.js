@@ -14,6 +14,7 @@ $(document).ready(function() {
                 console.log('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`)
                 if (data.count > 0) {
                     $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
+                    $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
                 } 
                 if (data.count < 1) {
                     $(".card_"+`${data.product_id}`+'_'+`${data.flavour_id}`).remove()

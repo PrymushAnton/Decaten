@@ -34,8 +34,10 @@
                     {% endfor %}
                     
                     <h5>{{product_in_cart.product.name}}</h5>
-                    <p>{{product_in_cart.product.price}} грн</p>
-                    
+                    {% for price in prices %}
+                        <p id="price_{{product_in_cart.product_id}}_{{product_in_cart.flavour_id}}">{{price}} грн</p>
+                    {% endfor %}
+
                     {% for flavour in flavours %}
                         {% if flavour.id == product_in_cart.flavour_id %}
                             <p id="flavour_name">{{flavour.name}}</p>

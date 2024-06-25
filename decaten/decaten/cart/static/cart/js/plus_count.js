@@ -10,8 +10,10 @@ $(document).ready(function() {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(data){
-                console.log(".card_"+`${data.product_id}`+'_'+`${data.flavour_id}`)
+                // console.log(".card_"+`${data.product_id}`+'_'+`${data.flavour_id}`)
+                console.log('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`)
                 $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
+                $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
             }
         })
     })
