@@ -33,11 +33,11 @@
     <div class="content">
         <form action="" method="POST">
           <div class="form_div">
-            <select id="area-select">
+            <select id="area-select" class="form-select">
               <option value="">Оберіть Область</option>
             </select>
               
-            <select id="city-select">
+            <select id="city-select" class="form-select">
                 <option value="">Оберіть Місто</option>
             </select>
 
@@ -57,12 +57,44 @@
               <label for="Postomat">Поштомати</label>
             </div> -->
               
-            <select id="location-select">
+            <select id="location-select" class="form-select">
                 <option value="">Оберіть Відділення</option>
             </select>
+
+            <div class="for_credit_card">
+              <label for="credit_card">Номер картки</label>
+              <input type="text" class="form-control" id="credit_card">
+              
+              <div class="additional-info">
+
+                <div class="expiration-date-parent">
+                  <label for="month">Термін дії</label>
+                  <div class="expiration-date">
+                    <input type="text" class="form-control" id="month">
+                    <span class="input-separator">/</span>
+                    <input type="text" class="form-control" id="year">
+                  </div>
+
+
+
+                </div>
+                <div class="cvv">
+                  <label for="cvv">CVV</label>
+                  <input type="password" class="form-control" id="cvv">
+                </div>
+                
+              </div>
+
+            </div>
+            <div class="button_send">
+              <button class="send btn btn-success">Оформити замовлення</button>
+            </div>
           </div>
             
+
+
         </form>
+
         
     </div>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
