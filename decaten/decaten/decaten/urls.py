@@ -19,7 +19,7 @@ from django.urls import path
 from decaten.settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
 from main.views import *
-from base.views import base
+from base.views import *
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
 from cart.views import *
@@ -58,6 +58,8 @@ urlpatterns = [
     path('areas/', areas, name='areas'),
     path('cities/', cities, name='cities'),
     path('warehouses/', warehouses, name='warehouses'),
+    
+    path('count_cart/', count_cart, name='count_cart'),
 
 ]
 

@@ -15,6 +15,11 @@ $(document).ready(function() {
                 if (data.count > 0) {
                     $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
                     $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
+                    if (data.count_cart > '99'){
+                        $('#count_cart').html('99+')
+                    } else {
+                        $('#count_cart').html(data.count_cart)
+                    }
                 } 
                 if (data.count < 1) {
                     $(".card_"+`${data.product_id}`+'_'+`${data.flavour_id}`).remove()
@@ -25,6 +30,13 @@ $(document).ready(function() {
                     //     </div>`
                     // )
                     $('.error_empty').css('display', 'flex')
+                    if (data.count_cart > '99'){
+                        $('#count_cart').html('99+')
+                    } else {
+                        $('#count_cart').html(data.count_cart)
+                    }
+                    
+                    $('#count_cart').css('display', 'none')
                 }
                 
             }

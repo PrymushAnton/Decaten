@@ -40,6 +40,22 @@
             <select id="city-select">
                 <option value="">Оберіть Місто</option>
             </select>
+
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Branch" disabled>
+              <label class="form-check-label" for="Branch">Відділення</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Postomat" disabled>
+              <label class="form-check-label" for="Postomat">Поштомати</label>
+            </div>
+            <!-- <div>
+              <input type="radio" id="">
+              <label for="Branch">Відділення</label>
+              <input type="radio" id="Postomat">
+              <label for="Postomat">Поштомати</label>
+            </div> -->
               
             <select id="location-select">
                 <option value="">Оберіть Відділення</option>
@@ -58,6 +74,7 @@
             success: function(data) {
               var $areaSelect = $('#area-select');
               $areaSelect.empty();
+              
               $areaSelect.append('<option value="">Оберіть Область</option>');
               data.forEach(function(area) {
                 $areaSelect.append(
@@ -74,6 +91,11 @@
         // Завантаження списку міст при виборі області
         $('#area-select').on('change', function() {
           var areaRef = $(this).val();
+          $('#Branch').prop('checked', false)
+          $('#Postomat').prop('checked', false)
+
+          $('#Branch').attr('disabled', true)
+          $('#Postomat').attr('disabled', true)
           $.ajax({
             url: '/cities/',
             data: { 'area_ref': areaRef },
@@ -81,6 +103,7 @@
               var $citySelect = $('#city-select');
               $citySelect.empty();
               $('#location-select').empty()
+
               $citySelect.append('<option value="">Оберіть Місто</option>');
               $('#location-select').append('<option value="">Оберіть відділення</option>')
               data.forEach(function(city) {
@@ -98,68 +121,121 @@
         // Перевірка наявності відділень та поштоматів при виборі міста
         $('#city-select').on('change', function() {
           var cityRef = $(this).val();
+          $('#Branch').prop('checked', false)
+          $('#Postomat').prop('checked', false)
+
+          $('#Branch').attr('disabled', true)
+          $('#Postomat').attr('disabled', true)
+          $('#location-select').empty()
+          $('#location-select').append('<option value="">Оберіть відділення</option>')
           $.ajax({
             url: '/warehouses/',
             data: { 'city_ref': cityRef },
             success: function(data) {
+              var branch = false
+              var postomat = false
+              data.forEach(function(location) {
+                if (!branch){
+                  if (location.CategoryOfWarehouse == 'Branch'){
+                    branch = true
+
+                  }
+                }
+                if (!postomat){
+                  if (location.CategoryOfWarehouse == 'Postomat'){
+                    postomat = true
+                  }
+                }
+              });
+              if (branch){
+                $("#Branch").removeAttr('disabled')
+              }
+              if (postomat){
+                $("#Postomat").removeAttr('disabled')
+              }
+            }
+          });
+        });
+
+        $('#Branch').on('click', function(){
+          // console.log(123123123)
+          var cityRef = $('#city-select').val()
+          $.ajax({
+            url: '/warehouses/',
+            type: "GET",
+            data: {'city_ref': cityRef},
+            success: function(data){
               var $locationSelect = $('#location-select');
               $locationSelect.empty();
               $locationSelect.append('<option value="">Оберіть відділення</option>');
               data.forEach(function(location) {
-                $locationSelect.append(
+                if (location.CategoryOfWarehouse == 'Branch'){
+                  $locationSelect.append(
                   $('<option>', {
                     value: location.Ref,
                     text: location.Description
                   })
                 );
+                }
               });
-              // var hasWarehouses = data.some(item => item.TypeOfWarehouse === '9');
-              // var hasPostmachines = data.some(item => item.TypeOfWarehouse === '10');
-      
-              // $('#warehouses-radio').prop('disabled', !hasWarehouses);
-              // $('#postmachines-radio').prop('disabled', !hasPostmachines);
-      
-              // $('#warehouses-radio').prop('checked', hasWarehouses);
-              // $('#postmachines-radio').prop('checked', hasPostmachines && !hasWarehouses);
-      
-              // if (hasWarehouses || hasPostmachines) {
-              //   fillLocationSelect(data);
-              // } else {
-              //   $('#location-select').empty().append('<option value="">No Locations Available</option>');
-              // }
             }
-          });
-        });
-      
-        // Заповнення селекту локацій залежно від вибору радіо кнопки
-        $('input[name="location_type"]').on('change', function() {
-          var cityRef = $('#city-select').val();
-          if (!cityRef) return;
+          })
+        })
+
+        $('#Postomat').on('click', function(){
+          // console.log(123123123)
+          var cityRef = $('#city-select').val()
           $.ajax({
             url: '/warehouses/',
-            data: { 'city_ref': cityRef },
-            success: function(data) {
-              fillLocationSelect(data);
+            type: "GET",
+            data: {'city_ref': cityRef},
+            success: function(data){
+              var $locationSelect = $('#location-select');
+              $locationSelect.empty();
+              $locationSelect.append('<option value="">Оберіть поштомат</option>');
+              data.forEach(function(location) {
+                if (location.CategoryOfWarehouse == 'Postomat'){
+                  $locationSelect.append(
+                  $('<option>', {
+                    value: location.Ref,
+                    text: location.Description
+                  })
+                );
+                }
+              });
             }
-          });
-        });
+          })
+        })
       
-        function fillLocationSelect(data) {
-          var $locationSelect = $('#location-select');
-          $locationSelect.empty();
-          $locationSelect.append('<option value="">Select Location</option>');
-          var selectedType = $('input[name="location_type"]:checked').val();
-          data.forEach(function(location) {
-            if ((selectedType === 'warehouses' && location.TypeOfWarehouse === '9') ||
-                (selectedType === 'postmachines' && location.TypeOfWarehouse === '10')) {
-              $locationSelect.append(
-                $('<option>', {
-                  value: location.Ref,
-                  text: location.Description
-                })
-              );
-            }
-          });
-        }
+        // // Заповнення селекту локацій залежно від вибору радіо кнопки
+        // $('input[name="location_type"]').on('change', function() {
+        //   var cityRef = $('#city-select').val();
+        //   if (!cityRef) return;
+        //   $.ajax({
+        //     url: '/warehouses/',
+        //     data: { 'city_ref': cityRef },
+        //     success: function(data) {
+        //       fillLocationSelect(data);
+        //     }
+        //   });
+        // });
+      
+        // function fillLocationSelect(data) {
+        //   var $locationSelect = $('#location-select');
+        //   $locationSelect.empty();
+        //   $locationSelect.append('<option value="">Select Location</option>');
+        //   var selectedType = $('input[name="location_type"]:checked').val();
+        //   data.forEach(function(location) {
+        //     if ((selectedType === 'warehouses' && location.TypeOfWarehouse === '9') ||
+        //         (selectedType === 'postmachines' && location.TypeOfWarehouse === '10')) {
+        //       $locationSelect.append(
+        //         $('<option>', {
+        //           value: location.Ref,
+        //           text: location.Description
+        //         })
+        //       );
+        //     }
+        //   });
+        // }
       </script>
 {% endblock %}

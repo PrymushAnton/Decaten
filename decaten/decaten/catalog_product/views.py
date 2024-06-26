@@ -37,6 +37,23 @@ def catalog(request):
 
     all_flavours = Flavour.objects.all()
     
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+
+    count = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count += product.count
+    
     context = {
         'names_of_filters': names_of_filters,
         'list_of_filters': filters,
@@ -45,6 +62,7 @@ def catalog(request):
         'all_flavours': all_flavours,
         'min_price': min_price,
         'max_price': max_price,
+        'count_cart': count,
     }
     
     return render(request, 'catalog_product/catalog.html', context)
@@ -259,6 +277,23 @@ def product_image(request):
 def product_page(request, id):
     context = {'product': Product.objects.get(id=id)}
     context['flaur'] = Flavour.objects.filter(for_product = id)
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+
+    count = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count += product.count
+        
+    context['count_cart'] = count
     # filters = []
     # print(list(Product.objects.filter(id=id).filters.values()))
     # for obj in list(Product.objects.filter(id=id).values()):
@@ -328,5 +363,12 @@ def add_to_cart(request):
     except:
         product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
     
-    return HttpResponse(1)
+    count_cart = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count_cart += product.count
+    
+    
+    return JsonResponse({'count_cart':count_cart})
 

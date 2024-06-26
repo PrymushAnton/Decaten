@@ -136,7 +136,7 @@
             {% for product in all_products %}
                 <div class="card_of_product product_{{product.id}}">
                     <input type="hidden" value="{{product.id}}" class="product_id_image">
-                    <img class="image_flavour{{product.id}}" src="" alt="">
+                    <a href="../product/{{product.id}}"><img class="image_flavour{{product.id}}" src="" alt=""></a>
                     <h5>{{product.name}}</h5>
                     <p>{{product.price}} грн.</p>
                     <select name="{{product.name}}" id="{{product.name}}" class="form-select">

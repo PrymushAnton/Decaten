@@ -90,6 +90,12 @@ $(document).ready(
                 } else if (success == '9') {
                     $('.ajax_text').html("Помилка! Спробуйте пізніше!")
                     console.log(9)
+                } else if (success == '12') {
+                    $('.ajax_text').html("Ім'я не повинно бути більше 12 символів!")
+                    console.log(12)
+                } else if (success == '13'){
+                    $('.ajax_text').html("Прізвище не повинно бути більше 15 символів!")
+                    console.log(13)
                 }
                 
             },

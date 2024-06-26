@@ -95,6 +95,23 @@ header {
     display: none;
 }
 
+.cart:hover #count_cart{
+    color: black !important;
+}
+
+#count_cart {
+    display: none;
+    position: relative;
+    bottom: 10px;
+    right: 5px;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: greenyellow;
+    font-size: 13px;
+    padding: 0px 3px;
+    
+}
 
 
 footer{

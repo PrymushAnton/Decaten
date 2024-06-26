@@ -13,6 +13,8 @@ $(document).ready(function() {
             },
             success: function(data){
                 console.log(data)
+                $("#count_cart").css('display', 'inline')
+                $('#count_cart').html(data.count_cart)
             }
         })
     })
