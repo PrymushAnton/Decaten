@@ -6,6 +6,7 @@
 {% block link %}
     <link rel="stylesheet" href="{% static 'my_order/css/my_order.css' %}">
     <script defer src="{% static 'my_order/js/my_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/validation.js' %}"></script>
 {% endblock %}
 
 
@@ -32,47 +33,57 @@
     -->
     <div class="content">
         <form action="" method="POST">
+          {% csrf_token %}
+          
           <div class="form_div">
-            <select id="area-select" class="form-select">
-              <option value="">Оберіть Область</option>
-            </select>
-              
-            <select id="city-select" class="form-select">
-                <option value="">Оберіть Місто</option>
-            </select>
+            <h2>Оформити замовлення</h2>
+            <div class="nova_poshta">
+              <select id="area-select" class="form-select">
+                <option value="" selected disabled hidden>Оберіть область</option>
+              </select>
+                
+              <select id="city-select" class="form-select">
+                  <option value="" selected disabled hidden>Оберіть місто</option>
+              </select>
+  
+  
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Branch" disabled>
+                <label class="form-check-label" for="Branch">Відділення</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Postomat" disabled>
+                <label class="form-check-label" for="Postomat">Поштомати</label>
+              </div>
 
-
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Branch" disabled>
-              <label class="form-check-label" for="Branch">Відділення</label>
+              <select id="location-select" class="form-select">
+                  <option value="" selected disabled hidden>Оберіть відділення</option>
+              </select>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Postomat" disabled>
-              <label class="form-check-label" for="Postomat">Поштомати</label>
+            
+            <div class="variant_of_payment">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="payment_later" checked>
+                <label class="form-check-label" for="payment_later">Оплата при отриманні</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="payment_now">
+                <label class="form-check-label" for="payment_now">Оплата карткою онлайн</label>
+              </div>
             </div>
-            <!-- <div>
-              <input type="radio" id="">
-              <label for="Branch">Відділення</label>
-              <input type="radio" id="Postomat">
-              <label for="Postomat">Поштомати</label>
-            </div> -->
-              
-            <select id="location-select" class="form-select">
-                <option value="">Оберіть Відділення</option>
-            </select>
 
             <div class="for_credit_card">
               <label for="credit_card">Номер картки</label>
-              <input type="text" class="form-control" id="credit_card">
+              <input type="tel" class="form-control" id="credit_card" minlength="16" maxlength="16">
               
               <div class="additional-info">
 
                 <div class="expiration-date-parent">
                   <label for="month">Термін дії</label>
                   <div class="expiration-date">
-                    <input type="text" class="form-control" id="month">
+                    <input type="tel" class="form-control" id="month" maxlength="2">
                     <span class="input-separator">/</span>
-                    <input type="text" class="form-control" id="year">
+                    <input type="tel" class="form-control" id="year" maxlength="2">
                   </div>
 
 
@@ -80,11 +91,36 @@
                 </div>
                 <div class="cvv">
                   <label for="cvv">CVV</label>
-                  <input type="password" class="form-control" id="cvv">
+                  <input type="tel" class="form-control" id="cvv" maxlength="3">
                 </div>
                 
               </div>
 
+
+              
+                
+              </div>
+              <div class="info_about_receiver">
+                <div class="first_column">
+                  <label for="last_name">Прізвище</label>
+                  <input type="text" class="form-control" id="last_name" maxlength="50">
+
+                  <label for="first_name">Ім'я</label>
+                  <input type="text" class="form-control" id="first_name" maxlength="50">
+                </div>
+                
+                <div class="second_column">
+                  <label for="middle_name">По батькові</label>
+                  <input type="text" class="form-control" id="middle_name" maxlength="50">
+
+                  <label for="number">Номер телефону</label>
+                  <input type="tel" class="form-control" id="number" maxlength="9">
+                </div>
+            </div>
+
+            <div class="final_price_div">
+              <input type="hidden" value="{{price}}">
+              <h5>Сума замовлення: {{price}} грн</h5>
             </div>
             <div class="button_send">
               <button class="send btn btn-success">Оформити замовлення</button>
@@ -98,146 +134,9 @@
         
     </div>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
+        <script>
         // Завантаження списку областей при завантаженні сторінки
-        $(document).ready(function() {
-          $.ajax({
-            url: '/areas/',
-            success: function(data) {
-              var $areaSelect = $('#area-select');
-              $areaSelect.empty();
-              
-              $areaSelect.append('<option value="">Оберіть Область</option>');
-              data.forEach(function(area) {
-                $areaSelect.append(
-                  $('<option>', {
-                    value: area.Ref,
-                    text: area.Description
-                  })
-                );
-              });
-            }
-          });
-        });
-      
-        // Завантаження списку міст при виборі області
-        $('#area-select').on('change', function() {
-          var areaRef = $(this).val();
-          $('#Branch').prop('checked', false)
-          $('#Postomat').prop('checked', false)
-
-          $('#Branch').attr('disabled', true)
-          $('#Postomat').attr('disabled', true)
-          $.ajax({
-            url: '/cities/',
-            data: { 'area_ref': areaRef },
-            success: function(data) {
-              var $citySelect = $('#city-select');
-              $citySelect.empty();
-              $('#location-select').empty()
-
-              $citySelect.append('<option value="">Оберіть Місто</option>');
-              $('#location-select').append('<option value="">Оберіть відділення</option>')
-              data.forEach(function(city) {
-                $citySelect.append(
-                  $('<option>', {
-                    value: city.Ref,
-                    text: city.Description
-                  })
-                );
-              });
-            }
-          });
-        });
-      
-        // Перевірка наявності відділень та поштоматів при виборі міста
-        $('#city-select').on('change', function() {
-          var cityRef = $(this).val();
-          $('#Branch').prop('checked', false)
-          $('#Postomat').prop('checked', false)
-
-          $('#Branch').attr('disabled', true)
-          $('#Postomat').attr('disabled', true)
-          $('#location-select').empty()
-          $('#location-select').append('<option value="">Оберіть відділення</option>')
-          $.ajax({
-            url: '/warehouses/',
-            data: { 'city_ref': cityRef },
-            success: function(data) {
-              var branch = false
-              var postomat = false
-              data.forEach(function(location) {
-                if (!branch){
-                  if (location.CategoryOfWarehouse == 'Branch'){
-                    branch = true
-
-                  }
-                }
-                if (!postomat){
-                  if (location.CategoryOfWarehouse == 'Postomat'){
-                    postomat = true
-                  }
-                }
-              });
-              if (branch){
-                $("#Branch").removeAttr('disabled')
-              }
-              if (postomat){
-                $("#Postomat").removeAttr('disabled')
-              }
-            }
-          });
-        });
-
-        $('#Branch').on('click', function(){
-          // console.log(123123123)
-          var cityRef = $('#city-select').val()
-          $.ajax({
-            url: '/warehouses/',
-            type: "GET",
-            data: {'city_ref': cityRef},
-            success: function(data){
-              var $locationSelect = $('#location-select');
-              $locationSelect.empty();
-              $locationSelect.append('<option value="">Оберіть відділення</option>');
-              data.forEach(function(location) {
-                if (location.CategoryOfWarehouse == 'Branch'){
-                  $locationSelect.append(
-                  $('<option>', {
-                    value: location.Ref,
-                    text: location.Description
-                  })
-                );
-                }
-              });
-            }
-          })
-        })
-
-        $('#Postomat').on('click', function(){
-          // console.log(123123123)
-          var cityRef = $('#city-select').val()
-          $.ajax({
-            url: '/warehouses/',
-            type: "GET",
-            data: {'city_ref': cityRef},
-            success: function(data){
-              var $locationSelect = $('#location-select');
-              $locationSelect.empty();
-              $locationSelect.append('<option value="">Оберіть поштомат</option>');
-              data.forEach(function(location) {
-                if (location.CategoryOfWarehouse == 'Postomat'){
-                  $locationSelect.append(
-                  $('<option>', {
-                    value: location.Ref,
-                    text: location.Description
-                  })
-                );
-                }
-              });
-            }
-          })
-        })
+        
       
         // // Заповнення селекту локацій залежно від вибору радіо кнопки
         // $('input[name="location_type"]').on('change', function() {
@@ -270,4 +169,7 @@
         //   });
         // }
       </script>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

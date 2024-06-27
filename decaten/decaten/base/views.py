@@ -29,7 +29,7 @@ def base(request):
     return render(request, 'base/base.html', context)
 
 def count_cart(request):
-    print(123123123123123)
+    # print(123123123123123)
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -50,6 +50,6 @@ def count_cart(request):
     # context = {
     #     'count_cart': count,
     # }
-    print(count)
+    # print(count)
     return JsonResponse({'count_cart':count})
     

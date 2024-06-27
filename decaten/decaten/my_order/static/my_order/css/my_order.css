@@ -14,7 +14,7 @@
 .form_div {
     /* width: max-content;
     height: 50%; */
-    padding: 15px;
+    padding: 20px 30px;
     display: flex;
     min-width: 400px;
     flex-direction: column;
@@ -29,12 +29,16 @@
     box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
 }
 
-/* .order_form{
+.nova_poshta{
+    width: 100%;
+    border: 2px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 2%;
+    margin-bottom: 5%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
+    align-items: start;
+}
 
 select{
     width: 200px;
@@ -42,6 +46,11 @@ select{
 }
 .for_credit_card{
     width: 100%;
+    border: 2px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 2%;
+    margin-bottom: 5%;
+    display: none;
 }
 .additional-info{
     
@@ -49,6 +58,7 @@ select{
     justify-content: center;
     align-items: center;
     gap: 20%;
+
 }
 .expiration-date-parent{
     /* width: 50%; */
@@ -72,6 +82,9 @@ select{
     justify-content: center;
     align-items: center;
 }
+h2{
+    margin-bottom: 15px;
+}
 
 
 
@@ -80,4 +93,27 @@ select{
 }
 #cvv{
     width: 70px;
+}
+
+.info_about_receiver{
+    display: flex;
+    gap: 5%;
+    margin-bottom: 3%;
+    border: 2px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.first_column{
+    display: flex;
+    flex-direction: column;
+}
+
+.second_column{
+    display: flex;
+    flex-direction: column;
+}
+
+h5{
+    margin-bottom: 7%;
 }

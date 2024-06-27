@@ -58,6 +58,7 @@ urlpatterns = [
     path('areas/', areas, name='areas'),
     path('cities/', cities, name='cities'),
     path('warehouses/', warehouses, name='warehouses'),
+    path('validation/', validation, name='validation'),
     
     path('count_cart/', count_cart, name='count_cart'),
 
