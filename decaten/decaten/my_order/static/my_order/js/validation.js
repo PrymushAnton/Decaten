@@ -4,6 +4,7 @@ $(document).ready(function() {
         // console.log($("#area-select").val())
         var data = null
         if ($("#payment_now").prop('checked')){
+            console.log(true)
             data = {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
                 area: $("#area-select").val(),
@@ -20,6 +21,7 @@ $(document).ready(function() {
                 payment_by_card: true,
             }
         } else {
+            console.log(false)
             data = {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
                 area: $("#area-select").val(),
@@ -43,6 +45,9 @@ $(document).ready(function() {
             success: function(data){
                 if (data == '100'){
                     console.log(100)
+                    window.location.replace('/')
+                    // window.location.href = '/'
+                    // window.location.reload()
                 } else if (data == '1'){
                     console.log("Заповніть всі поля!")
                 } else if (data == '2'){

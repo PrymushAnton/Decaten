@@ -22,6 +22,7 @@ from catalog_product.models import *
 
 class Orders(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255, blank=True, null=True)
     
 class Order(models.Model):
     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)

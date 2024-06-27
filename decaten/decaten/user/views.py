@@ -6,6 +6,7 @@ from .models import UserInfo
 from django.http import HttpResponse
 import re
 from catalog_product.models import *
+from my_order.models import *
 
 def validate_email(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
@@ -254,6 +255,7 @@ def validate_account(request):
                                                         if validate_password_confirmation(password, password_confirmation):
                                                             try:
                                                                 user = MyUser.objects.create_user(username=first_name,first_name=first_name, last_name=last_name, email=email, number=number, password=password)
+                                                                orders = Orders.objects.create(user=user, username=first_name)
                                                                 login(request, user)
                                                                 success = 10
                                                                 return HttpResponse(success)

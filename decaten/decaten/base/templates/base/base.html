@@ -60,8 +60,8 @@
             <li><a href="{% url 'main' %}">Головна</a></li>
             <li><a href="{% url 'catalog' %}">Каталог</a></li>
             {% if user.is_authenticated == True %}
-                <li><a href="{% url 'cart' %}">Кошик</a></li>
-                <p id="count">{{count_cart}}</p>
+                <li><a href="{% url 'cart' %}">Кошик <span id="count_cart_phone">{{count_cart}}</span></a></li>
+                
                 <li><a href="#">Замовлення</a></li>
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}

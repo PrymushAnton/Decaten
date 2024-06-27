@@ -33,7 +33,7 @@ class Flavour(models.Model):
     
 
 class Cart(models.Model):
-    sessionkey = models.CharField(max_length =255)
+    sessionkey = models.CharField(max_length=255)
     
 class ProductInCart(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)

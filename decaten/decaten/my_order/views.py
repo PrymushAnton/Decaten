@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 from django.http import JsonResponse, HttpResponse
 from .models import *
@@ -13,9 +13,9 @@ def my_order(request):
     
     # cities = get_cities()
     # print(cities)
-    print(request.user.password)
-    user = authenticate(username=request.user.username, password=request.user.password)
-    print(user)
+    # print(request.user.password)
+    # user = authenticate(username=request.user.username, password=request.user.password)
+    # print(user)
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -176,19 +176,19 @@ def validation(request):
             return False
         
     def validate_last_name(last_name):
-        if last_name.isalpha() and len(last_name) >= 50:
+        if last_name.isalpha() and len(last_name) <= 50:
             return True
         else:
             return False
     
     def validate_first_name(first_name):
-        if first_name.isalpha() and len(first_name) >= 50:
+        if first_name.isalpha() and len(first_name) <= 50:
             return True
         else:
             return False
 
     def validate_middle_name(middle_name):
-        if middle_name.isalpha() and len(middle_name) >= 50:
+        if middle_name.isalpha() and len(middle_name) <= 50:
             return True
         else:
             return False
@@ -201,6 +201,17 @@ def validation(request):
     
     error = None
     
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+    
     if payment_by_card == 'true':
         if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
             if validate_number_of_card(number_of_card):
@@ -211,8 +222,20 @@ def validation(request):
                                 if validate_first_name(first_name):
                                     if validate_middle_name(middle_name):
                                         if validate_number(number):
-                                        
+                                            orders = Orders.objects.get(username=request.user.username)
+                                            print(orders)
+                                            order = Order.objects.create(orders=orders)
+                                            products = cart.productincart_set.all().values()
+                                            products = list(products)
+                                            for product in products:
+                                                # print(product)
+                                                product_obj = Product.objects.get(id=product['product_id'])
+                                                flavour_obj = Flavour.objects.get(id=product['flavour_id'])
+                                                product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
+                                            print(ProductInOrder.objects.all())
+                                            cart.delete()
                                             return HttpResponse(100)
+                                            
                                         else:
                                             error = 9
                                             return HttpResponse(error)

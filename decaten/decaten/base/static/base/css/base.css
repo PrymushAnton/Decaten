@@ -113,6 +113,19 @@ header {
     
 }
 
+#count_cart_phone{
+    display: none;
+    position: relative;
+    bottom: 10px;
+    right: 5px;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: greenyellow;
+    font-size: 13px;
+    padding: 0px 3px;
+    
+}
 
 footer{
     display: flex;
@@ -241,6 +254,12 @@ footer h5{
     
     #carousel_close{
         display:none !important;
+    }
+    #count_cart{
+        display: none;
+    }
+    #count_cart_phone{
+        display: inline;
     }
     
     li{
