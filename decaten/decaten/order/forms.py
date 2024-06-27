@@ -21,7 +21,7 @@ class UserInfoForm(forms.Form):
     )
     number = forms.CharField(
         label="Номер телефону",
-        max_length=10,
+        max_length=13,
         min_length=8,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -43,7 +43,7 @@ class UserInfoForm(forms.Form):
         number = self.cleaned_data.get('number')
         if not number.isdigit():
             raise forms.ValidationError("Номер телефону повинен містити тільки цифри.")
-        if len(number) < 8 or len(number) > 10:
+        if len(number) < 8 or len(number) > 13:
             raise forms.ValidationError("Номер телефону повинен містити від 8 до 10 цифр.")
         return number
     

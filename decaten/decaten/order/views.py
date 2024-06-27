@@ -45,5 +45,5 @@ def order_page(request):
         # post_index = request.POST.get("post_index")
         return HttpResponse(context)
     else:
-        return render(request, 'order/order_page.html')
+        return render(request, 'order/order_page.html', context={'dont_footer':'1'})
     
