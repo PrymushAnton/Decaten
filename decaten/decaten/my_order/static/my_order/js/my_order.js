@@ -144,12 +144,20 @@ $("#payment_now").on('click', function() {
     $('.for_credit_card').css('display', 'block');
     $('#payment_now').prop('checked', true)
     $('#payment_later').prop('checked', false)
+    $("#month").prop('required', true)
+    $("#year").prop('required', true)
+    $("#cvv").prop('required', true)
+    $("#credit_card").prop('required', true)
 })
 
 $("#payment_later").on('click', function() {
     $('.for_credit_card').css('display', 'none');
     $('#payment_now').prop('checked', false)
     $('#payment_later').prop('checked', true)
+    $("#month").prop('required', false)
+    $("#year").prop('required', false)
+    $("#cvv").prop('required', false)
+    $("#credit_card").prop('required', false)
 })
 
 // $("Branch").on('click', function() {
@@ -161,3 +169,8 @@ $("#payment_later").on('click', function() {
 //     $("#Branch").attr('checked', false)
 //     $("#Postomat").attr('checked', true)
 // })
+
+
+$('.go_to_auth').click(function(){
+  window.location.replace('../login/')
+})

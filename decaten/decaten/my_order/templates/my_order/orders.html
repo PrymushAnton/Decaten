@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'my_order/css/orders.css' %}">
+    <script defer src="{% static 'my_order/js/cancel_order.js' %}"></script>
+{% endblock %}
+
+
+
+{% block main %}
+<div class="content">
+
+    <!-- <div class="col-1"></div> -->
+    <!-- col-10 d-flex justify-content-start gap-3 flex-wrap ps-3  -->
+    {% if all_orders|length == 0 %}
+        <div class="error_empty">
+            <h2>Не було зроблено жодного замовлення</h2>
+            <img src="{% static 'my_order/icons/orders_empty.svg' %}" alt="">
+        </div>
+    {% endif %}
+    <div class="orders">
+        {% for order in all_orders %}
+        <div class="order">
+            <div class="header_of_order_{{order.id}} header_of_order">
+                <h4>Замовлення №{{order.id}}</h4>
+                <!-- <p>{{order.status}}</p> -->
+                <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                {% if order.status == '0' %}
+                    <h4 class="order_status_{{order.id}} canceled">Статус: Скасовано</h5>
+                {% elif order.status == '1' %}
+                    <h4 class="order_status_{{order.id}} active">Статус: Активно</h5>
+                {% elif order.status == '2' %}
+                    <h4 class="order_status_{{order.id}} completed">Статус: Виконано</h5>
+                {% endif %}
+                
+            </div>
+            
+            <div class="adress">
+                <p class="date_phone">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                <p>Область: {{order.area}}</p>
+                <p>Місто: {{order.city}}</p>
+                <p>{{order.location}}</p>
+                
+            </div>
+
+            <div class="buttons">
+                <a href="../order/{{order.id}}/" class="text-success">Переглянути</a>
+                {% if order.status == '1' %}
+                    <form action="" method="POST" class="form_cancel_{{order.id}}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{order.id}}" class="cancel_input">
+                        <button class="btn btn-danger cancel_button" id="{{order.id}}">Відмінити</button>
+                    </form>
+                {% endif %}
+            </div>
+            
+        </div>
+           
+
+        {% endfor %}
+    </div>
+{% endblock %}

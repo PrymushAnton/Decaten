@@ -2,9 +2,10 @@
 $(document).ready(function() {
 
     $(".add_to_cart").click(function(e){
+        console.log($('.id_product').val(),)
         e.preventDefault()
         $.ajax({
-            url: 'add_to_cart/',
+            url: '../../add_to_cart/',
             type: "POST",
             data: {
                 product_id: $('.id_product').val(),

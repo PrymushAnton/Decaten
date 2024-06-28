@@ -30,6 +30,7 @@ $(document).ready(function() {
                     //     </div>`
                     // )
                     $('.error_empty').css('display', 'flex')
+                    // $(".")
                     if (data.count_cart > '99'){
                         $('#count_cart').html('99+')
                     } else {
@@ -37,8 +38,11 @@ $(document).ready(function() {
                     }
                     
                     $('#count_cart').css('display', 'none')
+                    if ($('.error_empty').css('display') == 'flex') {
+                        $(".make_order").css('display', 'none')
+                    }
                 }
-                
+
             }
         })
     })

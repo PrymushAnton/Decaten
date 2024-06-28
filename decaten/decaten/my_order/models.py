@@ -26,6 +26,17 @@ class Orders(models.Model):
     
 class Order(models.Model):
     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255, null=True, blank=True)
+    
+    # date = models.DateField(null=True, blank=True)
+    day_num = models.IntegerField(null=True, blank=True)
+    month_num = models.IntegerField(null=True, blank=True)
+    year_num = models.IntegerField(null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)
+    
+    area = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
 
 class ProductInOrder(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)

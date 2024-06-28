@@ -4,10 +4,83 @@ from django.http import JsonResponse, HttpResponse
 from .models import *
 from catalog_product.models import *
 from django.contrib.auth import authenticate
+from datetime import date
 
 API_KEY = 'a82d9d12e5f74a8692792b6930d55bc4'
 BASE_URL = 'https://api.novaposhta.ua/v2.0/json/'
 
+def cancel_order(request):
+    id = request.POST.get('id')
+    # print(id)
+    order = Order.objects.get(id=id)
+    order.status = 0
+    order.save()
+    
+    return HttpResponse()
+
+def order(request, id):
+    # print(id)
+    context = {}
+    try:
+        order = Order.objects.get(id=id)
+        products_in_order = ProductInOrder.objects.filter(order=order)
+        products = ProductInOrder.objects.filter(order=order).values()
+        products = list(products)
+        list_of_ids = []
+        list_of_ids_for_flavours = []
+        list_of_prices = []
+        list_of_counts = []
+        list_of_final_prices = []
+        for product in products:
+            list_of_ids.append(product['product_id'])
+            list_of_ids_for_flavours.append(product['flavour_id'])
+            list_of_counts.append(product['count'])
+        
+        all_products_for_prices = Product.objects.filter(id__in=list_of_ids).values()
+        all_products_for_prices = list(all_products_for_prices)
+        # print('all',all_products_for_prices)
+        for product in all_products_for_prices:
+            list_of_prices.append(product['price'])
+        # print(list_of_prices)
+        count = 0
+        for price in list_of_prices:
+            list_of_final_prices.append(int(price)*int(list_of_counts[count]))
+            count += 1
+            
+        print(list_of_final_prices)
+            
+        
+        all_products = Product.objects.filter(id__in=list_of_ids)
+        all_flavours = Flavour.objects.filter(id__in=list_of_ids_for_flavours)
+        print(all_products)
+        context = {'products': all_products, 'flavours': all_flavours, 'products_in_order': products_in_order, 'prices': list_of_final_prices}
+        # print(list(products))
+    except:
+        print('except')
+    
+    
+    
+    return render(request, 'my_order/order.html', context)
+
+def orders(request):
+    orders = Orders.objects.get(username=request.user.username)
+    
+    all_orders = Order.objects.filter(orders=orders)
+    # first_order = all_orders[0]
+    # print('first',first_order)
+    # all_orders = list(all_orders)
+    print(all_orders)
+    date_today = date.today()
+    date_today = str(date_today).split('-')
+    print(date_today)
+
+    
+    
+    
+    context = {'all_orders': all_orders}
+    
+    
+    return render(request, 'my_order/orders.html', context)
 
 def my_order(request):
     
@@ -27,7 +100,7 @@ def my_order(request):
         cart = Cart.objects.create(sessionkey=session_key)
     
     price_of_order = 0
-    products = []
+    # products = []
     try:
         products_in_cart = cart.productincart_set.all().values()
         products_in_cart = list(products_in_cart)
@@ -149,28 +222,52 @@ def validation(request):
     number = request.POST.get('number')
     payment_by_card = request.POST.get('payment_by_card')
     # print(payment_by_card)
+    print(area, city, location)
     
+    def validate_area(area):
+        if area[0] != 'О':
+            return True
+        else:
+            return False
+    
+    def validate_city(city):
+        if city[0] != 'О':
+            return True
+        else:
+            return False   
+    
+    def validate_location(location):
+        if location[0] != 'О':
+            return True
+        else:
+            return False
     
     def validate_number_of_card(number_of_card):
-        if number_of_card.isdigit() and len(number_of_card) == 16:
+        if number_of_card.isdigit() and len(str(number_of_card)) == 16:
             return True
         else:
             return False
         
     def validate_month(month):
-        if month.isdigit() and len(month) == 2:
-            return True
+        if month.isdigit() and len(str(month)) == 2:
+            if int(month) <= 12 and int(month) >= 1:
+                return True
+            else:
+                return False
         else:
             return False
         
     def validate_year(year):
-        if year.isdigit() and len(year) == 2:
-            return True
+        if year.isdigit() and len(str(year)) == 2:
+            if int(year) >= 24 and int(year) <= 29:
+                return True
+            else:
+                return False
         else:
             return False
         
     def validate_cvv(cvv):
-        if cvv.isdigit() and len(cvv) == 3:
+        if cvv.isdigit() and len(str(cvv)) == 3:
             return True
         else:
             return False
@@ -211,20 +308,103 @@ def validation(request):
         cart = Cart.objects.get(sessionkey=session_key)
     except:
         cart = Cart.objects.create(sessionkey=session_key)
+        
+        
+    price_of_order = 0
+    try:
+        products_in_cart = cart.productincart_set.all().values()
+        products_in_cart = list(products_in_cart)
+        print(products_in_cart)
+        for product in products_in_cart:
+            # print(product['id'])
+            product_obj = Product.objects.filter(id=product['product_id']).values()
+            product_obj = list(product_obj)
+            # print(product_obj[0]['price'])
+            price_of_order += int(product_obj[0]['price']) * int(product['count'])
+    except:
+        pass
     
-    if payment_by_card == 'true':
-        if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
-            if validate_number_of_card(number_of_card):
-                if validate_month(month):
-                    if validate_year(year):
-                        if validate_cvv(cvv):
+    if request.user.is_authenticated:
+        if payment_by_card == 'true':
+            if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
+                if validate_area(area):
+                    if validate_city(city):
+                        if validate_location(location):
+                            if validate_number_of_card(number_of_card):
+                                if validate_month(month):
+                                    if validate_year(year):
+                                        if validate_cvv(cvv):
+                                            if validate_last_name(last_name):
+                                                if validate_first_name(first_name):
+                                                    if validate_middle_name(middle_name):
+                                                        if validate_number(number):
+                                                            orders = Orders.objects.get(username=request.user.username)
+                                                            # print()
+                                                            date_today = date.today()
+                                                            date_today = str(date_today).split('-')
+                                                            
+                                                            order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0])
+                                                            products = cart.productincart_set.all().values()
+                                                            products = list(products)
+                                                            for product in products:
+                                                                # print(product)
+                                                                product_obj = Product.objects.get(id=product['product_id'])
+                                                                flavour_obj = Flavour.objects.get(id=product['flavour_id'])
+                                                                product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
+                                                            print(ProductInOrder.objects.all())
+                                                            cart.delete()
+                                                            return HttpResponse(100)
+
+                
+                                                
+                                                        else:
+                                                            error = 9
+                                                            return HttpResponse(error)
+                                                    else:
+                                                        error = 8
+                                                        return HttpResponse(error)
+                                                else:
+                                                    error = 7
+                                                    return HttpResponse(error)
+                                            else:
+                                                error = 6
+                                                return HttpResponse(error)
+                                        else:
+                                            error = 5
+                                            return HttpResponse(error)
+                                    else:
+                                        error = 4
+                                        return HttpResponse(error)
+                                else:
+                                    error = 3
+                                    return HttpResponse(error)
+                            else:
+                                error = 2
+                                return HttpResponse(error)
+                        else:
+                            return HttpResponse(12)
+                    else:
+                        return HttpResponse(11)
+                else:
+                    return HttpResponse(10)
+            else:
+                error = 1
+                return HttpResponse(error)
+        elif payment_by_card == 'false':
+            if area and city and location and last_name and first_name and middle_name and number:
+                if validate_area(area):
+                    if validate_city(city):
+                        if validate_location(location):
                             if validate_last_name(last_name):
                                 if validate_first_name(first_name):
                                     if validate_middle_name(middle_name):
                                         if validate_number(number):
                                             orders = Orders.objects.get(username=request.user.username)
-                                            print(orders)
-                                            order = Order.objects.create(orders=orders)
+                                            # print()
+                                            date_today = date.today()
+                                            date_today = str(date_today).split('-')
+                                            
+                                            order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0])
                                             products = cart.productincart_set.all().values()
                                             products = list(products)
                                             for product in products:
@@ -235,7 +415,6 @@ def validation(request):
                                             print(ProductInOrder.objects.all())
                                             cart.delete()
                                             return HttpResponse(100)
-                                            
                                         else:
                                             error = 9
                                             return HttpResponse(error)
@@ -249,39 +428,14 @@ def validation(request):
                                 error = 6
                                 return HttpResponse(error)
                         else:
-                            error = 5
-                            return HttpResponse(error)
+                            return HttpResponse(12)
                     else:
-                        error = 4
-                        return HttpResponse(error)
+                        return HttpResponse(11)
                 else:
-                    error = 3
-                    return HttpResponse(error)
+                    return HttpResponse(10)
             else:
-                error = 2
+                error = 1
                 return HttpResponse(error)
-        else:
-            error = 1
-            return HttpResponse(error)
-    elif payment_by_card == 'false':
-        if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
-            if validate_last_name(last_name):
-                if validate_first_name(first_name):
-                    if validate_middle_name(middle_name):
-                        if validate_number(number):
-                            return HttpResponse(100)
-                        else:
-                            error = 9
-                            return HttpResponse(error)
-                    else:
-                        error = 8
-                        return HttpResponse(error)
-                else:
-                    error = 7
-                    return HttpResponse(error)
-            else:
-                error = 6
-                return HttpResponse(error)
-        else:
-            error = 1
-            return HttpResponse(error)
+    else:
+        return HttpResponse(321)
+

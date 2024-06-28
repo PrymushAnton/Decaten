@@ -92,12 +92,9 @@
             {% endfor %}
         </div>
 
-    </div>
-    {% if products %}
-    <!-- row justify-content-center align-items-center content my-4 -->
-        <!-- <div class="make_order"> -->
-            <a href="{% url 'order' %}" class="make_order">Замовити</a>
-        <!-- </div> -->
-    {% endif %}
+    <!-- </div class='make_order_div'> -->
+        {% if products %}
+            <a href="{% url 'my_order' %}" class="make_order">Замовити</a>
+        {% endif %}
     </div>
 {% endblock main %}

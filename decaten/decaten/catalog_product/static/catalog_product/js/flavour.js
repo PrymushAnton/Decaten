@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $('select').on('input', function() {
         $.ajax({
-            url: 'get_flavour_image/',
+            url: '../../get_flavour_image/',
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
@@ -13,7 +13,7 @@ $(document).ready(function() {
                     try{
                         class_image = '.image_flavour' + obj.for_product_id
                         // $(class_image).attr('src', '')
-                        $(class_image).attr('src', '../media/' + obj.image)
+                        $(class_image).attr('src', '../../media/' + obj.image)
                     } catch {
                         class_image = '.image_flavour' + obj.for_product_id
                         // $(class_image).attr('src', '')

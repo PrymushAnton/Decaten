@@ -12,6 +12,7 @@
 {% block main %}
     <div class="content">
         <!-- <div class="col-4"></div> -->
+        <h5>Вже є акаунт? <a href="{% url 'log' %}">Ввійти</a></h5>
         <div class="form_div">
             <form action="" method="post" class="d-flex flex-column needs-validation">
                 {% csrf_token %}

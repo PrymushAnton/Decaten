@@ -31,8 +31,10 @@ $(document).ready(function() {
                     $('#count_cart').css('display', 'inline')
                     $('#count_cart').html(data.count_cart)
                 }
-                
-                
+                console.log($('.error_empty').css('display'))
+                if ($('.error_empty').css('display') == 'flex') {
+                    $(".make_order").css('display', 'none')
+                }
             }
         })
     })

@@ -10,7 +10,7 @@
     <script defer src="{% static 'base/js/bootstrap.js' %}"></script>
     <script  src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script>
     <script defer src="{% static 'base/js/burger.js' %}"></script>
-    <script defer src="{% static 'base/js/count_cart.js' %}"></script>
+    <!-- <script defer src="{% static 'base/js/count_cart.js' %}"></script> -->
     {% block link %}
         
     {% endblock link %}
@@ -35,7 +35,7 @@
                 {% if count_cart %}
                     <span id="count_cart">{{count_cart}}</span>
                 {% endif %}
-                <a href="" class="orders">Замовлення</a>
+                <a href="{% url 'orders' %}" class="orders_link">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
 
                 {% if not user.is_superuser %}
@@ -62,7 +62,7 @@
             {% if user.is_authenticated == True %}
                 <li><a href="{% url 'cart' %}">Кошик <span id="count_cart_phone">{{count_cart}}</span></a></li>
                 
-                <li><a href="#">Замовлення</a></li>
+                <li><a href="{% url 'orders' %}">Замовлення</a></li>
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
                 <li>
@@ -106,7 +106,7 @@
 
             <div class="phone_and_email" id="default">
                 <h5>Контакти</h5>
-                <p>decaten@gmail.com</p>
+                <p>decaten2024@gmail.com</p>
                 <p>+38xxxxxxxxxx</p>
             </div>
         </footer>

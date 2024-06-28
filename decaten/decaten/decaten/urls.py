@@ -39,20 +39,22 @@ urlpatterns = [
     path('catalog/filter_products/', filter_products, name='filter_products'),
     path('catalog/get_flavour_image/', get_flavour_image, name='get_flavour_image'),
     path('catalog/product_image/', product_image, name='product_image'),
-    path('product/<id>', product_page, name='product_page'),
+    path('product/<id>/', product_page, name='product_page'),
     path('product_flavour_main/', product_flavour_main, name='product_flavour_main'),
     path('product_image_main/', product_image_main, name='product_image_main'),
-    path('product/get_flavour_image/', get_flavour_image, name='product_page'),
+    path('get_flavour_image/', get_flavour_image, name='product_page'),
     path('cart/', cart, name='cart'),
 
     path('cart/plus_count/', plus_count, name='plus_count'),
     path('cart/minus_count/', minus_count, name='minus_count'),
     path('cart/delete_product/', delete_product, name='delete_product'),
-    path('product/add_to_cart/', add_to_cart, name='product_page'),
+    path('add_to_cart/', add_to_cart, name='product_page'),
     path('cart/error_empty/', error_empty, name='error_empty'),
 
     path('order', order_page,name='order'),
     path('my_order/', my_order, name='my_order'),
+    path('orders/', orders, name='orders'),
+    
     # path('cart/get_flavour_image/', get_flavour_image_cart, name='get_flavour_image_Cart'),
 
     path('areas/', areas, name='areas'),
@@ -60,7 +62,10 @@ urlpatterns = [
     path('warehouses/', warehouses, name='warehouses'),
     path('validation/', validation, name='validation'),
     
-    path('count_cart/', count_cart, name='count_cart'),
+    
+    # path('count_cart/', count_cart, name='count_cart'),
+    path('order/<id>/', order, name='order'),
+    path('cancel_order/', cancel_order, name='cancel_order'),
 
 ]
 

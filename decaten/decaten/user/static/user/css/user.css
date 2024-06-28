@@ -14,11 +14,16 @@ main{
 
 .content{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     min-height: calc(100vh - 80px);
 
+}
+h5{
+    margin-bottom: 1%;
+    font-weight: normal;
 }
 
 .form_div{

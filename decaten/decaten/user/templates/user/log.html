@@ -10,6 +10,7 @@
 
 {% block main %}
   <div class="content">
+    <h5>Ще немає акаунту? <a href="{% url 'reg' %}">Зареєструватись</a></h5>
     <div class="form_div">
       <form action="" method="post">
           {% csrf_token %}
