@@ -22,19 +22,19 @@
 
     <header>
         <!-- <div class="col-1"></div> -->
-        <div class="first_headerd d-flex align-items-center gap-4">
+        <!-- d-flex align-items-center gap-4 -->
+        <div class="first_header">
             <h1><a href="{% url 'main' %}">Decaten</a></h1>
              <!-- <h1>Decaten</h1> -->
             <a href="{% url 'main' %}" class="main">Головна</a>
             <a href="{% url 'catalog' %}" class="catalog">Каталог</a>
         </div>
         <!-- <div class="col-2"></div> -->
-        <div class="header_links d-flex align-items-center justify-content-end gap-4">
+        <!-- d-flex align-items-center justify-content-end gap-4 -->
+        <div class="header_links">
             {% if user.is_authenticated == True %}
-                <a href="{% url 'cart' %}" class="cart">Кошик</a>
-                {% if count_cart %}
-                    <span id="count_cart">{{count_cart}}</span>
-                {% endif %}
+                <!-- <a href="{% url 'cart' %}" class="cart">Кошик</a -->
+                <a href="{% url 'cart' %}" class="cart">Кошик{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}</a>
                 <a href="{% url 'orders' %}" class="orders_link">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
 
@@ -46,7 +46,7 @@
                 <svg class="burger_icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
                 <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             {% else %}
-                <a href="{% url 'cart' %}" class="cart">Кошик<span id="count_cart">{{count_cart}}</span></a>
+                <a href="{% url 'cart' %}" class="cart">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}Кошик</a>
                 
                 <a href="{% url 'log' %}" class="auth">Авторизація</a>
                 <a href="{% url 'reg' %}" class="reg">Реєстрація</a>

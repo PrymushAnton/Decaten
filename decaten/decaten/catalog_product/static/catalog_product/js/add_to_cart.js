@@ -14,7 +14,10 @@ $(document).ready(function() {
             },
             success: function(data){
                 console.log(data)
-                $("#count_cart").css('display', 'inline')
+                $('.cart').empty()
+                $('.cart').append(`<span id="count_cart">${data.count_cart}</span>`)
+                $('.cart').append('Кошик')
+                $("#count_cart").css('display', 'inline !important')
                 $('#count_cart').html(data.count_cart)
             }
         })

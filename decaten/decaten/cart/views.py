@@ -34,6 +34,7 @@ def cart(request):
         'flavours': flavours,
         'prices': prices,
         'count_cart': count,
+
     }
     
     return render(request, 'cart/cart.html', context)

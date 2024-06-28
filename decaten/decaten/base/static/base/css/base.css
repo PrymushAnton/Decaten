@@ -25,6 +25,19 @@ main a{
     text-decoration: none;
 }
 
+.header_links{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 7%;
+    width: max-content;
+}
+
+.first_header {
+    display: flex;
+    align-items: center;
+    gap: 7%;
+}
 
 header h1{
     text-shadow: -1px 1px 0 #000,
@@ -101,10 +114,10 @@ header {
 }
 
 #count_cart {
-    display: none;
+    /* display: none; */
     position: relative;
     bottom: 10px;
-    right: 5px;
+    left: 70px;
 
     border: 1px solid black;
     border-radius: 5px;
