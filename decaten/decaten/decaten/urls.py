@@ -29,7 +29,7 @@ from my_order.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name='main'),
-    path('base/', base, name='base'),
+    # path('base/', base, name='base'),
     path('login/', log_page, name='log'),
     path('registration/', reg_page, name='reg'),
     path('logout/', logout_page, name='logout'),

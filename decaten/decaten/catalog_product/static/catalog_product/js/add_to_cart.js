@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-
+    
     $(".add_to_cart").click(function(e){
         console.log($('.id_product').val(),)
         e.preventDefault()

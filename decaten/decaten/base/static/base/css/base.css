@@ -209,7 +209,17 @@ footer h5{
     /* flex-direction: row; */
 }
 
+li p{
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
 
+li{
+    max-height: 73.72px;
+}
 
 /* @media (max-width: ) */
 
@@ -289,7 +299,7 @@ footer h5{
     
     li a{
         font-size: 24px;
-        padding-top: 3%;
+        padding-top: 2%;
     }
 }
 
