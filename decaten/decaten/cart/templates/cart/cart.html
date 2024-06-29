@@ -18,19 +18,13 @@
         <!-- col-10 d-flex justify-content-start gap-3 flex-wrap ps-3  -->
         <div class="error_empty">
             <h2>Кошик порожній!</h2>
-            <img src="{% static 'cart/icons/cart.svg' %}" alt="">
+            <img src="{% static 'cart/icons/cart.svg' %}" width="200px" alt="">
         </div>
         <div class="products">
-
-            <!-- d-flex flex-column align-items-center -->
-            
             {% for product_in_cart in products %}
-            <!-- d-flex align-items-center py-3 mb-3 shadow  -->
                 <div class="card_{{product_in_cart.product_id}}_{{product_in_cart.flavour_id}} product_card product_{{product.id}}_{{product_in_cart.flavour_id}}">
                     {% for flavour in flavours %}
                         {% if flavour.id == product_in_cart.flavour_id %}
-                        <!-- w-75 m-1  -->
-                            
                             <img src="{{flavour.image.url}}" alt="" class="image_flavour{{product_in_cart.product_id}}">
                         {% endif %}
                     {% endfor %}
@@ -45,9 +39,11 @@
                     {% for flavour in flavours %}
                         {% if flavour.id == product_in_cart.flavour_id %}
                             <p id="flavour_name">{{flavour.name}}</p>
+                            <p>Кількість на складі: {{flavour.count_of_product}}</p>
                         {% endif %}
                     {% endfor %}
-                    <!-- d-flex gap-1 mb-2 -->
+
+
                     <div class="count_div">
                         <form method="POST">
                             {% csrf_token %}
@@ -56,10 +52,8 @@
                                     <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="minus" class="minus_input_hidden_{{flavour.for_product.id}}">
                                 {% endif %}
                             {% endfor %}
-                            <!-- btn btn-outline-secondary  -->
                             <button class="minus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">-</button>
                         </form>
-                        <!-- p-2 d-flex align-items-center rounded -->
                         <div class="count product_count_{{product_in_cart.product_id}}_{{product_in_cart.flavour_id}}">Кількість: {{product_in_cart.count}}</div>
                         <form method="POST">
                             {% csrf_token %}
@@ -68,7 +62,6 @@
                                     <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="plus" class="plus_input_hidden_{{flavour.for_product.id}}">
                                 {% endif %}
                             {% endfor %}
-                            <!-- btn btn-outline-secondary  -->
                             <button class="plus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">+</button>
                         </form>
         
@@ -82,7 +75,6 @@
                                     <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="delete" class="delete_input_hidden_{{flavour.for_product.id}}">
                                 {% endif %}
                             {% endfor %}
-                            <!-- btn btn-secondary  -->
                             <button class="delete" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">Видалити</button>
                         </form>
                     </div>
@@ -92,7 +84,6 @@
             {% endfor %}
         </div>
 
-    <!-- </div class='make_order_div'> -->
         {% if products %}
             <a href="{% url 'my_order' %}" class="make_order">Замовити</a>
         {% endif %}

@@ -3,6 +3,7 @@ from .models import *
 from django.http import JsonResponse, HttpResponse
 import json
 import ast
+from cart.models import *
 
 
 # Create your views here.
@@ -73,19 +74,12 @@ def filter_products(request):
     
     
     filters_true = ast.literal_eval(filters_true)
-    # print(filters_true)
+    print(filters_true)
     
     products_true = request.POST.get('filters_true')
     products_true = ast.literal_eval(products_true)
     for product_list in products_true:
         product_list.clear()
-
-    # print('products_true: ',products_true)
-    # print(products_true)
-    # print(filters_true)
-    
-    filtered_products = []
-    filters = []
 
     error = None
 
@@ -93,7 +87,7 @@ def filter_products(request):
     max_price = request.POST.get('max_price')
     min_price = request.POST.get('min_price')
     all_products = Product.objects.all().values()
-    # print('prices',max_price, min_price)
+
     filtered_products_by_price_ids = []
     for product in all_products:
         if int(product['price']) >= int(min_price) and int(product['price']) <= int(max_price):
@@ -157,7 +151,7 @@ def filter_products(request):
         print('products false',products)
         print('error', error)
     elif len(list(products.values())) == 0:
-        if len(list(products_price.values())) != 0:
+        if len(list(products_price.values())) != 0 and error != 1:
             products = list(products_price.values())
             print('products none 1',products)
             print('error', error)
@@ -263,10 +257,9 @@ def product_page(request, id):
 
 
 def add_to_cart(request):
-    print('adadadadadadadadada')
+    # print('adadadadadadadadada')
     select = request.POST.get('selector')
     select = select.split(',')
-    # print('selectottttttrtrtrtrt',select)
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -277,21 +270,33 @@ def add_to_cart(request):
     try:
         cart = Cart.objects.get(sessionkey=session_key)
     except:
-        cart = Cart.objects.create(sessionkey=session_key)        
+        cart = Cart.objects.create(sessionkey=session_key)
+        
+          
+    flavour = Flavour.objects.filter(id=select[0]).values()
+    flavour = list(flavour)
+    print(flavour)
     
     try:
         product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
-        product.count += 1
-        product.save()
+        if flavour[0]['count_of_product'] > product.count:
+            
+            product.count += 1
+            product.save()
+        else:
+            pass
     except:
-        product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+        if flavour[0]['count_of_product'] > 0:
+            product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+        else:
+            pass
     
     count_cart = 0
     for product in cart.productincart_set.all():
         product_obj = Product.objects.filter(id=product.product_id).values()
         product_obj = list(product_obj)
         count_cart += product.count
-    
+        
     
     return JsonResponse({'count_cart':count_cart})
 

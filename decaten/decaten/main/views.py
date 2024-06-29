@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Carusel
 from catalog_product.models import *
 from django.http import JsonResponse
+from cart.models import *
 
 # Create your views here.
 def main(request):

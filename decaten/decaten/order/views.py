@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from .forms import UserInfoForm, PostInfoForm, PaymentForm
+from cart.models import *
 # Create your views here.
 
 def order_page(request):

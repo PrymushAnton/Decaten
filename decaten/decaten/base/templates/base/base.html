@@ -34,7 +34,7 @@
         <div class="header_links">
             {% if user.is_authenticated == True %}
                 <!-- <a href="{% url 'cart' %}" class="cart">Кошик</a -->
-                <a href="{% url 'cart' %}" class="cart">Кошик{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}</a>
+                <a href="{% url 'cart' %}" class="cart">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}Кошик</a>
                 <a href="{% url 'orders' %}" class="orders_link">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
 
@@ -59,15 +59,13 @@
         <div class="header_list" id="">
             <li><a href="{% url 'main' %}">Головна</a></li>
             <li><a href="{% url 'catalog' %}">Каталог</a></li>
+            <li><a href="{% url 'cart' %}" class="cart_phone">Кошик{% if count_cart != 0 %}<span id="count_cart_phone">{{count_cart}}</span>{% endif %}</a></li>
             {% if user.is_authenticated == True %}
-                <li><a href="{% url 'cart' %}">Кошик <span id="count_cart_phone">{{count_cart}}</span></a></li>
+                
                 
                 <li><a href="{% url 'orders' %}">Замовлення</a></li>
                 <li><a href="{% url 'logout' %}">Вийти</a></li>
             {% else %}
-                <li>
-
-                </li>
                 <li><a href="{% url 'log' %}">Авторизація</a></li>
                 <li><a href="{% url 'reg' %}">Реєстрація</a></li>
             {% endif %}

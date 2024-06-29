@@ -16,9 +16,19 @@ $(document).ready(function() {
                     $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
                     $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
                     if (data.count_cart > '99'){
-                        $('#count_cart').html('99+')
+                        if ($('.cart').css('display') == 'none'){
+                            $('#count_cart_phone').html('99+')
+                        } else {
+                            $('#count_cart').html('99+')
+                        }
+                        // $('#count_cart').html('99+')
                     } else {
-                        $('#count_cart').html(data.count_cart)
+                        if ($('.cart').css('display') == 'none'){
+                            $('#count_cart_phone').html(data.count_cart)
+                        } else {
+                            $('#count_cart').html(data.count_cart)
+                        }
+                        // $('#count_cart').html(data.count_cart)
                     }
                 } 
                 if (data.count < 1) {
@@ -26,9 +36,18 @@ $(document).ready(function() {
 
                     
                     if (data.count_cart > '99'){
-                        $('#count_cart').html('99+')
+                        if ($('.cart').css('display') == 'none'){
+                            $('#count_cart_phone').html('99+')
+                        } else {
+                            $('#count_cart').html('99+')
+                        }
+                        // $('#count_cart').html('99+')
                     } else {
-                        $('#count_cart').html(data.count_cart)
+                        if ($('.cart').css('display') == 'none'){
+                            $('#count_cart_phone').html(data.count_cart)
+                        } else {
+                            $('#count_cart').html(data.count_cart)
+                        }
                     }
                     
                     
@@ -36,12 +55,18 @@ $(document).ready(function() {
                 }
                 if (data.count_cart < 1){
                     $('.error_empty').css('display', 'flex')
-                    $('#count_cart').css('display', 'none')
+                    if ($('.cart').css('display') == 'none'){
+                        $('#count_cart_phone').css('display', 'none')
+                    } else {
+                        $('#count_cart').css('display', 'none')
+                    }
+                    
                 }
 
                 if ($('.error_empty').css('display') == 'flex') {
                     $(".make_order").css('display', 'none')
                 }
+                
             }
         })
     })

@@ -3,9 +3,16 @@ $(document).ready(function() {
         e.preventDefault();
         // console.log($("#area-select").val())
         var data = null
-        if ($("#payment_now").prop('checked')){
-            console.log(true)
-            data = {
+        // if ($("#payment_now").prop('checked')){
+        //     console.log(true)
+        // }
+        console.log(data)
+        // console.log($("#payment_now").prop('checked'))
+        
+        $.ajax({
+            url: '/validation/',
+            type: "POST",
+            data: {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
                 area: $("#area-select option:selected").text(),
                 city: $("#city-select option:selected").text(),
@@ -18,30 +25,7 @@ $(document).ready(function() {
                 first_name: $("#first_name").val(),
                 middle_name: $("#middle_name").val(),
                 number: $("#number").val(),
-                payment_by_card: true,
-            }
-        } else {
-            console.log(false)
-            data = {
-                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-                area: $("#area-select option:selected").text(),
-                city: $("#city-select option:selected").text(),
-                location: $("#location-select option:selected").text(),
-
-                last_name: $("#last_name").val(),
-                first_name: $("#first_name").val(),
-                middle_name: $("#middle_name").val(),
-                number: $("#number").val(),
-                payment_by_card: false,
-            }
-        }
-        console.log(data)
-        // console.log($("#payment_now").prop('checked'))
-        
-        $.ajax({
-            url: '/validation/',
-            type: "POST",
-            data: data,
+            },
             success: function(data){
                 if (data == '321') {
                     $('.modal').modal('show');

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from catalog_product.models import *
 from django.http import JsonResponse, HttpResponse
+from cart.models import *
 # Create your views here.
 
 def cart(request):
@@ -50,6 +51,8 @@ def plus_count(request):
         cart = Cart.objects.get(sessionkey=session_key)
     except:
         cart = Cart.objects.create(sessionkey=session_key)
+        
+    
     
     try:
         hidden_input = request.POST.get('product_id')
@@ -59,22 +62,27 @@ def plus_count(request):
         product_obj = Product.objects.filter(id=hidden_input[1]).values()
         price = list(product_obj)[0]['price']
         
+        flavour = Flavour.objects.filter(id=hidden_input[0]).values()
+        flavour = list(flavour)
+        
         product = cart.productincart_set.get(product_id=hidden_input[1], flavour_id=hidden_input[0])
-
-        
-        product.count += 1
-        count = product.count
-        
-        final_price = price * count
-        product.save()
-        
-        count_cart = 0
-        for product in cart.productincart_set.all():
-            product_obj = Product.objects.filter(id=product.product_id).values()
-            product_obj = list(product_obj)
-            count_cart += product.count
-        
-        return JsonResponse({'count_cart':count_cart,'price': final_price,"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0]})
+        print(flavour[0]['count_of_product'])
+        if flavour[0]['count_of_product'] > product.count:
+            product.count += 1
+            count = product.count
+            
+            final_price = price * count
+            product.save()
+            
+            count_cart = 0
+            for product in cart.productincart_set.all():
+                product_obj = Product.objects.filter(id=product.product_id).values()
+                product_obj = list(product_obj)
+                count_cart += product.count
+            
+            return JsonResponse({'count_cart':count_cart,'price': final_price,"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0], 'plus': 1})
+        else:
+            return JsonResponse({'count_cart':count, 'plus': 0})
     except:
         return HttpResponse()
     

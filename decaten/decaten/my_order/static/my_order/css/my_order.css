@@ -44,17 +44,17 @@
     align-items: start;
 }
 
-select{
-    width: 200px;
+/* select{
+    width: 200px !important;
     margin-bottom: 10px;
-}
+} */
 .for_credit_card{
     width: 100%;
     border: 2px solid rgb(0, 0, 0, 0.1);
     border-radius: 5px;
     padding: 2%;
     margin-bottom: 5%;
-    display: none;
+    /* display: flex; */
 }
 
 .variant_of_payment{
@@ -103,27 +103,39 @@ h2{
     width: 110px;
 }
 
+.info_about_receiver_parent{
+    /* display: flex;
+    gap: 5%;
+    margin-bottom: 3%; */
+    border: 2px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding-top: 2%;
+}
+
 .info_about_receiver{
     display: flex;
     gap: 5%;
     margin-bottom: 3%;
-    border: 2px solid rgb(0, 0, 0, 0.1);
-    border-radius: 5px;
+    /* border: 2px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px; */
     padding: 2%;
 }
 
 .first_column{
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 .second_column{
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 h5{
-    margin-bottom: 7%;
+    margin-bottom: 4%;
+    margin-top: 3%;
 }
 
 .selector_divs{
@@ -135,8 +147,8 @@ h5{
     margin-bottom: 10px;
 }
 select{
-    width: 100% !important;
-    min-width: 200px !important;
+    width: 100%;
+    max-width: 400px !important;
     margin-bottom: 0;
 }
 
@@ -145,6 +157,11 @@ select{
         min-width: 0;
         width: 90%;
         padding: 5%;
+    }
+
+    .input-group-text{
+        font-size: 14px;
+        padding: 0.375rem 0.4rem !important;
     }
 
     h2{

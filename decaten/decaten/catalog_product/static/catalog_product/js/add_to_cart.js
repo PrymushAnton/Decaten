@@ -14,9 +14,16 @@ $(document).ready(function() {
             },
             success: function(data){
                 console.log(data)
-                $('.cart').empty()
-                $('.cart').append(`<span id="count_cart">${data.count_cart}</span>`)
-                $('.cart').append('Кошик')
+                if ($('.cart').css('display') == 'none'){
+                    $('.cart_phone').empty()
+                    $('.cart_phone').append(`Кошик<span id="count_cart_phone">${data.count_cart}</span>`)
+                    // $('.cart_phone').append('')
+                } else {
+                    $('.cart').empty()
+                    $('.cart').append(`<span id="count_cart">${data.count_cart}</span>`)
+                    $('.cart').append('Кошик')
+                }
+                
                 $("#count_cart").css('display', 'inline !important')
                 $('#count_cart').html(data.count_cart)
             }

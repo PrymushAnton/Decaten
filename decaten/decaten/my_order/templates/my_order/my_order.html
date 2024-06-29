@@ -93,7 +93,7 @@
               
             </div>
             
-            <div class="variant_of_payment">
+            <!-- <div class="variant_of_payment">
               <div class="form-check">
                 <input class="form-check-input" type="radio" id="payment_later" checked>
                 <label class="form-check-label" for="payment_later">Оплата при отриманні</label>
@@ -102,14 +102,13 @@
                 <input class="form-check-input" type="radio" id="payment_now">
                 <label class="form-check-label" for="payment_now">Оплата карткою онлайн</label>
               </div>
-            </div>
+            </div> -->
 
             <div class="for_credit_card">
               <label for="credit_card">Номер картки</label>
               <input type="tel" class="form-control" id="credit_card" minlength="16" maxlength="16">
               <div class="invalid-feedback"></div>
               
-              <!-- <div class="additional-info"> -->
                 <div class="expiration-date-parent" >
                   <label for="month">Термін дії</label>
                   <div class="expiration-date">
@@ -127,7 +126,6 @@
                     </div>
                     
                   </div>
-                <!-- </div> -->
                 <div class="cvv">
                   <label for="cvv">CVV</label>
                   <input type="tel" class="form-control" id="cvv" minlength="3" maxlength="3">
@@ -137,28 +135,40 @@
 
 
               </div>
-              <div class="info_about_receiver">
-                <div class="first_column">
-                  <label for="last_name">Прізвище</label>
-                  <input type="text" class="form-control" id="last_name" maxlength="50" required>
-                  <div class="invalid-feedback"></div>
 
-                  <label for="first_name">Ім'я</label>
-                  <input type="text" class="form-control" id="first_name" maxlength="50" required>
-                  <div class="invalid-feedback"></div>
+              
+              <div class="info_about_receiver_parent">
+                <div class="info_about_receiver">
+                  <div class="first_column">
+                    <label for="last_name">Прізвище</label>
+                    <input type="text" class="form-control" id="last_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+  
+                    <label for="first_name">Ім'я</label>
+                    <input type="text" class="form-control" id="first_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+                  </div>
+                  
+                  <div class="second_column">
+                    <label for="middle_name">По батькові</label>
+                    <input type="text" class="form-control" id="middle_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+                    
+
+                    <label for="number">Номер телефону</label>
+                    <div class="input-group">
+                      <span class="input-group-text" id="addon-wrapping">+380</span>
+                      <!-- <input required type="tel" class="form-control number" aria-label="Username" aria-describedby="addon-wrapping" id="exampleInputNum" maxlength="9"> -->
+                      <input type="tel" class="form-control" id="number" maxlength="9" required>
+                      <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    
+                  </div>
                 </div>
                 
-                <div class="second_column">
-                  <label for="middle_name">По батькові</label>
-                  <input type="text" class="form-control" id="middle_name" maxlength="50" required>
-                  <div class="invalid-feedback"></div>
-
-                  <label for="number">Номер телефону</label>
-                  <input type="tel" class="form-control" id="number" maxlength="9" required>
-                  <div class="invalid-feedback"></div>
-                </div>
+                
             </div>
-
             <div class="final_price_div">
               <input type="hidden" value="{{price}}">
               <h5>Сума замовлення: {{price}} грн</h5>

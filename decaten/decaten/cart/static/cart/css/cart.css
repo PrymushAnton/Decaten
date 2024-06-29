@@ -6,8 +6,8 @@
 .content{
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     /* margin-top: 8%;   */
     min-height: calc(100vh - 80px);
     /* height: 100vh; */
@@ -29,9 +29,9 @@
     align-items: center;
 
 }
-.error_empty img{
+/* .error_empty img{
     width: 30%;
-}
+} */
 .product_card{
     display: flex;
     align-items: center;
@@ -162,6 +162,11 @@
     /* .products{
         gap: 3%;
     } */
+
+    .content{
+        justify-content: start;
+        margin-top: 3%;
+    }
 
     .product_card p{
         margin-bottom: 2%;

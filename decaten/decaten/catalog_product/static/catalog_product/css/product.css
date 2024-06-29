@@ -34,7 +34,9 @@
 /* .product_info h1{
     font-size:25px;
 } */
-
+.no_product_error{
+    display: none;
+}
 
 @media (max-width: 1024px) {
     .image_div img{

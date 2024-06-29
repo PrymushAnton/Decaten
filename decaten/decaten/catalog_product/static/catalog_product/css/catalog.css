@@ -42,7 +42,7 @@
     justify-content: start;
     /* align-items: start; */
     /* gap: 5%; */
-    padding: 0 14% 0 15%;
+    padding: 0 16% 0 17%;
 
     min-height: calc(100vh - 80px);
 }
@@ -129,8 +129,22 @@ h5{
 .filter_button_div{
     display: flex;
     width: 100vw;
-    margin-left: 8%;
+    margin-left: 5%;
 }
+
+.send_filters{
+    background-color: #FF847C !important;
+}
+.send_filters:hover{
+    background-color: #b35c57 !important;
+    color: white;
+}
+
+.filter_button_div button{
+    background-color: #FF847C !important;
+}
+
+
 
 
 /* gap-3 py-2 ms-4 */
@@ -174,6 +188,7 @@ h5{
 } */
 
 
+
 @media (max-width:1200px) and (min-width: 769px){
     .card_of_product {
         width: 31%;
@@ -183,6 +198,9 @@ h5{
     }
     .card_of_product p{
         font-size: 15px;
+    }
+    .content{
+        padding: 0 11% 0 12% !important;
     }
 }
 
@@ -199,11 +217,17 @@ h5{
     .filter_section{
         width: 25%;
     }
+    .content{
+        padding: 0 14% 0 15%;
+    }
 }
 
 @media (max-width:1250px){
     .card_of_product {
         width: 31%;
+    }
+    .content{
+        padding: 0 13% 0 14%;
     }
 
     /* .content{
@@ -213,11 +237,9 @@ h5{
 
 @media (max-width:1024px){
     .filter_section{
-        width: 27%;
+        width: 30%;
     }
-    .content{
-        padding: 0 2%;
-    }
+    
     .card_of_product {
         width: 32%;
     }
@@ -225,6 +247,15 @@ h5{
         font-size: 17px;
     } */
 
+}
+@media (max-width: 950px) and (min-width:769px){
+    .content{
+        padding: 0 8% 0 9% !important;
+    }
+}
+
+@media (max-width: 500px){
+    
 }
 
 @media (min-width:2000px){

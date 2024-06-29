@@ -5,27 +5,67 @@ from .models import *
 from catalog_product.models import *
 from django.contrib.auth import authenticate
 from datetime import date
+from cart.models import *
 
 API_KEY = 'a82d9d12e5f74a8692792b6930d55bc4'
 BASE_URL = 'https://api.novaposhta.ua/v2.0/json/'
 
 def cancel_order(request):
     id = request.POST.get('id')
-    # print(id)
     order = Order.objects.get(id=id)
+    
+    products = order.productinorder_set.all().values()
+    products = list(products)
+    for product in products:
+        # print(product)
+        flavour = Flavour.objects.get(id=product['flavour_id'])
+        flavour.count_of_product = int(flavour.count_of_product) + int(product['count'])
+        flavour.save()
+    
+    # print(id)
+    
     order.status = 0
     order.save()
     
     return HttpResponse()
 
+def sent_order(request):
+    id = request.POST.get('id')
+    # print(id)
+    order = Order.objects.get(id=id)
+    order.status = 2
+    order.save()
+    
+    return HttpResponse()
+
+def arrived_order(request):
+    id = request.POST.get('id')
+    # print(id)
+    order = Order.objects.get(id=id)
+    order.status = 3
+    order.save()
+    return HttpResponse()
+
+def success_order(request):
+    id = request.POST.get('id')
+    # print(id)
+    order = Order.objects.get(id=id)
+    order.status = 4
+    order.save()
+    return HttpResponse()
+
 def order(request, id):
     # print(id)
+
     context = {}
     try:
         order = Order.objects.get(id=id)
-        products_in_order = ProductInOrder.objects.filter(order=order)
+        # print(order)
+        products_in_order = ProductInOrder.objects.filter(order_id=order.id)
+        
         products = ProductInOrder.objects.filter(order=order).values()
         products = list(products)
+        # print(products)
         list_of_ids = []
         list_of_ids_for_flavours = []
         list_of_prices = []
@@ -35,7 +75,7 @@ def order(request, id):
             list_of_ids.append(product['product_id'])
             list_of_ids_for_flavours.append(product['flavour_id'])
             list_of_counts.append(product['count'])
-        
+        print(list_of_counts)
         all_products_for_prices = Product.objects.filter(id__in=list_of_ids).values()
         all_products_for_prices = list(all_products_for_prices)
         # print('all',all_products_for_prices)
@@ -47,13 +87,44 @@ def order(request, id):
             list_of_final_prices.append(int(price)*int(list_of_counts[count]))
             count += 1
             
-        print(list_of_final_prices)
+        # print(list_of_final_prices)
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.cycle_key()
+            session_key = request.session.session_key
+            
+        try:
+            cart = Cart.objects.get(sessionkey=session_key)
+        except:
+            cart = Cart.objects.create(sessionkey=session_key)
+
+        count = 0
+        for product in cart.productincart_set.all():
+            product_obj = Product.objects.filter(id=product.product_id).values()
+            product_obj = list(product_obj)
+            count += product.count
             
         
-        all_products = Product.objects.filter(id__in=list_of_ids)
-        all_flavours = Flavour.objects.filter(id__in=list_of_ids_for_flavours)
-        print(all_products)
-        context = {'products': all_products, 'flavours': all_flavours, 'products_in_order': products_in_order, 'prices': list_of_final_prices}
+        # all_products = Product.objects.filter(id__in=list_of_ids)
+        all_products = []
+        all_flavours = Flavour.objects.filter(id__in=list_of_ids_for_flavours).values()
+        all_flavours = list(all_flavours)
+        print(all_flavours)
+        list_of_products = []
+        list_of_products_prices = []
+        count_for_price = 0
+        for flavour in all_flavours:
+            product = Product.objects.get(id=flavour['for_product_id'])
+            list_of_products.append(product)
+            list_of_products_prices.append(int(product.price) * int(list_of_counts[count_for_price]))
+            count_for_price += 1
+        print(list_of_products)
+        
+        print(list_of_products_prices)
+        flavours = Flavour.objects.filter(id__in=list_of_ids_for_flavours)
+            
+        # print(all_flavours)
+        context = {'products': list_of_products, 'flavours': flavours, 'products_in_order': products_in_order, 'prices': list_of_products_prices, 'count_cart': count}
         # print(list(products))
     except:
         print('except')
@@ -63,21 +134,43 @@ def order(request, id):
     return render(request, 'my_order/order.html', context)
 
 def orders(request):
-    orders = Orders.objects.get(username=request.user.username)
-    
-    all_orders = Order.objects.filter(orders=orders)
-    # first_order = all_orders[0]
-    # print('first',first_order)
-    # all_orders = list(all_orders)
-    print(all_orders)
-    date_today = date.today()
-    date_today = str(date_today).split('-')
-    print(date_today)
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+    count = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count += product.count
+        
+        
+        
+    if not request.user.is_staff:
+        orders = Orders.objects.get(username=request.user.username)
+        
+        all_orders = Order.objects.filter(orders=orders)
 
+        date_today = date.today()
+        date_today = str(date_today).split('-')
+
+        
+        
+        context = {'all_orders': all_orders, 'count_cart': count}
+    elif request.user.is_staff:
+        all_orders_of_users = Order.objects.all()
+        context = {'count_cart': count, 'all_orders_of_users': all_orders_of_users}
     
     
     
-    context = {'all_orders': all_orders}
+    
+    
+    
     
     
     return render(request, 'my_order/orders.html', context)
@@ -113,10 +206,25 @@ def my_order(request):
             price_of_order += int(product_obj[0]['price']) * int(product['count'])
     except:
         pass
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
         
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+
+    count = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count += product.count
         
     
-    context = {'price':price_of_order}
+    context = {'price':price_of_order, 'count_cart': count}
     
     return render(request, 'my_order/my_order.html', context)
 
@@ -325,117 +433,129 @@ def validation(request):
         pass
     
     if request.user.is_authenticated:
-        if payment_by_card == 'true':
-            if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
-                if validate_area(area):
-                    if validate_city(city):
-                        if validate_location(location):
-                            if validate_number_of_card(number_of_card):
-                                if validate_month(month):
-                                    if validate_year(year):
-                                        if validate_cvv(cvv):
-                                            if validate_last_name(last_name):
-                                                if validate_first_name(first_name):
-                                                    if validate_middle_name(middle_name):
-                                                        if validate_number(number):
-                                                            orders = Orders.objects.get(username=request.user.username)
-                                                            # print()
-                                                            date_today = date.today()
-                                                            date_today = str(date_today).split('-')
+        if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
+            if validate_area(area):
+                if validate_city(city):
+                    if validate_location(location):
+                        if validate_number_of_card(number_of_card):
+                            if validate_month(month):
+                                if validate_year(year):
+                                    if validate_cvv(cvv):
+                                        if validate_last_name(last_name):
+                                            if validate_first_name(first_name):
+                                                if validate_middle_name(middle_name):
+                                                    if validate_number(number):
+                                                        orders = Orders.objects.get(username=request.user.username)
+                                                        # print()
+                                                        date_today = date.today()
+                                                        date_today = str(date_today).split('-')
+                                                        
+                                                        order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0], number_of_card=number_of_card, month=month, year=year, cvv=cvv, last_name=last_name, first_name=first_name, middle_name=middle_name, number=number)
+                                                        products = cart.productincart_set.all().values()
+                                                        products = list(products)
+                                                        for product in products:
+                                                            # print(product)
+                                                            product_obj = Product.objects.get(id=product['product_id'])
+                                                            flavour_obj = Flavour.objects.get(id=product['flavour_id'])
+                                                            product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
+                                                            flavour = Flavour.objects.get(id=product['flavour_id'])
+                                                            flavour.count_of_product = int(flavour.count_of_product) - int(product['count'])
+                                                            flavour.save()
                                                             
-                                                            order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0])
-                                                            products = cart.productincart_set.all().values()
-                                                            products = list(products)
-                                                            for product in products:
-                                                                # print(product)
-                                                                product_obj = Product.objects.get(id=product['product_id'])
-                                                                flavour_obj = Flavour.objects.get(id=product['flavour_id'])
-                                                                product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
-                                                            print(ProductInOrder.objects.all())
-                                                            cart.delete()
-                                                            return HttpResponse(100)
+                                                            
+                                                            
+                                                            
+                                                        print(ProductInOrder.objects.all())
+                                                        
+                                                        cart.delete()
+                                                        return HttpResponse(100)
 
-                
-                                                
-                                                        else:
-                                                            error = 9
-                                                            return HttpResponse(error)
+            
+                                            
                                                     else:
-                                                        error = 8
+                                                        error = 9
                                                         return HttpResponse(error)
                                                 else:
-                                                    error = 7
+                                                    error = 8
                                                     return HttpResponse(error)
                                             else:
-                                                error = 6
+                                                error = 7
                                                 return HttpResponse(error)
                                         else:
-                                            error = 5
+                                            error = 6
                                             return HttpResponse(error)
                                     else:
-                                        error = 4
+                                        error = 5
                                         return HttpResponse(error)
                                 else:
-                                    error = 3
+                                    error = 4
                                     return HttpResponse(error)
                             else:
-                                error = 2
+                                error = 3
                                 return HttpResponse(error)
                         else:
-                            return HttpResponse(12)
+                            error = 2
+                            return HttpResponse(error)
                     else:
-                        return HttpResponse(11)
+                        return HttpResponse(12)
                 else:
-                    return HttpResponse(10)
+                    return HttpResponse(11)
             else:
-                error = 1
-                return HttpResponse(error)
-        elif payment_by_card == 'false':
-            if area and city and location and last_name and first_name and middle_name and number:
-                if validate_area(area):
-                    if validate_city(city):
-                        if validate_location(location):
-                            if validate_last_name(last_name):
-                                if validate_first_name(first_name):
-                                    if validate_middle_name(middle_name):
-                                        if validate_number(number):
-                                            orders = Orders.objects.get(username=request.user.username)
-                                            # print()
-                                            date_today = date.today()
-                                            date_today = str(date_today).split('-')
-                                            
-                                            order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0])
-                                            products = cart.productincart_set.all().values()
-                                            products = list(products)
-                                            for product in products:
-                                                # print(product)
-                                                product_obj = Product.objects.get(id=product['product_id'])
-                                                flavour_obj = Flavour.objects.get(id=product['flavour_id'])
-                                                product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
-                                            print(ProductInOrder.objects.all())
-                                            cart.delete()
-                                            return HttpResponse(100)
-                                        else:
-                                            error = 9
-                                            return HttpResponse(error)
-                                    else:
-                                        error = 8
-                                        return HttpResponse(error)
-                                else:
-                                    error = 7
-                                    return HttpResponse(error)
-                            else:
-                                error = 6
-                                return HttpResponse(error)
-                        else:
-                            return HttpResponse(12)
-                    else:
-                        return HttpResponse(11)
-                else:
-                    return HttpResponse(10)
-            else:
-                error = 1
-                return HttpResponse(error)
+                return HttpResponse(10)
+        else:
+            error = 1
+            return HttpResponse(error)
     else:
         return HttpResponse(321)
+    #     elif payment_by_card == 'false':
+    #         if area and city and location and last_name and first_name and middle_name and number:
+    #             if validate_area(area):
+    #                 if validate_city(city):
+    #                     if validate_location(location):
+    #                         if validate_last_name(last_name):
+    #                             if validate_first_name(first_name):
+    #                                 if validate_middle_name(middle_name):
+    #                                     if validate_number(number):
+    #                                         orders = Orders.objects.get(username=request.user.username)
+    #                                         # print()
+    #                                         date_today = date.today()
+    #                                         date_today = str(date_today).split('-')
+                                            
+    #                                         order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0])
+    #                                         products = cart.productincart_set.all().values()
+    #                                         products = list(products)
+    #                                         for product in products:
+    #                                             # print(product)
+    #                                             product_obj = Product.objects.get(id=product['product_id'])
+    #                                             flavour_obj = Flavour.objects.get(id=product['flavour_id'])
+    #                                             product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
+    #                                             flavour = Flavour.objects.get(id=product['flavour_id'])
+    #                                             print(int(product['count']))
+    #                                             flavour.count_of_product -= int(product['count'])
+    #                                             flavour.save()
+    #                                         print(ProductInOrder.objects.all())
+    #                                         cart.delete()
+    #                                         return HttpResponse(100)
+    #                                     else:
+    #                                         error = 9
+    #                                         return HttpResponse(error)
+    #                                 else:
+    #                                     error = 8
+    #                                     return HttpResponse(error)
+    #                             else:
+    #                                 error = 7
+    #                                 return HttpResponse(error)
+    #                         else:
+    #                             error = 6
+    #                             return HttpResponse(error)
+    #                     else:
+    #                         return HttpResponse(12)
+    #                 else:
+    #                     return HttpResponse(11)
+    #             else:
+    #                 return HttpResponse(10)
+    #         else:
+    #             error = 1
+    #             return HttpResponse(error)
+
 

@@ -5,60 +5,157 @@
 {% block link %}
     <link rel="stylesheet" href="{% static 'my_order/css/orders.css' %}">
     <script defer src="{% static 'my_order/js/cancel_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/arrived_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/success_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/sent_order.js' %}"></script>
+
 {% endblock %}
 
 
 
 {% block main %}
 <div class="content">
+    {% if not request.user.is_staff %}
+        {% if all_orders|length == 0 %}
+            <div class="error_empty">
+                <h2>Не було зроблено жодного замовлення</h2>
+                <img src="{% static 'my_order/icons/orders_empty.svg' %}" width="200px" alt="">
+            </div>
+        {% endif %}
+        <div class="orders">
+            {% for order in all_orders %}
+            <div class="order">
+                <div class="header_of_order_{{order.id}} header_of_order">
+                    <h4>Замовлення №{{order.id}}</h4>
+                    <!-- <p>{{order.status}}</p> -->
+                    <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                    {% if order.status == '0' %}
+                        <h4 class="order_status_{{order.id}} canceled">Статус: Скасовано</h5>
+                    {% elif order.status == '1' %}
+                        <h4 class="order_status_{{order.id}} active">Статус: Активно</h5>
+                    {% elif order.status == '2' %}
+                        <h4 class="order_status_{{order.id}} sent">Статус: Відправлено</h5>
+                    {% elif order.status == '3' %}
+                        <h4 class="order_status_{{order.id}} arrived">Статус: Доставлено</h5>
+                    {% elif order.status == '4' %}
+                        <h4 class="order_status_{{order.id}} completed">Статус: Виконано</h5>
+                    {% endif %}
+                        
+                </div>
+                
+                <div class="adress">
+                    <p class="date_phone">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                    <p>Область: {{order.area}}</p>
+                    <p>Місто: {{order.city}}</p>
+                    <p>{{order.location}}</p>
+                    
+                </div>
 
-    <!-- <div class="col-1"></div> -->
-    <!-- col-10 d-flex justify-content-start gap-3 flex-wrap ps-3  -->
-    {% if all_orders|length == 0 %}
-        <div class="error_empty">
-            <h2>Не було зроблено жодного замовлення</h2>
-            <img src="{% static 'my_order/icons/orders_empty.svg' %}" alt="">
+                <div class="buttons">
+                    <a href="../order/{{order.id}}/" class="text-success">Переглянути</a>
+                    {% if order.status == '1' %}
+                        <form action="" method="POST" class="form_cancel_{{order.id}}">
+                            {% csrf_token %}
+                            <div class="div_buttons_form_{{order.id}} div_buttons_form">
+                                {% if order.status == '1' or order.status == '2' or order.status == '3' %}
+                                    <button class="btn btn-danger cancel_button" id="{{order.id}}">Скасувати</button>
+                                {% endif %}
+                            </div>
+                            <!-- <input type="hidden" value="{{order.id}}" class="cancel_input"> -->
+                            <!-- <button class="btn btn-danger cancel_button" id="{{order.id}}">Відмінити</button> -->
+                        </form>
+                    {% endif %}
+                </div>
+                
+            </div>
+            
+
+            {% endfor %}
+    {% elif request.user.is_staff %}
+        <div class="orders">
+            {% for order in all_orders_of_users %}
+                <div class="order_admin">
+                    <div class="header_of_order_{{order.id}} header_of_order">
+                        
+                        <h4>Замовлення №{{order.id}}</h4>
+                        <h5 class="user_h5">Користувач: {{order.orders.user}}</h5>
+                        <!-- <p>{{order.status}}</p> -->
+                        <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                        {% if order.status == '0' %}
+                            <h4 class="order_status_{{order.id}} canceled">Статус: Скасовано</h5>
+                        {% elif order.status == '1' %}
+                            <h4 class="order_status_{{order.id}} active">Статус: Активно</h5>
+                        {% elif order.status == '2' %}
+                            <h4 class="order_status_{{order.id}} sent">Статус: Відправлено</h5>
+                        {% elif order.status == '3' %}
+                            <h4 class="order_status_{{order.id}} arrived">Статус: Доставлено</h5>
+                        {% elif order.status == '4' %}
+                            <h4 class="order_status_{{order.id}} completed">Статус: Виконано</h5>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="user">
+                        <p>Користувач: {{order.orders.user}}</p>
+                    </div>
+                    
+                    <div class="adress">
+                        <p class="date_phone">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
+                        <p>Область: {{order.area}}</p>
+                        <p>Місто: {{order.city}}</p>
+                        <p>{{order.location}}</p>
+                        
+
+                    </div>
+
+                    <div class="credit_card">
+                        <p>Номер картки: {{order.number_of_card}}</p>
+                        <p>Місяць до: {{order.month}}</p>
+                        <p>Рік до: {{order.year}}</p>
+                        <p>CVV: {{order.cvv}}</p>
+                    </div>
+
+                    <div class="info_about_person">
+                        <p>Прізвище: {{order.last_name}}</p>
+                        <p>Ім'я: {{order.first_name}}</p>
+                        <p>По батькові: {{order.middle_name}}</p>
+                        <p>Номер: {{order.number}}</p>
+                    </div>
+
+                    <div class="buttons">
+                        <a href="../order/{{order.id}}/" class="text-success">Переглянути</a>
+                        
+                            <form action="" method="POST" class="form_cancel_{{order.id}} form_buttons">
+                                {% csrf_token %}
+                                <div class="div_buttons_form_{{order.id}} div_buttons_form">
+                                    {% if order.status == '1' or order.status == '2' or order.status == '3' %}
+                                        <button class="btn btn-danger cancel_button" id="{{order.id}}">Скасувати</button>
+                                    {% endif %}
+
+
+                                    {% if order.status == '1' %}
+                                        <button class="btn btn-info sent_button" id="{{order.id}}">Відправлено</button>
+                                    {% endif %}
+
+
+                                    {% if order.status == '2'  %}
+                                        <button class="btn btn-primary arrived_button" id="{{order.id}}">Доставлено</button>
+                                    {% endif %}
+
+
+                                    {% if order.status == '3' %}
+                                        <button class="btn btn-success success_button" id="{{order.id}}">Виконано</button>
+                                    {% endif %}
+                                </div>
+                                <!-- <input type="hidden" value="{{order.id}}" class="cancel_input"> -->
+                                
+                                
+                            </form>
+                        
+                    </div>
+                    
+                </div>
+            {% endfor %}
         </div>
     {% endif %}
-    <div class="orders">
-        {% for order in all_orders %}
-        <div class="order">
-            <div class="header_of_order_{{order.id}} header_of_order">
-                <h4>Замовлення №{{order.id}}</h4>
-                <!-- <p>{{order.status}}</p> -->
-                <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
-                {% if order.status == '0' %}
-                    <h4 class="order_status_{{order.id}} canceled">Статус: Скасовано</h5>
-                {% elif order.status == '1' %}
-                    <h4 class="order_status_{{order.id}} active">Статус: Активно</h5>
-                {% elif order.status == '2' %}
-                    <h4 class="order_status_{{order.id}} completed">Статус: Виконано</h5>
-                {% endif %}
-                
-            </div>
-            
-            <div class="adress">
-                <p class="date_phone">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
-                <p>Область: {{order.area}}</p>
-                <p>Місто: {{order.city}}</p>
-                <p>{{order.location}}</p>
-                
-            </div>
-
-            <div class="buttons">
-                <a href="../order/{{order.id}}/" class="text-success">Переглянути</a>
-                {% if order.status == '1' %}
-                    <form action="" method="POST" class="form_cancel_{{order.id}}">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{order.id}}" class="cancel_input">
-                        <button class="btn btn-danger cancel_button" id="{{order.id}}">Відмінити</button>
-                    </form>
-                {% endif %}
-            </div>
-            
-        </div>
-           
-
-        {% endfor %}
-    </div>
+</div>
 {% endblock %}

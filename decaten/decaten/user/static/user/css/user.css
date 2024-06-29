@@ -62,7 +62,8 @@ h2{
 
 @media (max-width:768px){
     .content{
-        align-items: start;
+        /* align-items: start; */
+        min-height: max-content;
         height: max-content;
         margin-top: 5%;
         min-height: 0;

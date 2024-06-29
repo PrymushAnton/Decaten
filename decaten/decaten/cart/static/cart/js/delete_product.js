@@ -23,15 +23,27 @@ $(document).ready(function() {
                     
                 //     console.log(123)
                 // }
+                console.log(data.count_cart)
+                console.log(typeof(data.count_cart))
                 if (data.count_cart == '0'){
+                    console.log('delete 0')
                     $('.error_empty').css('display', 'flex')
-                    $('#count_cart').css('display', 'none')
+                    // $('#count_cart').css('display', 'none')
+                    if ($('.cart').css('display') == 'none'){
+                        $('#count_cart_phone').css('display', 'none')
+                    } else {
+                        $('#count_cart').css('display', 'none')
+                    }
 
                 } else {
-                    $('#count_cart').css('display', 'inline')
-                    $('#count_cart').html(data.count_cart)
+                    // $('#count_cart').css('display', 'inline')
+                    if ($('.cart').css('display') == 'none'){
+                        $('#count_cart_phone').html(data.count_cart)
+                    } else {
+                        $('#count_cart').html(data.count_cart)
+                    }
                 }
-                console.log($('.error_empty').css('display'))
+                // console.log($('.error_empty').css('display'))
                 if ($('.error_empty').css('display') == 'flex') {
                     $(".make_order").css('display', 'none')
                 }

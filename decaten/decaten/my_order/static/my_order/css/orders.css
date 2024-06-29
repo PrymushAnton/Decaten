@@ -5,6 +5,14 @@
 
 .content{
     min-height: calc(100vh - 80px);
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    /* align-items: center; */
+}
+
+.user{
+    display: none;
 }
 .orders{
     display: flex;
@@ -14,6 +22,50 @@
     margin-top: 2%;
 }
 
+.order div{
+    width: 20%;
+}
+.info_about_person, .credit_card{
+    width: 15%;
+}
+
+.adress{
+    width: 30%;
+}
+
+
+.div_buttons_form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+.div_buttons_form button{
+    width: 100% !important;
+    min-width: 120px;
+    margin-bottom: 10% !important;
+}
+
+.order_admin{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 2%;
+    width: 85%;
+    margin-bottom: 1.5%;
+    /* gap: 1%; */
+
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 11px -5px rgba(0,0,0,0.75);
+}
+
+h4{
+    text-align: start;
+}
 .order{
     display: flex;
     justify-content: space-between;
@@ -22,6 +74,7 @@
     padding: 2%;
     width: 68%;
     margin-bottom: 1.5%;
+    
     /* gap: 5%; */
 
     border-bottom: 1px solid rgb(0, 0, 0, 0.1);
@@ -36,6 +89,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    width: 20% !important;
 }
 .header_of_order p{
     margin-bottom: 0.5rem;
@@ -50,10 +104,12 @@
 .adress p{
     margin-bottom: 0.5rem;
     text-align: start;
+    /* width: 70%; */
 }
 p{
     text-align: start;
-    width: 90%;
+    margin-bottom: 0.5rem;
+    /* width: 90%; */
 }
 
 .text-success{
@@ -65,6 +121,7 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 10%;
 }
 
 .buttons a{
@@ -80,12 +137,26 @@ p{
 }
 
 .active{
-    color: lightgreen;
+    color: rgb(132, 214, 132);
 }
 
 .completed{
-    color: green;
+    color: rgb(0, 158, 0);
 }
+
+.sent{
+    color: rgb(27, 226, 226);
+}
+
+.arrived{
+    color: rgb(40, 40, 235);
+}
+
+.btn-info{
+    color: white !important;
+}
+
+
 .date_phone{
     display: none;
 }
@@ -133,6 +204,17 @@ p{
         width: 85%;
     }
 
+    .order_admin{
+        width: 90%;
+        
+    }
+    .order_admin .header_of_order h5{
+        font-size: 18px !important;
+    }
+    .order_admin .header_of_order h4{
+        font-size: 19px !important;
+    }
+
     .text-success{
         font-size: 15px !important;
     }
@@ -149,33 +231,73 @@ p{
 
 @media (max-width:768px){
     
+    .user_h5{
+        display: none;
+    }
+    .user{
+        display: flex;
+        width: 100%;
+        justify-content: start;
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
+    }
+    .user p{
+        margin-bottom: 0.3rem;
+    }
+    .order_admin{
+        flex-direction: column;
+        margin-bottom: 5%;
+    }
+    .order_admin .header_of_order{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
+    }
+    .info_about_person, .credit_card{
+        width: 100%;
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
+    }
+    .adress{
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
+    }
+    .buttons{
+        padding-top: 1%;
+    }
+
     .orders{
         margin-top: 3%;
+    }
+    .content{
+        justify-content: start;
     }
     .order{
         margin-bottom: 3%;
         flex-direction: column;
         padding: 3%;
+        /* justify-content: space-between; */
+        align-items: start;
     }
     p{
         font-size: 15px;
     }
-    .header_of_order{
-        width: 100%;
+    .order .header_of_order{
+        width: 100% !important;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
     }
     .adress{
-        width: 100%;
+        width: 100% !important;
         /* padding-left: 4%; */
     }
     .buttons{
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 10%;
+        gap: 5%;
+        width: 100% !important;
     }
     .buttons a{
         margin-bottom: 0 !important;
@@ -193,10 +315,23 @@ p{
         font-size: 14px;
     }
 
+    .order_admin .header_of_order h4{
+        font-size: 17px !important;
+    }
+    .order_admin .header_of_order h5{
+        font-size: 16px !important;
+    }
+
 }
 @media (max-width: 425px){
     h4{
         font-size: 17px;
+    }
+    .order_admin .header_of_order h4{
+        font-size: 16px !important;
+    }
+    .order_admin .header_of_order h5{
+        font-size: 15px !important;
     }
 }
 @media (max-width: 375px){

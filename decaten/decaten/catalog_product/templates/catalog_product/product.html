@@ -4,7 +4,7 @@
 
 {% block link %}
     <!-- <script defer src="{% static 'base\js\jquery-3.7.1.min.js' %}"></script> -->
-    <script defer src="{% static '\catalog_product/js/product.js' %}"></script>
+    <!-- <script defer src="{% static '\catalog_product/js/product.js' %}"></script> -->
     <script defer src="{% static 'catalog_product/js/flavour.js' %}"></script>
     <script defer src="{% static 'catalog_product/js/add_to_cart.js' %}"></script>
     <link rel="stylesheet" href="{% static 'catalog_product/css/product.css' %}">
@@ -45,7 +45,14 @@
                     {% endfor %}
                 </select>
                 <p class="mt-2" >{{product.price}} грн.</p>
-                <button class="btn btn-success add_to_cart">Додати в кошик</button>
+                <p>{{flaur.count_of_product}}</p>
+
+                {% if flaur.0.count_of_product > 0 %}
+                    <button class="btn btn-success add_to_cart">Додати в кошик</button>
+                    
+                {% endif %}
+                <span class="no_product_error">Товару немає в наявності.</span>
+
             </form>
         </div>
 

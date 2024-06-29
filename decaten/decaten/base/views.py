@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from catalog_product.models import *
 from django.http import JsonResponse
+from cart.models import *
 
 # Create your views here.
 def base(request):

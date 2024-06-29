@@ -7,6 +7,7 @@ from django.http import HttpResponse
 import re
 from catalog_product.models import *
 from my_order.models import *
+from cart.models import *
 
 def validate_email(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
