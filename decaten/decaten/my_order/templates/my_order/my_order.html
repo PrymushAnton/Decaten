@@ -1,0 +1,226 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'my_order/css/my_order.css' %}">
+    <script defer src="{% static 'my_order/js/my_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/validation.js' %}"></script>
+{% endblock %}
+
+
+
+{% block main %}
+    <!-- 
+        <div class="form_div">
+            <form class="order_form" action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Ім'я користувача</label>
+                    <input required name="first_name" type="text" class="form-control first_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputName" class="form-label">Прізвище користувача</label>
+                    <input required name="last_name" type="text" class="form-control last_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <button>Відправити</button>
+            </form>
+        </div>
+        
+    -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Помилка!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Не авторизовані користувачі не можуть робити замовлення!</p>
+            <p>Будь ласка, ввійдіть в акаунт.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" class="btn btn-primary go_to_auth">Авторизуватись</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content">
+      <div class="form_div">
+        <form action="" method="POST">
+          {% csrf_token %}
+          
+          
+            <h2>Оформити замовлення</h2>
+            <div class="nova_poshta">
+              <div class="selector_divs">
+                <select id="area-select" class="form-select">
+                  <option value="" selected disabled hidden>Оберіть область</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+              
+              <div class="selector_divs">
+                <select id="city-select" class="form-select">
+                  <option value="" selected disabled hidden>Оберіть місто</option>
+              </select>
+              <div class="invalid-feedback"></div>
+              </div>
+              
+  
+  
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Branch" disabled>
+                <label class="form-check-label" for="Branch">Відділення</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Postomat" disabled>
+                <label class="form-check-label" for="Postomat">Поштомати</label>
+              </div>
+
+              <div class="selector_divs">
+                <select id="location-select" class="form-select">
+                  <option value="" selected disabled hidden>Оберіть відділення</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+              
+            </div>
+            
+            <!-- <div class="variant_of_payment">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="payment_later" checked>
+                <label class="form-check-label" for="payment_later">Оплата при отриманні</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="payment_now">
+                <label class="form-check-label" for="payment_now">Оплата карткою онлайн</label>
+              </div>
+            </div> -->
+
+            <div class="for_credit_card">
+              <label for="credit_card">Номер картки</label>
+              <input type="tel" class="form-control" id="credit_card" minlength="16" maxlength="16">
+              <div class="invalid-feedback"></div>
+              
+                <div class="expiration-date-parent" >
+                  <label for="month">Термін дії</label>
+                  <div class="expiration-date">
+                    <div>
+                      <input type="tel" class="form-control" id="month" minlength="2" maxlength="2">
+                      <div class="invalid-feedback"></div>
+                    </div>
+                    
+
+                    <span class="input-separator">/</span>
+
+                    <div>
+                      <input type="tel" class="form-control" id="year" minlength="2" maxlength="2">
+                      <div class="invalid-feedback"></div>
+                    </div>
+                    
+                  </div>
+                <div class="cvv">
+                  <label for="cvv">CVV</label>
+                  <input type="tel" class="form-control" id="cvv" minlength="3" maxlength="3">
+                  <div class="invalid-feedback"></div>
+                </div>
+              </div>
+
+
+              </div>
+
+              
+              <div class="info_about_receiver_parent">
+                <div class="info_about_receiver">
+                  <div class="first_column">
+                    <label for="last_name">Прізвище</label>
+                    <input type="text" class="form-control" id="last_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+  
+                    <label for="first_name">Ім'я</label>
+                    <input type="text" class="form-control" id="first_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+                  </div>
+                  
+                  <div class="second_column">
+                    <label for="middle_name">По батькові</label>
+                    <input type="text" class="form-control" id="middle_name" maxlength="50" required>
+                    <div class="invalid-feedback"></div>
+                    
+
+                    <label for="number">Номер телефону</label>
+                    <div class="input-group">
+                      <span class="input-group-text" id="addon-wrapping">+380</span>
+                      <!-- <input required type="tel" class="form-control number" aria-label="Username" aria-describedby="addon-wrapping" id="exampleInputNum" maxlength="9"> -->
+                      <input type="tel" class="form-control" id="number" maxlength="9" required>
+                      <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+                
+                
+            </div>
+            <div class="final_price_div">
+              <input type="hidden" value="{{price}}">
+              <h5>Сума замовлення: {{price}} грн</h5>
+            </div>
+            <div class="button_send">
+              <button class="send btn btn-success">Оформити замовлення</button>
+            </div>
+
+            
+
+
+        </form>
+      </div>
+        
+    </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        // Завантаження списку областей при завантаженні сторінки
+        
+      
+        // // Заповнення селекту локацій залежно від вибору радіо кнопки
+        // $('input[name="location_type"]').on('change', function() {
+        //   var cityRef = $('#city-select').val();
+        //   if (!cityRef) return;
+        //   $.ajax({
+        //     url: '/warehouses/',
+        //     data: { 'city_ref': cityRef },
+        //     success: function(data) {
+        //       fillLocationSelect(data);
+        //     }
+        //   });
+        // });
+      
+        // function fillLocationSelect(data) {
+        //   var $locationSelect = $('#location-select');
+        //   $locationSelect.empty();
+        //   $locationSelect.append('<option value="">Select Location</option>');
+        //   var selectedType = $('input[name="location_type"]:checked').val();
+        //   data.forEach(function(location) {
+        //     if ((selectedType === 'warehouses' && location.TypeOfWarehouse === '9') ||
+        //         (selectedType === 'postmachines' && location.TypeOfWarehouse === '10')) {
+        //       $locationSelect.append(
+        //         $('<option>', {
+        //           value: location.Ref,
+        //           text: location.Description
+        //         })
+        //       );
+        //     }
+        //   });
+        // }
+      </script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

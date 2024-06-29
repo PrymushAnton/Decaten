@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'my_order/css/order.css' %}">
+{% endblock %}
+
+
+
+{% block main %}
+    <div class="content">
+        <div class="products">
+            {% for product in products %}
+
+                <div class="product">
+                    {% for flavour in flavours %}
+                        {% if forloop.counter0 == forloop.parentloop.counter0 %}
+                            <img src="{{flavour.image.url}}" alt="" class="image_flavour{{product_in_cart.product_id}}">
+                        {% endif %}
+                    {% endfor %}
+                    <h5>{{product.name}}</h5>
+                    {% for flavour in flavours %}
+                        {% if forloop.counter0 == forloop.parentloop.counter0 %}
+                            <p>{{flavour.name}}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for product_in_order in products_in_order %}
+                        {% if forloop.counter0 == forloop.parentloop.counter0 %}
+                            <p>Кількість: {{product_in_order.count}}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for price in prices %}
+                        {% if forloop.counter0 == forloop.parentloop.counter0 %}
+                            <p>Ціна: {{price}}</p>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    
+
+                    
+                </div>
+                
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

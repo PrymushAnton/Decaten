@@ -9,12 +9,14 @@
             border-bottom-left-radius: 12px;
         }
     </style>
+    <link rel="stylesheet" href="{% static 'order/css/order.css' %}">
 {% endblock link %}
     
     
 <!-- disabled  -->
 {% block main %}
-    <div class="container-md h-75 d-flex flex-column justify-content-center align-items-center mt-3 ">
+<!-- container-md h-75 d-flex flex-column justify-content-center align-items-center mt-3  -->
+    <div class="content">
         <form method="post" id="userInfo" class="bottomForm row g-3 needs-validation mt-2 p-5 pt-1 justify-content-center align-items-end border border-2" novalidate>
             {% csrf_token %}
             <div class="col-md-12 text-center">
@@ -210,4 +212,7 @@
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
     <script src="{% static 'order/post_order.js' %}"></script>
 {% endblock main %}
-    
+
+
+{% block footer %}
+{% endblock %}

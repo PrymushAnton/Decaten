@@ -3,6 +3,7 @@ from .models import *
 from django.http import JsonResponse, HttpResponse
 import json
 import ast
+from cart.models import *
 
 
 # Create your views here.
@@ -37,6 +38,23 @@ def catalog(request):
 
     all_flavours = Flavour.objects.all()
     
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+
+    count = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count += product.count
+    
     context = {
         'names_of_filters': names_of_filters,
         'list_of_filters': filters,
@@ -45,6 +63,7 @@ def catalog(request):
         'all_flavours': all_flavours,
         'min_price': min_price,
         'max_price': max_price,
+        'count_cart': count,
     }
     
     return render(request, 'catalog_product/catalog.html', context)
@@ -55,19 +74,12 @@ def filter_products(request):
     
     
     filters_true = ast.literal_eval(filters_true)
-    # print(filters_true)
+    print(filters_true)
     
     products_true = request.POST.get('filters_true')
     products_true = ast.literal_eval(products_true)
     for product_list in products_true:
         product_list.clear()
-
-    # print('products_true: ',products_true)
-    # print(products_true)
-    # print(filters_true)
-    
-    filtered_products = []
-    filters = []
 
     error = None
 
@@ -75,7 +87,7 @@ def filter_products(request):
     max_price = request.POST.get('max_price')
     min_price = request.POST.get('min_price')
     all_products = Product.objects.all().values()
-    # print('prices',max_price, min_price)
+
     filtered_products_by_price_ids = []
     for product in all_products:
         if int(product['price']) >= int(min_price) and int(product['price']) <= int(max_price):
@@ -139,7 +151,7 @@ def filter_products(request):
         print('products false',products)
         print('error', error)
     elif len(list(products.values())) == 0:
-        if len(list(products_price.values())) != 0:
+        if len(list(products_price.values())) != 0 and error != 1:
             products = list(products_price.values())
             print('products none 1',products)
             print('error', error)
@@ -149,88 +161,7 @@ def filter_products(request):
             print('error', error)
     else:
         error = 1
-    # elif len(list(products.values())) == 0:
-    #     error = 1
-    #     products = list(products.values())
-    #     print('products none',products)
 
-
-    # common_products = products.intersection(products_price)
-    # print(common_products)
-    
-    
-    
-    
-    # print(products)
-    # if len(products) == 0:
-    #     error = 1
-    # print(products)
-    
-    # products_true = [lst for lst in products_true if lst]
-    
-    
-    # if products_true:
-    #     common_items = set(products_true[0])
-    #     for lst in products_true[1:]:
-    #         common_items.intersection_update(lst)
-
-    #     # Перетворимо набір назад у список (якщо потрібно)
-    #     common_items = list(common_items)
-    # else:
-    #     common_items = []
-    # print('common_items',common_items)
-    
-    
-    
-    
-    
-    
-    
-    # for product_list in products_true:
-    #     if product_list:
-    #         for product in product_list
-    
-    
-
-    # filters_list = []
-    # for filter in filters_true:
-        # names_of_filters = Filter.objects.filter(id=filter)
-    # products = Product.objects.filter(filters__id__in=filters_true)
-        # filters_list.append(names_of_filters)
-    # print(names_of_filters)
-        
-        
-    # print(filters_list)
-    # names_of_filters_list = []
-    # for el in name_of_filters:
-    #     print(el)
-    #     name = NameOfFilter.objects.filter(id=el)
-    #     print(name)
-    #     names_of_filters_list.append(name)
-        
-    # print(names_of_filters_list)
-        
-
-    # name_of_filters = NameOfFilter.objects.all().values()
-    # for filter in filters_true:
-    #     # name_of_filters_ids.append(int(name['id']))
-    #     print(filter)
-
-
-    # try:
-    #     filter = Filter.objects.filter(id__in=filters_true).values()
-    #     for obj in filter:
-    #         filters.append(obj['id'])
-    #     filtered_products = Product.objects.filter(filters__id__in=filters).distinct().values()
-    #     filtered_products = list(filtered_products)
-        
-    # except:
-    #     pass
-    # print(filters)
-    # print(filtered_products)
-    
-    
-    # 'products': products, 'error': error
     return JsonResponse({'products': products, 'error': error})
 
 
@@ -240,11 +171,11 @@ def filter_products(request):
 def get_flavour_image(request):
     value_of_selector = request.POST.get('value_of_selector')
     value_of_selector = value_of_selector.split(',')
-    print(value_of_selector)
+    # print(value_of_selector)
     flavour = Flavour.objects.filter(id=value_of_selector[0]).values()
     flavour = list(flavour)
 
-    print(flavour)
+    # print(flavour)
     return JsonResponse({'flavour': flavour})
 
 
@@ -257,58 +188,78 @@ def product_image(request):
     return JsonResponse({"flavours":flavours})
 
 def product_page(request, id):
-    context = {'product': Product.objects.get(id=id)}
-    context['flaur'] = Flavour.objects.filter(for_product = id)
-    # filters = []
-    # print(list(Product.objects.filter(id=id).filters.values()))
-    # for obj in list(Product.objects.filter(id=id).values()):
-    #     print(obj)
-        # filters.append(obj['filters'])
-        
-    id_of_filters = []
-    name_of_filters = []
+    context = {}
+    try:
+        context = {'product': Product.objects.get(id=id)}
     
-    products = Product.objects.filter(id=id)
-    
-    product_filters = []
-    
-    list_of_names = []
-    list_of_filters = []
-    
-    for product in products:
-        product_filters_objs = list(product.filters.values('name_of_filter','name'))
-        # filter = list(product.filters.values('name'))
+        context['flaur'] = Flavour.objects.filter(for_product = id)
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.cycle_key()
+            session_key = request.session.session_key
+            
+        try:
+            cart = Cart.objects.get(sessionkey=session_key)
+        except:
+            cart = Cart.objects.create(sessionkey=session_key)
+
         count = 0
-        for product_obj in product_filters_objs:
-            count += 1
-            list_temp = []
-            # for obj in product_obj:
-            # id_of_filters.append(int(product_obj['name_of_filter']))
-            # print(id_of_filters)
-            name_of_filter = NameOfFilter.objects.filter(id=int(product_obj['name_of_filter'])).values('name')
-            name_of_filter = list(name_of_filter)
-            print(name_of_filter)
+        for product in cart.productincart_set.all():
+            product_obj = Product.objects.filter(id=product.product_id).values()
+            product_obj = list(product_obj)
+            count += product.count
             
-            filter = Filter.objects.filter(name=product_obj['name']).values('name')
-            filter = list(filter)
+        context['count_cart'] = count
+        # filters = []
+        # print(list(Product.objects.filter(id=id).filters.values()))
+        # for obj in list(Product.objects.filter(id=id).values()):
+        #     print(obj)
+            # filters.append(obj['filters'])
             
-            list_temp = [name_of_filter[0]['name']+':', filter[0]['name']]
-            list_of_filters.append(list_temp)
-            list_temp = []
+        id_of_filters = []
+        name_of_filters = []
         
-    print(list_of_filters)
-    context['list_of_filters'] = list_of_filters
-    
+        products = Product.objects.filter(id=id)
+        
+        product_filters = []
+        
+        list_of_names = []
+        list_of_filters = []
+        
+        for product in products:
+            product_filters_objs = list(product.filters.values('name_of_filter','name'))
+            # filter = list(product.filters.values('name'))
+            count = 0
+            for product_obj in product_filters_objs:
+                count += 1
+                list_temp = []
+                # for obj in product_obj:
+                # id_of_filters.append(int(product_obj['name_of_filter']))
+                # print(id_of_filters)
+                name_of_filter = NameOfFilter.objects.filter(id=int(product_obj['name_of_filter'])).values('name')
+                name_of_filter = list(name_of_filter)
+                # print(name_of_filter)
+                
+                filter = Filter.objects.filter(name=product_obj['name']).values('name')
+                filter = list(filter)
+                
+                list_temp = [name_of_filter[0]['name']+':', filter[0]['name']]
+                list_of_filters.append(list_temp)
+                list_temp = []
+            
+        # print(list_of_filters)
+        context['list_of_filters'] = list_of_filters
+    except:
+        pass
     
    
     return render(request, 'catalog_product/product.html', context)
 
 
 def add_to_cart(request):
-    
+    # print('adadadadadadadadada')
     select = request.POST.get('selector')
     select = select.split(',')
-    
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -319,14 +270,33 @@ def add_to_cart(request):
     try:
         cart = Cart.objects.get(sessionkey=session_key)
     except:
-        cart = Cart.objects.create(sessionkey=session_key)        
+        cart = Cart.objects.create(sessionkey=session_key)
+        
+          
+    flavour = Flavour.objects.filter(id=select[0]).values()
+    flavour = list(flavour)
+    print(flavour)
     
     try:
         product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
-        product.count += 1
-        product.save()
+        if flavour[0]['count_of_product'] > product.count:
+            
+            product.count += 1
+            product.save()
+        else:
+            pass
     except:
-        product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+        if flavour[0]['count_of_product'] > 0:
+            product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+        else:
+            pass
     
-    return HttpResponse(1)
+    count_cart = 0
+    for product in cart.productincart_set.all():
+        product_obj = Product.objects.filter(id=product.product_id).values()
+        product_obj = list(product_obj)
+        count_cart += product.count
+        
+    
+    return JsonResponse({'count_cart':count_cart})
 
