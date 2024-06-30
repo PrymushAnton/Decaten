@@ -76,7 +76,7 @@ Decaten - це проект, присвячений створенню та пі
     ```
     Тепер запускаємо проект.
     ```
-    python manage.py runserver
+    python3 manage.py runserver
     ```
 
 ### Якщо немає Django
@@ -103,7 +103,7 @@ Decaten - це проект, присвячений створенню та пі
     ```
     Тепер запускаємо сам проект.
     ```
-    python manage.py runserver
+    python3 manage.py runserver
     ```
 
 # Учасники команди
