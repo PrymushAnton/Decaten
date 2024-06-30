@@ -23,13 +23,12 @@ from base.views import *
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
 from cart.views import *
-from order.views import *
 from my_order.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name='main'),
-    path('base/', base, name='base'),
+    # path('base/', base, name='base'),
     path('login/', log_page, name='log'),
     path('registration/', reg_page, name='reg'),
     path('logout/', logout_page, name='logout'),
@@ -51,7 +50,6 @@ urlpatterns = [
     path('add_to_cart/', add_to_cart, name='product_page'),
     path('cart/error_empty/', error_empty, name='error_empty'),
 
-    path('order', order_page,name='order'),
     path('my_order/', my_order, name='my_order'),
     path('orders/', orders, name='orders'),
     
@@ -66,9 +64,9 @@ urlpatterns = [
     # path('count_cart/', count_cart, name='count_cart'),
     path('order/<id>/', order, name='order'),
     path('cancel_order/', cancel_order, name='cancel_order'),
-    path('sent_order/', sent_order, name='sent_order'),
-    path('arrived_order/', arrived_order, name='arrived_order'),
-    path('success_order/', success_order, name='success_order'),
+    # path('sent_order/', sent_order, name='sent_order'),
+    # path('arrived_order/', arrived_order, name='arrived_order'),
+    # path('success_order/', success_order, name='success_order'),
     
 
 ]

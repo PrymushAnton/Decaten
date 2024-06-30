@@ -61,14 +61,14 @@
             <div class="nova_poshta">
               <div class="selector_divs">
                 <select id="area-select" class="form-select">
-                  <option value="" selected disabled hidden>Оберіть область</option>
+                  <option value="0" selected disabled hidden>Оберіть область</option>
                 </select>
                 <div class="invalid-feedback"></div>
               </div>
               
               <div class="selector_divs">
                 <select id="city-select" class="form-select">
-                  <option value="" selected disabled hidden>Оберіть місто</option>
+                  <option value="0" selected disabled hidden>Оберіть місто</option>
               </select>
               <div class="invalid-feedback"></div>
               </div>
@@ -86,7 +86,7 @@
 
               <div class="selector_divs">
                 <select id="location-select" class="form-select">
-                  <option value="" selected disabled hidden>Оберіть відділення</option>
+                  <option value="0" selected disabled hidden>Оберіть відділення</option>
                 </select>
                 <div class="invalid-feedback"></div>
               </div>
@@ -184,42 +184,7 @@
       </div>
         
     </div>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-        // Завантаження списку областей при завантаженні сторінки
-        
-      
-        // // Заповнення селекту локацій залежно від вибору радіо кнопки
-        // $('input[name="location_type"]').on('change', function() {
-        //   var cityRef = $('#city-select').val();
-        //   if (!cityRef) return;
-        //   $.ajax({
-        //     url: '/warehouses/',
-        //     data: { 'city_ref': cityRef },
-        //     success: function(data) {
-        //       fillLocationSelect(data);
-        //     }
-        //   });
-        // });
-      
-        // function fillLocationSelect(data) {
-        //   var $locationSelect = $('#location-select');
-        //   $locationSelect.empty();
-        //   $locationSelect.append('<option value="">Select Location</option>');
-        //   var selectedType = $('input[name="location_type"]:checked').val();
-        //   data.forEach(function(location) {
-        //     if ((selectedType === 'warehouses' && location.TypeOfWarehouse === '9') ||
-        //         (selectedType === 'postmachines' && location.TypeOfWarehouse === '10')) {
-        //       $locationSelect.append(
-        //         $('<option>', {
-        //           value: location.Ref,
-        //           text: location.Description
-        //         })
-        //       );
-        //     }
-        //   });
-        // }
-      </script>
+
 {% endblock %}
 
 {% block footer %}

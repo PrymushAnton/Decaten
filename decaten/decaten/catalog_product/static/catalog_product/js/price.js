@@ -1,31 +1,4 @@
-// function updatePriceFilter() {
-//     url = $('#category-url').data('category-url')
-//     minPrice = ($('#min-price-slider').val())
-//     maxPrice = ($('#max-price-slider').val())
-//     colors = []
-//     $('input[name="colors-filter"]:checked').each(function () {
-//         colors.push($(this).attr('id'));
-//     })
 
-//     $.ajax({
-//         url: url,
-//         type: 'GET',
-//         data: {
-//             min_price: minPrice,
-//             max_price: maxPrice,
-//             colors: colors,
-//         },
-//         success: function (data) {
-//             $('#product-list').html(data.html);
-//             var newUrl = url + '?price_from=' + minPrice + '&price_to=' + maxPrice;
-//             if (colors.length > 0) {
-//                 newUrl += '&colors=' + colors.join(',')
-//             }
-//             history.pushState({}, '', newUrl);
-//         }
-//     })
-// }
-// $('#min-price-slider, #max-price-slider, input[name="colors-filter"]').on('change', updatePriceFilter);
 let priceGap = 0;
 function updateProgress() {
     let minVal = parseInt($(".range-input input:eq(0)").val()),

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from catalog_product.models import *
 from django.http import JsonResponse, HttpResponse
 from cart.models import *
-# Create your views here.
+
 
 def cart(request):
     session_key = request.session.session_key
@@ -16,18 +16,15 @@ def cart(request):
         cart = Cart.objects.get(sessionkey=session_key)
     except:
         cart = Cart.objects.create(sessionkey=session_key)
-        
-    # print(cart.productincart_set.)
+
     prices = []
     count = 0
     for product in cart.productincart_set.all():
         product_obj = Product.objects.filter(id=product.product_id).values()
         product_obj = list(product_obj)
-        # print(product.count)
         prices.append(int(product_obj[0]['price']) * product.count)
         count += product.count
         
-    print(count)
 
   
     context = {

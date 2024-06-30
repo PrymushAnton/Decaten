@@ -9,14 +9,13 @@ def main(request):
     context = {}
     images_for_carusel = Carusel.objects.all()
     all_products = Product.objects.all()
-    print(all_products)
     products = []
     count = 0
     for product in all_products:
         count += 1
         if count <= 4:
             products.append(product)
-    # print(products)
+
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -32,8 +31,7 @@ def main(request):
         product_obj = Product.objects.filter(id=product.product_id).values()
         product_obj = list(product_obj)
         count += product.count
-        
-    print(count)
+
     
     context['images_for_carusel'] = images_for_carusel
     context['products'] = products

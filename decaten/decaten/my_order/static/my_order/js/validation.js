@@ -1,22 +1,18 @@
 $(document).ready(function() {
     $(".send").click(function(e) {
         e.preventDefault();
-        // console.log($("#area-select").val())
-        var data = null
-        // if ($("#payment_now").prop('checked')){
-        //     console.log(true)
-        // }
-        console.log(data)
-        // console.log($("#payment_now").prop('checked'))
-        
+        console.log($("#area-select option:selected").val())
         $.ajax({
             url: '/validation/',
             type: "POST",
             data: {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
                 area: $("#area-select option:selected").text(),
+                area_val: $("#area-select option:selected").val(),
                 city: $("#city-select option:selected").text(),
+                city_val: $("#city-select option:selected").val(),
                 location: $("#location-select option:selected").text(),
+                location_val: $("#location-select option:selected").val(),
                 number_of_card: $("#credit_card").val(),
                 month: $("#month").val(),
                 year: $("#year").val(),
@@ -30,12 +26,9 @@ $(document).ready(function() {
                 if (data == '321') {
                     $('.modal').modal('show');
                 }
-
                 if (data == '100'){
                     console.log(100)
                     window.location.replace('/')
-                    // window.location.href = '/'
-                    // window.location.reload()
                 } else if (data == '1'){
                     console.log("Заповніть всі поля!")
                     var inputs = document.querySelectorAll('input')
@@ -103,19 +96,19 @@ $(document).ready(function() {
                     $("input").removeClass('is-invalid')
                     $("select").removeClass('is-invalid')
                     $("#area-select").addClass('is-invalid')
-                    $(".invalid-feedback").html('Оберіть область!')
+                    $(".invalid-feedback").html('Виберіть область!')
                 } else if (data == '11'){
                     // console.log("Введіть телефон коректно!")
                     $("input").removeClass('is-invalid')
                     $("select").removeClass('is-invalid')
                     $("#city-select").addClass('is-invalid')
-                    $(".invalid-feedback").html('Оберіть місто!')
+                    $(".invalid-feedback").html('Виберіть місто!')
                 } else if (data == '12'){
                     // console.log("Введіть телефон коректно!")
                     $("input").removeClass('is-invalid')
                     $("select").removeClass('is-invalid')
                     $("#location-select").addClass('is-invalid')
-                    $(".invalid-feedback").html('Оберіть відділення!')
+                    $(".invalid-feedback").html('Виберіть відділення!')
                 } 
             }
         })

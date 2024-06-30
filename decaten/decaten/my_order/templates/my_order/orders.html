@@ -5,9 +5,9 @@
 {% block link %}
     <link rel="stylesheet" href="{% static 'my_order/css/orders.css' %}">
     <script defer src="{% static 'my_order/js/cancel_order.js' %}"></script>
-    <script defer src="{% static 'my_order/js/arrived_order.js' %}"></script>
+    <!-- <script defer src="{% static 'my_order/js/arrived_order.js' %}"></script>
     <script defer src="{% static 'my_order/js/success_order.js' %}"></script>
-    <script defer src="{% static 'my_order/js/sent_order.js' %}"></script>
+    <script defer src="{% static 'my_order/js/sent_order.js' %}"></script> -->
 
 {% endblock %}
 
@@ -27,6 +27,7 @@
             <div class="order">
                 <div class="header_of_order_{{order.id}} header_of_order">
                     <h4>Замовлення №{{order.id}}</h4>
+                    <p>Ціна: {{order.price}} грн</p>
                     <!-- <p>{{order.status}}</p> -->
                     <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
                     {% if order.status == '0' %}
@@ -78,7 +79,9 @@
                     <div class="header_of_order_{{order.id}} header_of_order">
                         
                         <h4>Замовлення №{{order.id}}</h4>
+                        
                         <h5 class="user_h5">Користувач: {{order.orders.user}}</h5>
+                        <p class="price">Ціна: {{order.price}} грн</p>
                         <!-- <p>{{order.status}}</p> -->
                         <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
                         {% if order.status == '0' %}
@@ -96,6 +99,7 @@
                     </div>
                     <div class="user">
                         <p>Користувач: {{order.orders.user}}</p>
+                        <p>Ціна: {{order.price}} грн</p>
                     </div>
                     
                     <div class="adress">
@@ -108,7 +112,7 @@
                     </div>
 
                     <div class="credit_card">
-                        <p>Номер картки: {{order.number_of_card}}</p>
+                        <p class="number_of_card">Номер картки: {{order.number_of_card}}</p>
                         <p>Місяць до: {{order.month}}</p>
                         <p>Рік до: {{order.year}}</p>
                         <p>CVV: {{order.cvv}}</p>
@@ -128,27 +132,9 @@
                                 {% csrf_token %}
                                 <div class="div_buttons_form_{{order.id}} div_buttons_form">
                                     {% if order.status == '1' or order.status == '2' or order.status == '3' %}
-                                        <button class="btn btn-danger cancel_button" id="{{order.id}}">Скасувати</button>
-                                    {% endif %}
-
-
-                                    {% if order.status == '1' %}
-                                        <button class="btn btn-info sent_button" id="{{order.id}}">Відправлено</button>
-                                    {% endif %}
-
-
-                                    {% if order.status == '2'  %}
-                                        <button class="btn btn-primary arrived_button" id="{{order.id}}">Доставлено</button>
-                                    {% endif %}
-
-
-                                    {% if order.status == '3' %}
-                                        <button class="btn btn-success success_button" id="{{order.id}}">Виконано</button>
+                                        <button type="button" class="btn btn-danger cancel_button" id="{{order.id}}">Скасувати</button>
                                     {% endif %}
                                 </div>
-                                <!-- <input type="hidden" value="{{order.id}}" class="cancel_input"> -->
-                                
-                                
                             </form>
                         
                     </div>

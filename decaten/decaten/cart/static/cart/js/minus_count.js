@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     $(".minus").click(function(e){
         e.preventDefault()
         $.ajax({
@@ -7,11 +6,9 @@ $(document).ready(function() {
             type: "POST",
             data: {
                 product_id: $(this).val(),
-                // flavour_id: $(this).val(),
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(data){
-                console.log('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`)
                 if (data.count > 0) {
                     $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
                     $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
@@ -21,14 +18,12 @@ $(document).ready(function() {
                         } else {
                             $('#count_cart').html('99+')
                         }
-                        // $('#count_cart').html('99+')
                     } else {
                         if ($('.cart').css('display') == 'none'){
                             $('#count_cart_phone').html(data.count_cart)
                         } else {
                             $('#count_cart').html(data.count_cart)
                         }
-                        // $('#count_cart').html(data.count_cart)
                     }
                 } 
                 if (data.count < 1) {
@@ -41,7 +36,6 @@ $(document).ready(function() {
                         } else {
                             $('#count_cart').html('99+')
                         }
-                        // $('#count_cart').html('99+')
                     } else {
                         if ($('.cart').css('display') == 'none'){
                             $('#count_cart_phone').html(data.count_cart)
@@ -49,9 +43,6 @@ $(document).ready(function() {
                             $('#count_cart').html(data.count_cart)
                         }
                     }
-                    
-                    
-                    
                 }
                 if (data.count_cart < 1){
                     $('.error_empty').css('display', 'flex')
