@@ -23,7 +23,6 @@ from base.views import *
 from user.views import log_page, reg_page,logout_page, validate_account, log_in_account
 from catalog_product.views import *
 from cart.views import *
-from order.views import *
 from my_order.views import *
 
 urlpatterns = [
@@ -51,7 +50,6 @@ urlpatterns = [
     path('add_to_cart/', add_to_cart, name='product_page'),
     path('cart/error_empty/', error_empty, name='error_empty'),
 
-    path('order', order_page,name='order'),
     path('my_order/', my_order, name='my_order'),
     path('orders/', orders, name='orders'),
     
