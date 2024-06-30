@@ -11,6 +11,10 @@
     /* align-items: center; */
 }
 
+.price_div{
+    display: none;
+}
+
 .user{
     display: none;
 }
@@ -233,6 +237,17 @@ p{
 }
 
 @media (max-width:768px){
+    .price_div{
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+        justify-content: start;
+        border-bottom: 2px solid rgb(0, 0, 0, 0.2);
+    }
+
+    .price_header{
+        display: none;
+    }
     .price{
         display: none;
     }

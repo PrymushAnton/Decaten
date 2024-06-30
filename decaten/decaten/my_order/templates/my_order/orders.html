@@ -27,7 +27,7 @@
             <div class="order">
                 <div class="header_of_order_{{order.id}} header_of_order">
                     <h4>Замовлення №{{order.id}}</h4>
-                    <p>Ціна: {{order.price}} грн</p>
+                    <p class="price_header">Ціна: {{order.price}} грн</p>
                     <!-- <p>{{order.status}}</p> -->
                     <p class="date_pc">Дата замовлення: {{order.day_num}}.{{order.month_num}}.{{order.year_num}}</p>
                     {% if order.status == '0' %}
@@ -42,6 +42,10 @@
                         <h4 class="order_status_{{order.id}} completed">Статус: Виконано</h5>
                     {% endif %}
                         
+                </div>
+
+                <div class="price_div">
+                    <p>Ціна: {{order.price}} грн</p>
                 </div>
                 
                 <div class="adress">
