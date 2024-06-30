@@ -2576,8 +2576,8 @@ def validate_last_name(last_name):
 
 # Ця функція відповідає за валідацію паролю
 def validate_password(password):
-    # Якщо довжинна введених даних більше або дорівнює 8, то валідація пройдена
-    if len(password) >= 8:
+    # Якщо довжинна введених даних більше або дорівнює 8 та довжина введених даних менше або дорівнює 16, то валідація пройдена
+    if len(password) >= 8 and len(password) <= 16:
         return True
     else:
         return False

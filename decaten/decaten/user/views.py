@@ -49,7 +49,7 @@ def validate_last_name(last_name):
         return False
     
 def validate_password(password):
-    if len(password) >= 8:
+    if len(password) >= 8 and len(password) <= 16:
         return True
     else:
         return False
