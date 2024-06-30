@@ -1,5 +1,6 @@
 $('document').ready(function() {
     $('.cancel_button').click(function(e) {
+        console.log('canceled')
         var id = $(this).attr('id')
         e.preventDefault();
         $.ajax({

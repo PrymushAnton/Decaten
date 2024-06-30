@@ -116,12 +116,15 @@ p{
     font-size: 18px !important;
 }
 
+.number_of_card {
+    word-break: break-word;
+}
 .buttons{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 10%;
+    width: 15%;
 }
 
 .buttons a{
@@ -230,12 +233,15 @@ p{
 }
 
 @media (max-width:768px){
-    
+    .price{
+        display: none;
+    }
     .user_h5{
         display: none;
     }
     .user{
         display: flex;
+        flex-direction: column;
         width: 100%;
         justify-content: start;
         border-bottom: 2px solid rgb(0, 0, 0, 0.2);
@@ -251,7 +257,7 @@ p{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 100%;
+        width: 100% !important;
         border-bottom: 2px solid rgb(0, 0, 0, 0.2);
     }
     .info_about_person, .credit_card{
@@ -260,9 +266,6 @@ p{
     }
     .adress{
         border-bottom: 2px solid rgb(0, 0, 0, 0.2);
-    }
-    .buttons{
-        padding-top: 1%;
     }
 
     .orders{
@@ -298,9 +301,22 @@ p{
         justify-content: center;
         gap: 5%;
         width: 100% !important;
+        padding-top: 1%;
     }
     .buttons a{
         margin-bottom: 0 !important;
+    }
+
+    .div_buttons_form{
+        display: flex !important;
+        flex-direction: row;
+        margin-top: 3%;
+        
+
+        gap: 5%;
+    }
+    .div_buttons_form button{
+        margin-bottom: 2% !important;
     }
     .date_phone{
         display: block;

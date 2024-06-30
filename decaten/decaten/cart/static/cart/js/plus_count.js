@@ -10,9 +10,6 @@ $(document).ready(function() {
                 csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
             },
             success: function(data){
-                // console.log(".card_"+`${data.product_id}`+'_'+`${data.flavour_id}`)
-                console.log('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`)
-                console.log(data.plus)
                 if (data.plus == 1){
                     $('.product_count_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html('Кількість: '+data.count)
                     $('#price_'+`${data.product_id}`+'_'+`${data.flavour_id}`).html(data.price+' грн')
@@ -28,7 +25,6 @@ $(document).ready(function() {
                         } else {
                             $('#count_cart').html(data.count_cart)
                         }
-                        // $('#count_cart').html(data.count_cart)
                     }
                 }
                 
