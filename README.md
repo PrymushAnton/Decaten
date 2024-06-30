@@ -72,11 +72,11 @@ Decaten - це проект, присвячений створенню та пі
     ```
     Далі проводимо міграції
     ```
-    python3 manage.py migrate
+    python manage.py migrate
     ```
     Тепер запускаємо проект.
     ```
-    python3 manage.py runserver
+    python manage.py runserver
     ```
 
 ### Якщо немає Django
@@ -99,11 +99,11 @@ Decaten - це проект, присвячений створенню та пі
     ```
     Далі проводимо міграції
     ```
-    python3 manage.py migrate
+    python manage.py migrate
     ```
     Тепер запускаємо сам проект.
     ```
-    python3 manage.py runserver
+    python manage.py runserver
     ```
 
 # Учасники команди
