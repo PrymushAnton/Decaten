@@ -93,6 +93,10 @@ Decaten - це проект, присвячений створенню та пі
     ```
     cd decaten/decaten
     ```
+    Далі проводимо міграції
+    ```
+    cd decaten/decaten
+    ```
     Тепер запускаємо сам проект.
     ```
     python manage.py runserver
