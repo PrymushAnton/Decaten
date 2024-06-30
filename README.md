@@ -70,6 +70,10 @@ Decaten - це проект, присвячений створенню та пі
     ```
     cd decaten/decaten
     ```
+    Далі проводимо міграції
+    ```
+    python3 manage.py migrate
+    ```
     Тепер запускаємо проект.
     ```
     python manage.py runserver
@@ -95,7 +99,7 @@ Decaten - це проект, присвячений створенню та пі
     ```
     Далі проводимо міграції
     ```
-    cd decaten/decaten
+    python3 manage.py migrate
     ```
     Тепер запускаємо сам проект.
     ```
