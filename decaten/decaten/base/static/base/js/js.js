@@ -1,0 +1,1 @@
+$("#button_support").css("width", `${$("#button_support").height()}px`)

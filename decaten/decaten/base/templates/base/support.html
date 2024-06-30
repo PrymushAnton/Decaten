@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block link %}
+<script defer src="{% static 'base\js\support.js' %}"></script>
+{% endblock link %}
+{% block main %}
+<p style="font-size: small; color: rgb(113, 113, 113);">Не хвилюйтесь, відповідь може трохи затриматись (1-3 хвилин)</p>
+<div id="chat">
+    <div class="message">
+        <p>Привіт! Як я вам можу допомогти?</p>
+    </div>
+    <div class="space">
+    </div>
+</div>
+<div id="inputs">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <button id="supp_btn"><img src="https://www.svgrepo.com/show/533314/send-alt-2.svg" alt=""></button>
+    <input id="support" type="text" value="{% url 'support' %}" hidden>
+    {% csrf_token %}
+</div>
+{% endblock main %}

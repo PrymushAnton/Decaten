@@ -39,7 +39,7 @@
         <div class="header_links">
             {% if user.is_authenticated == True %}
                 <!-- <a href="{% url 'cart' %}" class="cart">Кошик</a -->
-                <a href="{% url 'cart' %}" class="cart">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}Кошик</a>
+                <a href="{% url 'cart' %}" class="cart" width="5%">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %} <img width="5%" height="5%" src="https://www.svgrepo.com/show/529455/cart-large-minimalistic.svg"></a>
                 <a href="{% url 'orders' %}" class="orders_link">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
 
@@ -64,7 +64,7 @@
         <div class="header_list" id="">
             <li><a href="{% url 'main' %}">Головна</a></li>
             <li><a href="{% url 'catalog' %}">Каталог</a></li>
-            <li><a href="{% url 'cart' %}" class="cart_phone">Кошик{% if count_cart != 0 %}<span id="count_cart_phone">{{count_cart}}</span>{% endif %}</a></li>
+            <li><a href="{% url 'cart' %}" class="cart_phone"><img width="5%" height="5%" src="https://www.svgrepo.com/show/529455/cart-large-minimalistic.svg"> {% if count_cart != 0 %}<span id="count_cart_phone">{{count_cart}}</span>{% endif %}</a></li>
             {% if user.is_authenticated == True %}
                 
                 
@@ -82,6 +82,31 @@
         {% block main %}
 
         {% endblock %}
+        <button type="button" class="mybtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div id="button_support">
+                <img src="https://www.svgrepo.com/show/448396/discussion-circle.svg" alt="">
+            </div>
+            
+        </button>
+          
+          <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Підтвердження дії</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Після того як ви натиснете на кнопку перейти до чату ви перейдете на сторінку чату з підтримкою. ВОна може відповісти вам напротязі найближчих 5 хвилин. Підтримка відповідае тільки на прості питання!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <a href="{% url 'support' %}"><button type="button" class="btn btn-primary">Перейти до чату</button></a>
+                </div>
+                </div>
+            </div>
+        </div>
     </main>
     {% block footer %}
         <footer>

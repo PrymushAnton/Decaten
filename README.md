@@ -110,7 +110,7 @@ Decaten - це проект, присвячений створенню та пі
 1. [Антон Примуш](https://github.com/PrymushAnton) - лідер команди(TeamLead)
 2. [Андрiй Дружга](https://github.com/GKAndrey) - кодер та розробник дизайну
 3. [Михайло Фатуєв](https://github.com/mishafat) - кодер та розробник дизайну
-4. [Ярослав Самчук](https://github.com/YaroslavSamchuk) - кодер та розробник дизайну
+4. [Ярослав Самчук](https://github.com/YaroslavSamchuk) - кодер та розробник дизайну та головний по навчанню AI
    
 # Опис сторінок проекту
 - **Головна сторiнка** - можливість швидко переглянути наявні пропозиції магазину.
@@ -181,6 +181,141 @@ $(document).ready(function(){
     })
 
 })
+```
+
+#### js.js
+```javascript
+// Міняє розмір кнопки чату з підтримкою
+$("#button_support").css("width", `${$("#button_support").height()}px`)
+```
+
+#### support.js
+
+```javascript
+// Міняє розмір кнопки відтправки
+$("#inputs button").css("height", `${($(window).height()/100)*10}px`)
+// Міняє розмір кнопки текстового поля
+$("#inputs textarea").css("height", `${$("#inputs button").height()}px`)
+// Міняє розмір елемента div де знаходеться текстове поле та кнопка відправки тексту
+$("#inputs").css("width", `${($(window).width()/100)*100}px`)
+// Міняє розмір картинки кнопки якщо ширина екрану менше 600 пікселів
+if ($(window).width() < "600") {
+    $("#supp_btn img").css("width", "80%")
+}
+// Удаляє футер
+$("footer").remove()
+// Список з усіма повідомленнями
+var messages = [{"role" : "assistant", "content" : "Привіт! Як я вам можу допомогти?"}]
+// функція яка визивається коли документ готов
+$(document).ready(function() {
+    // функція при натисканні кнопки
+    $("#inputs button").on("click", function(){
+        // додавання тексту який написав користувач
+        messages.push({"role" : "user", "content" : $("#exampleFormControlTextarea1").val()})
+        // Удаляємо пробіл якщо вона була
+        $(".space").remove()
+        // Добавляємо в чат повідомлення з нашим текстом
+        $("#chat").append(`
+            <div class="message1">
+                <p>${$("#exampleFormControlTextarea1").val()}</p>
+            </div>
+        `)
+        // Добавляємо повідомлення з плейсходерами на момент коли користувач чекає відповіді
+        $("#chat").append(`
+            <div class="space1">
+                <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-6"></span>
+                <span class="placeholder col-8"></span>
+                </p>
+            </div>
+        `)
+        // Добавляємо пробіл
+        $("#chat").append(`
+            <div class="space">
+            </div>
+        `)
+        // Очищяємо текст в текстовому полі
+        $("#exampleFormControlTextarea1").val("")
+        // Робимо посилання на функцію views.py 
+        $.ajax({
+            // Юрл функції який записаний в прихованому елементу в html
+            url:$("#support").val(),
+            // Тип запросу Пост
+            type: "POST",
+            // Наш токен який відповідає за сессію
+            headers: { "X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val() },
+            // наші данні
+            data: {"messages" : messages},
+            success: function(response){
+                // Видаляємо пробіл
+                $(".space").remove()
+                // Видаляємо повідомлення з плейсхолдерами
+                $(".space1").remove()
+                // Добавляємо в чат повідомлення з відповіддю
+                $("#chat").append(`
+                <div class="message">
+                    <p>${response["answer"]}</p>
+                </div>
+                `)
+                // Добавляємо пробіл
+                $("#chat").append(`
+                    <div class="space">
+                    </div>
+                `)
+                // Додаємо в наші данні відповідь
+                messages.push({"role" : "assistant", "content" : response["answer"]})
+            }
+        })
+    });
+});
+```
+
+### Файл з функціями відображення (views.py)
+```python
+# Функція парсування даних у такі які підходять апі
+def code_data(data):
+    # цикл в якому парсуємо данні
+    new_data = {}
+    for message in data:
+        index_of_message = data.index(message)
+        for i in message:
+            new_data[f"{i}{index_of_message}"] = [message[i]]
+    # Вертаємо вже відпарсенні данні
+    return new_data
+#Функція розшиврування данних які прийшли у форматі QueryDict
+def decode_from_query_dict(data):
+    # цикл в якому розшифровуємо данні
+    role = ""
+    new_messages = []
+    for key in data:
+        if re.search("role", key):
+            role = data[key]
+        elif re.search("content", key):
+            new_messages.append({"role" : role, "content" : data[key]})
+    # Вертаємо вже розшифровані данні
+    return new_messages
+
+# Головна функція відображання
+def support_chat(request):
+    # Перевірка чи запрос є пост
+    if request.method == "POST":
+        # Наші данні з запросу
+        messages = request.POST
+        # Розшивровка данних
+        messages = decode_from_query_dict(messages)
+        # Юрл апі
+        url = 'https://yaroslavsamchukapi.onrender.com/post/'
+        # Шифруємо данні
+        messages = code_data(messages)
+        #Робимо запрос на апі
+        response = requests.post(url, data=messages)
+        # Повертаємо данні з апі
+        return JsonResponse(data=response.json())
+    # Якщо запрос не пост то ми повертаємо html файл
+    return render(request, "base/support.html")
 ```
 
 ## Додаток cart
