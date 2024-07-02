@@ -31,7 +31,7 @@ main a{
     align-items: center;
     justify-content: end;
     gap: 7%;
-    width: max-content;
+    width: 30%;
 }
 
 .first_header {
@@ -122,11 +122,11 @@ header {
     /* display: none; */
     position: relative;
     bottom: 10px;
-    left: 70px;
+    left: 48px;
 
     border: 1px solid black;
     border-radius: 5px;
-    background-color: greenyellow;
+    background-color: #FF847C;
     font-size: 13px;
     padding: 0px 3px;
     
