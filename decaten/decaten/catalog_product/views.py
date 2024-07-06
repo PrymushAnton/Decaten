@@ -154,11 +154,8 @@ def filter_products(request):
 def get_flavour_image(request):
     value_of_selector = request.POST.get('value_of_selector')
     value_of_selector = value_of_selector.split(',')
-    # print(value_of_selector)
     flavour = Flavour.objects.filter(id=value_of_selector[0]).values()
     flavour = list(flavour)
-
-    # print(flavour)
     return JsonResponse({'flavour': flavour})
 
 
@@ -195,20 +192,12 @@ def product_page(request, id):
             
         context['count_cart'] = count
 
-            
-        # id_of_filters = []
-        # name_of_filters = []
-        
         products = Product.objects.filter(id=id)
-        # product_filters = []
-        
-        # list_of_names = []
         list_of_filters = []
         
         for product in products:
             product_filters_objs = list(product.filters.values('name_of_filter','name'))
 
-            # filter = list(product.filters.values('name'))
             count = 0
             for product_obj in product_filters_objs:
                 count += 1

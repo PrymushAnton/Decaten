@@ -8,10 +8,11 @@
     flex-direction: column;
     align-items: center;
     min-height: calc(100vh - 180px);
+    padding: 0 2%;
 }
 
 .carousel_container{
-    padding: 0 2%;
+    /* padding: 0 2%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,10 +20,6 @@
     height: auto !important;
 
 }
-
-/* .carousel-control-prev, .carousel-control-next{
-    z-index: -1;
-} */
 
 .info{
     display: flex;
@@ -60,8 +57,8 @@
     align-items: center;
     width: 87%;
     /* padding: 0 2%; */
-    margin: 3% 0;
-    gap: 3%;
+    margin: 2% 0;
+    gap: 4.5%;
 }
 
 .product_card {
@@ -83,6 +80,25 @@
     width: 75%;
 }
 
+@media (max-width:1350px){
+    .carousel_container{
+        width: 74%;
+    }
+}
+@media (max-width:1200px){
+    .carousel_container{
+        width: 77%;
+    }
+}
+@media (max-width:1100px){
+    .carousel_container{
+        width: 80%;
+    }
+}
+
+
+
+
 @media (max-width: 1050px){
     .product_card h5{
         font-size: 18px
@@ -101,50 +117,39 @@
         width: 100%;
         height: 50% !important;
     }
+    .products{
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 3.5%;
+        flex-wrap: wrap;
+        /* padding: 0 2%; */
+    }
 }
 
-/* @media (max-width: 1024px){
-    .product_card h5{
-        font-size: 18px
-    }
-    .info_card{
-        width: 25%;
-    }
-    .info_card svg{
-        width: 40px;
-        height: 40px;
-    }
-    .product_card{
-        width: 20%;
-    }
-    .carousel_container{
-        width: 100%;
-        height: 50%;
-    }
-} */
 
 @media (max-width:850px){
-    /* .info{
-        gap:0;
-    } */
-    /* .info_card{
-        width: 23%;
-    } */
     .info_card p{
         font-size: 15px;
     }
+    
     
     .info_card h5{
         width: 100%;
         font-size: 18px
     }
+
+    .product_card{
+        width: 22%;
+    }
+
+    
 }
 
 @media (max-width:768px){
     
     .info{
         width: 100%;
-        /* gap: 5%; */
+        gap: 3%;
         padding: 2%;
     }
     .info_card{
@@ -168,23 +173,20 @@
         width: 100%;
         font-size: 18px
     }
-    .products{
-        overflow-x: scroll;
-        width: 100%;
-        justify-content: center;
-        gap: 6%;
-        flex-wrap: wrap;
-        padding: 0;
-    }
+
     .product_card{
         margin-bottom: 3%;
         width: 40%;
         padding: 3% 0;
     }
 
-    /* .product_card img{
-        width: 50%;
-    } */
+    .products{
+        width: 100%;
+        justify-content: space-evenly;
+        /* gap: 3.5%; */
+        flex-wrap: wrap;
+        padding: 0 2%;
+    }
 }
 
 @media (max-width: 620px){
@@ -227,7 +229,7 @@
 
 
     .products{
-        padding: 0%;
+        /* padding: 0%; */
         gap: 5%;
     }
 

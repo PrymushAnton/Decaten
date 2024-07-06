@@ -45,11 +45,12 @@
                     {% endfor %}
                 </select>
                 <p class="mt-2" >{{product.price}} грн.</p>
-
+                <p class="amount_on_base">Кількість на складі: {{flaur.0.count_of_product}} шт.</p>
+                <p class="no_product_error">Товару немає в наявності.</p>
                 {% if flaur.0.count_of_product > 0 %}
                     <button class="btn btn-success add_to_cart">Додати в кошик</button>
                 {% endif %}
-                <span class="no_product_error">Товару немає в наявності.</span>
+                
 
             </form>
         </div>

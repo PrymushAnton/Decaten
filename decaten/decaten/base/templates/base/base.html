@@ -22,23 +22,16 @@
     <title>Decaten</title>
     
 </head>
-<!-- class="d-flex flex-column" -->
 <body>
 
     <header>
-        <!-- <div class="col-1"></div> -->
-        <!-- d-flex align-items-center gap-4 -->
         <div class="first_header">
             <h1><a href="{% url 'main' %}">Decaten</a></h1>
-             <!-- <h1>Decaten</h1> -->
             <a href="{% url 'main' %}" class="main">Головна</a>
             <a href="{% url 'catalog' %}" class="catalog">Каталог</a>
         </div>
-        <!-- <div class="col-2"></div> -->
-        <!-- d-flex align-items-center justify-content-end gap-4 -->
         <div class="header_links">
             {% if user.is_authenticated == True %}
-                <!-- <a href="{% url 'cart' %}" class="cart">Кошик</a -->
                 <a href="{% url 'cart' %}" class="cart">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}Кошик</a>
                 <a href="{% url 'orders' %}" class="orders_link">Замовлення</a>
                 <a href="{% url 'logout' %}" class="logout">Вийти</a>
@@ -49,19 +42,57 @@
                     <p class="name_of_user">{{user.username}}</p>
                 {% endif %}
                 <svg class="burger_icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                <!-- <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg> -->
+                
             {% else %}
                 <a href="{% url 'cart' %}" class="cart">{% if count_cart != 0 %}<span id="count_cart">{{count_cart}}</span>{% endif %}Кошик</a>
                 
                 <a href="{% url 'log' %}" class="auth">Авторизація</a>
                 <a href="{% url 'reg' %}" class="reg">Реєстрація</a>
                 <svg class="burger_icon" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
-                <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                <!-- <svg class="burger_close" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg> -->
+                
             {% endif %}
 
         </div>
 
-        <div class="header_list" id="">
+        
+          
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="BurgerOffcanvas" aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+                {% if user.is_authenticated == True %}
+                    <div class="header_username"><p class="login_of_user">Логін: {{request.user.username}}</p></div>
+                {% endif %}
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body-header">
+                <a href="{% url 'main' %}"><div class="header_link">Головна</div></a>
+                <a href="{% url 'catalog' %}"><div class="header_link">Каталог</div></a>
+                <a href="{% url 'catalog' %}"><div class="header_link cart_phone">Кошик{% if count_cart != 0 %}<span id="count_cart_phone">{{count_cart}}</span>{% endif %}</div></a>
+
+                {% if user.is_authenticated == True %}
+                    
+                    <a href="{% url 'orders' %}"><div class="header_link">Замовлення</div></a>
+                    <a href="{% url 'logout' %}"><div class="header_link">Вийти</div></a>
+                    
+                {% else %}
+                    <a href="{% url 'log' %}"><div class="header_link">Авторизація</div></a>
+                    <a href="{% url 'reg' %}"><div class="header_link">Реєстрація</div></a>
+                {% endif %}
+            </div>
+        </div>
+
+
+    
+
+
+
+
+
+
+
+
+        <!-- <div class="header_list" id="">
             <li><a href="{% url 'main' %}">Головна</a></li>
             <li><a href="{% url 'catalog' %}">Каталог</a></li>
             <li><a href="{% url 'cart' %}" class="cart_phone">Кошик{% if count_cart != 0 %}<span id="count_cart_phone">{{count_cart}}</span>{% endif %}</a></li>
@@ -75,8 +106,7 @@
                 <li><a href="{% url 'log' %}">Авторизація</a></li>
                 <li><a href="{% url 'reg' %}">Реєстрація</a></li>
             {% endif %}
-        </div>
-        <!-- <div class="col-1"></div> -->
+        </div> -->
     </header>
     <main>
         {% block main %}
