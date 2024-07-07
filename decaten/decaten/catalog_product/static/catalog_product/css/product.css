@@ -31,9 +31,7 @@
     justify-content: start;
     align-items: center;
 }
-/* .product_info h1{
-    font-size:25px;
-} */
+
 .no_product_error{
     display: none;
 }
@@ -61,6 +59,7 @@
     .image_div{
         width: 40%;
         margin-bottom: 3%;
+        margin-top: 2%;
     }
     .product_info h1{
         font-size:25px;
