@@ -7,30 +7,14 @@
     <link rel="stylesheet" href="{% static 'my_order/css/my_order.css' %}">
     <script defer src="{% static 'my_order/js/my_order.js' %}"></script>
     <script defer src="{% static 'my_order/js/validation.js' %}"></script>
+    
+    <!-- <script defer src="{% static 'my_order/js/pay.js' %}"></script> -->
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 {% endblock %}
 
 
 
 {% block main %}
-    <!-- 
-        <div class="form_div">
-            <form class="order_form" action="" method="POST">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="exampleInputName" class="form-label">Ім'я користувача</label>
-                    <input required name="first_name" type="text" class="form-control first_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputName" class="form-label">Прізвище користувача</label>
-                    <input required name="last_name" type="text" class="form-control last_name" id="exampleInputName" aria-label="Username" aria-describedby="basic-addon1">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <button>Відправити</button>
-            </form>
-        </div>
-        
-    -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -93,18 +77,7 @@
               
             </div>
             
-            <!-- <div class="variant_of_payment">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" id="payment_later" checked>
-                <label class="form-check-label" for="payment_later">Оплата при отриманні</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" id="payment_now">
-                <label class="form-check-label" for="payment_now">Оплата карткою онлайн</label>
-              </div>
-            </div> -->
-
-            <div class="for_credit_card">
+            <!-- <div class="for_credit_card">
               <label for="credit_card">Номер картки</label>
               <input type="tel" class="form-control" id="credit_card" minlength="16" maxlength="16">
               <div class="invalid-feedback"></div>
@@ -134,7 +107,7 @@
               </div>
 
 
-              </div>
+              </div> -->
 
               
               <div class="info_about_receiver_parent">
@@ -172,15 +145,20 @@
             <div class="final_price_div">
               <input type="hidden" value="{{price}}">
               <h5>Сума замовлення: {{price}} грн</h5>
+              <input type="hidden" value="{{price}}" class="final_price">
             </div>
             <div class="button_send">
               <button class="send btn btn-success">Оформити замовлення</button>
             </div>
 
             
-
+            
 
         </form>
+        <!-- <div id="container"></div> -->
+
+        
+
       </div>
         
     </div>
