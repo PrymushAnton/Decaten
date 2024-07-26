@@ -137,8 +137,6 @@ def orders(request):
     return render(request, 'my_order/orders.html', context)
 
 def my_order(request):
-    if request.user.is_authenticated:
-        return redirect('main')
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
