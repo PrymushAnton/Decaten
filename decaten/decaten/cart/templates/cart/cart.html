@@ -60,9 +60,11 @@
                             {% for flavour in flavours %}
                                 {% if flavour.id == product_in_cart.flavour_id %}
                                     <input type="hidden" value="{{flavour.id}},{{flavour.for_product.id}}" name="plus" class="plus_input_hidden_{{flavour.for_product.id}}">
+                                    <button class="plus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}},{{flavour.count_of_product}},{{product_in_cart.count}}">+</button>
                                 {% endif %}
                             {% endfor %}
-                            <button class="plus" value="{{product_in_cart.flavour_id}},{{product_in_cart.product_id}}">+</button>
+                            
+                            
                         </form>
         
                         
@@ -87,5 +89,28 @@
         {% if products %}
             <a href="{% url 'my_order' %}" class="make_order">Замовити</a>
         {% endif %}
+        
+        <div class="toast-container position-fixed bottom-0 end-0 p-3 me-2">
+            <div id="success_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body bg-success">
+                    <div class="d-flex text-white justify-content-between">
+                        Товар було додано до кошику
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3 me-2">
+            <div id="danger_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body bg-danger">
+                    <div class="d-flex text-white justify-content-between">
+                        Такої кількості товару немає на складі
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock main %}

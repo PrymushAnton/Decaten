@@ -26,6 +26,19 @@ $(document).ready(function() {
                             $('#count_cart').html(data.count_cart)
                         }
                     }
+                    // if (parseInt(data.count_of_product) parseInt(data.count_of_product_in_cart)){
+
+                    // }
+                } else {
+                    const toast = document.getElementById('danger_toast')
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast)
+
+                    // const toast_success = document.getElementById('success_toast')
+                    // const toastSuccessBootstrap = bootstrap.Toast.getOrCreateInstance(toast_success)
+                    
+                    // toastSuccessBootstrap.hide()
+                    toastBootstrap.show()
+                    console.log(2)
                 }
                 
             }
