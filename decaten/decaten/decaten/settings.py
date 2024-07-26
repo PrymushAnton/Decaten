@@ -136,3 +136,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+GOOGLE_PAY_API_URL = 'https://pay.google.com/gp/p/api'
+GOOGLE_PAY_MERCHANT_ID = 'BCR2DN4TWXAYTEBL'
+GOOGLE_PAY_MERCHANT_NAME = 'Decaten'

@@ -154,11 +154,8 @@ def filter_products(request):
 def get_flavour_image(request):
     value_of_selector = request.POST.get('value_of_selector')
     value_of_selector = value_of_selector.split(',')
-    # print(value_of_selector)
     flavour = Flavour.objects.filter(id=value_of_selector[0]).values()
     flavour = list(flavour)
-
-    # print(flavour)
     return JsonResponse({'flavour': flavour})
 
 
@@ -195,20 +192,12 @@ def product_page(request, id):
             
         context['count_cart'] = count
 
-            
-        # id_of_filters = []
-        # name_of_filters = []
-        
         products = Product.objects.filter(id=id)
-        # product_filters = []
-        
-        # list_of_names = []
         list_of_filters = []
         
         for product in products:
             product_filters_objs = list(product.filters.values('name_of_filter','name'))
 
-            # filter = list(product.filters.values('name'))
             count = 0
             for product_obj in product_filters_objs:
                 count += 1
@@ -235,6 +224,9 @@ def product_page(request, id):
 def add_to_cart(request):
     select = request.POST.get('selector')
     select = select.split(',')
+    
+    count_of_product = request.POST.get('count_of_product')
+    
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -248,18 +240,20 @@ def add_to_cart(request):
           
     flavour = Flavour.objects.filter(id=select[0]).values()
     flavour = list(flavour)
-    
+    count_of_product_in_cart = None
     try:
         product = cart.productincart_set.get(product_id=select[1], flavour_id=select[0])
         if flavour[0]['count_of_product'] > product.count:
             
             product.count += 1
+            count_of_product_in_cart = product.count
             product.save()
         else:
             pass
     except:
         if flavour[0]['count_of_product'] > 0:
             product = cart.productincart_set.create(product_id=select[1], flavour_id=select[0], count=1)
+            count_of_product_in_cart = 1
         else:
             pass
     
@@ -270,5 +264,5 @@ def add_to_cart(request):
         count_cart += product.count
         
     
-    return JsonResponse({'count_cart':count_cart})
+    return JsonResponse({'count_cart':count_cart, 'count_of_product': count_of_product, 'count_of_product_in_cart': count_of_product_in_cart,})
 

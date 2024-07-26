@@ -19,11 +19,6 @@ class Order(models.Model):
     city = models.CharField(max_length=255, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     
-    number_of_card = models.IntegerField(blank=True, null=True)
-    month = models.IntegerField(blank=True, null=True)
-    year = models.IntegerField(blank=True, null=True)
-    cvv = models.IntegerField(blank=True, null=True)
-    
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     middle_name = models.CharField(max_length=255, blank=True, null=True)

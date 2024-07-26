@@ -64,6 +64,9 @@ def plus_count(request):
         
         product = cart.productincart_set.get(product_id=hidden_input[1], flavour_id=hidden_input[0])
         print(flavour[0]['count_of_product'])
+        
+
+        
         if flavour[0]['count_of_product'] > product.count:
             product.count += 1
             count = product.count
@@ -76,10 +79,12 @@ def plus_count(request):
                 product_obj = Product.objects.filter(id=product.product_id).values()
                 product_obj = list(product_obj)
                 count_cart += product.count
+        
             
-            return JsonResponse({'count_cart':count_cart,'price': final_price,"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0], 'plus': 1})
+            
+            return JsonResponse({'count_cart':count_cart,'price': final_price,"count": count, 'product_id': hidden_input[1], 'flavour_id': hidden_input[0], 'plus': 1, 'count_of_product': hidden_input[2], 'count_of_product_in_cart': hidden_input[3],})
         else:
-            return JsonResponse({'count_cart':count, 'plus': 0})
+            return JsonResponse({'count_cart':count, 'plus': 0, 'count_of_product': hidden_input[2], 'count_of_product_in_cart': hidden_input[3],})
     except:
         return HttpResponse()
     

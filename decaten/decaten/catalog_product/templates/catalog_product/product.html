@@ -14,14 +14,35 @@
 {% block main %}
 <!-- d-flex justify-content-center align-items-center mx-5 my-5  -->
     <div class="content">
-        <!-- w-auto d-flex justify-content-start  -->
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3 me-2">
+            <div id="success_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body bg-success">
+                    <div class="d-flex text-white justify-content-between">
+                        Товар було додано до кошику
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3 me-2">
+            <div id="danger_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body bg-danger">
+                    <div class="d-flex text-white justify-content-between">
+                        Такої кількості товару немає на складі
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
         <div class="image_div">
-            <!-- w-75 m-2  -->
             <img id="1" class="image_flavour{{product.id}}" src="{{flaur.0.image.url}}" alt="">
         </div>
-        <!-- d-flex flex-column justify-content-start align-items-center pe-5 -->
         <div class="product_info ">
-            <!-- <p class="h1">{{product.name}}</p>  -->
              
             <h1>{{product.name}}</h1>
  
@@ -45,11 +66,12 @@
                     {% endfor %}
                 </select>
                 <p class="mt-2" >{{product.price}} грн.</p>
-
+                <p class="amount_on_base">Кількість на складі: {{flaur.0.count_of_product}} шт.</p>
+                <p class="no_product_error">Товару немає в наявності.</p>
                 {% if flaur.0.count_of_product > 0 %}
-                    <button class="btn btn-success add_to_cart">Додати в кошик</button>
+                    <button class="btn btn-success add_to_cart" value='{{flaur.0.count_of_product}}'>Додати в кошик</button>
                 {% endif %}
-                <span class="no_product_error">Товару немає в наявності.</span>
+                
 
             </form>
         </div>

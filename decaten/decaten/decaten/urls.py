@@ -59,11 +59,13 @@ urlpatterns = [
     path('cities/', cities, name='cities'),
     path('warehouses/', warehouses, name='warehouses'),
     path('validation/', validation, name='validation'),
+    path('add_order/', add_order, name='add_order'),
     
     
     # path('count_cart/', count_cart, name='count_cart'),
     path('order/<id>/', order, name='order'),
     path('cancel_order/', cancel_order, name='cancel_order'),
+    
     # path('sent_order/', sent_order, name='sent_order'),
     # path('arrived_order/', arrived_order, name='arrived_order'),
     # path('success_order/', success_order, name='success_order'),

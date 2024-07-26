@@ -57,6 +57,9 @@ $(document).ready(function() {
                 if ($('.error_empty').css('display') == 'flex') {
                     $(".make_order").css('display', 'none')
                 }
+                const toast_danger = document.getElementById('danger_toast')
+                const toastDangerBootstrap = bootstrap.Toast.getOrCreateInstance(toast_danger)
+                toastDangerBootstrap.hide()
                 
             }
         })

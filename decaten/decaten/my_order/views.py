@@ -7,6 +7,11 @@ from django.contrib.auth import authenticate
 from datetime import date
 from cart.models import *
 
+from django.views.decorators.csrf import csrf_exempt
+import requests
+from django.conf import settings
+
+
 API_KEY = 'a82d9d12e5f74a8692792b6930d55bc4'
 BASE_URL = 'https://api.novaposhta.ua/v2.0/json/'
 
@@ -132,6 +137,8 @@ def orders(request):
     return render(request, 'my_order/orders.html', context)
 
 def my_order(request):
+    if request.user.is_authenticated:
+        return redirect('main')
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
@@ -163,8 +170,6 @@ def my_order(request):
     except:
         print('exception')
     
-    
-        
     
     context = {'price':price_of_order, 'count_cart': count}
     
@@ -240,16 +245,10 @@ def validation(request):
     city_val =request.POST.get('city_val')
     location = request.POST.get('location')
     location_val =request.POST.get('location_val')
-    number_of_card = request.POST.get('number_of_card')
-    month = request.POST.get('month')
-    year = request.POST.get('year')
-    cvv = request.POST.get('cvv')
     last_name = request.POST.get('last_name')
     first_name = request.POST.get('first_name')
     middle_name = request.POST.get('middle_name')
     number = request.POST.get('number')
-    # payment_by_card = request.POST.get('payment_by_card')
-
     
     def validate_area(area_val):
         if area_val != '0':
@@ -269,35 +268,6 @@ def validation(request):
         else:
             return False
     
-    def validate_number_of_card(number_of_card):
-        if number_of_card.isdigit() and len(str(number_of_card)) == 16:
-            return True
-        else:
-            return False
-        
-    def validate_month(month):
-        if month.isdigit() and len(str(month)) == 2:
-            if int(month) <= 12 and int(month) >= 1:
-                return True
-            else:
-                return False
-        else:
-            return False
-        
-    def validate_year(year):
-        if year.isdigit() and len(str(year)) == 2:
-            if int(year) >= 24 and int(year) <= 29:
-                return True
-            else:
-                return False
-        else:
-            return False
-        
-    def validate_cvv(cvv):
-        if cvv.isdigit() and len(str(cvv)) == 3:
-            return True
-        else:
-            return False
         
     def validate_last_name(last_name):
         if last_name.isalpha() and len(last_name) <= 50:
@@ -349,70 +319,87 @@ def validation(request):
         pass
     
     if request.user.is_authenticated:
-        if area and city and location and number_of_card and month and year and cvv and last_name and first_name and middle_name and number:
-            if validate_area(area_val):
-                if validate_city(city_val):
-                    if validate_location(location_val):
-                        if validate_number_of_card(number_of_card):
-                            if validate_month(month):
-                                if validate_year(year):
-                                    if validate_cvv(cvv):
-                                        if validate_last_name(last_name):
-                                            if validate_first_name(first_name):
-                                                if validate_middle_name(middle_name):
-                                                    if validate_number(number):
-                                                        orders = Orders.objects.get(username=request.user.username)
-                                                        # print()
-                                                        date_today = date.today()
-                                                        date_today = str(date_today).split('-')
-                                                        
-                                                        order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0], number_of_card=number_of_card, month=month, year=year, cvv=cvv, last_name=last_name, first_name=first_name, middle_name=middle_name, number=number)
-                                                        products = cart.productincart_set.all().values()
-                                                        products = list(products)
-                                                        for product in products:
-                                                            # print(product)
-                                                            product_obj = Product.objects.get(id=product['product_id'])
-                                                            flavour_obj = Flavour.objects.get(id=product['flavour_id'])
-                                                            product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
-                                                            flavour = Flavour.objects.get(id=product['flavour_id'])
-                                                            flavour.count_of_product = int(flavour.count_of_product) - int(product['count'])
-                                                            flavour.save()
-       
-                                                        cart.delete()
-                                                        return HttpResponse(100)
-                                                    else:
-                                                        error = 9
-                                                        return HttpResponse(error)
-                                                else:
-                                                    error = 8
-                                                    return HttpResponse(error)
-                                            else:
-                                                error = 7
-                                                return HttpResponse(error)
-                                        else:
-                                            error = 6
-                                            return HttpResponse(error)
+        if validate_area(area_val):
+            if validate_city(city_val):
+                if validate_location(location_val):
+                    if last_name and first_name and middle_name and number:
+
+                        if validate_last_name(last_name):
+                            if validate_first_name(first_name):
+                                if validate_middle_name(middle_name):
+                                    if validate_number(number):
+                                        
+                                        return HttpResponse(100)
                                     else:
-                                        error = 5
+                                        error = 9
                                         return HttpResponse(error)
                                 else:
-                                    error = 4
+                                    error = 8
                                     return HttpResponse(error)
                             else:
-                                error = 3
+                                error = 7
                                 return HttpResponse(error)
                         else:
-                            error = 2
+                            error = 6
                             return HttpResponse(error)
                     else:
-                        return HttpResponse(12)
+                        error = 1
+                        return HttpResponse(error)
                 else:
-                    return HttpResponse(11)
+                    return HttpResponse(12)
             else:
-                return HttpResponse(10)
+                return HttpResponse(11)
         else:
-            error = 1
-            return HttpResponse(error)
+            return HttpResponse(10)
     else:
         return HttpResponse(321)
 
+
+
+def add_order(request):
+    area = request.POST.get('area')
+    city = request.POST.get('city')
+    location = request.POST.get('location')
+    last_name = request.POST.get('last_name')
+    first_name = request.POST.get('first_name')
+    middle_name = request.POST.get('middle_name')
+    number = request.POST.get('number')
+    
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+        
+    try:
+        cart = Cart.objects.get(sessionkey=session_key)
+    except:
+        cart = Cart.objects.create(sessionkey=session_key)
+    
+    price_of_order = 0
+    try:
+        products_in_cart = cart.productincart_set.all().values()
+        products_in_cart = list(products_in_cart)
+        for product in products_in_cart:
+            product_obj = Product.objects.filter(id=product['product_id']).values()
+            product_obj = list(product_obj)
+            price_of_order += int(product_obj[0]['price']) * int(product['count'])
+    except:
+        pass
+    
+    orders = Orders.objects.get(username=request.user.username)
+    date_today = date.today()
+    date_today = str(date_today).split('-')
+    
+    order = Order.objects.create(orders=orders, status=1, price = price_of_order, area=area, city=city, location=location, day_num=date_today[2], month_num=date_today[1], year_num=date_today[0], last_name=last_name, first_name=first_name, middle_name=middle_name, number=number)
+    products = cart.productincart_set.all().values()
+    products = list(products)
+    for product in products:
+        product_obj = Product.objects.get(id=product['product_id'])
+        flavour_obj = Flavour.objects.get(id=product['flavour_id'])
+        product_in_order = ProductInOrder.objects.create(product=product_obj, order=order, count=product['count'], flavour=flavour_obj)
+        flavour = Flavour.objects.get(id=product['flavour_id'])
+        flavour.count_of_product = int(flavour.count_of_product) - int(product['count'])
+        flavour.save()
+
+    cart.delete()
+    return HttpResponse(123123)
